@@ -22,6 +22,10 @@ public class Booking implements Serializable {
 
     private int groupSize;
 
+    @ManyToOne
+    @JoinColumn(name = "customerPhone")
+    private Customer customer;
+
     public LocalDateTime getStartTime() {
         return this.startTime;
     }
