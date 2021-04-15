@@ -1,11 +1,13 @@
 package com.punchcard.bookingsystem.tables;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table
-public class Booking {
+@IdClass(BookingID.class)
+public class Booking implements Serializable {
 
     @Id
     private LocalDateTime startTime;
