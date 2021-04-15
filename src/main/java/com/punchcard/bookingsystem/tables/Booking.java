@@ -14,10 +14,11 @@ public class Booking {
     private LocalDateTime endTime;
 
     @Id
-    //private Activity activity;
+    @ManyToOne
+    @JoinColumn(name = "activityName")
+    private Activity activity;
 
     private int groupSize;
-
 
     public LocalDateTime getStartTime() {
         return this.startTime;

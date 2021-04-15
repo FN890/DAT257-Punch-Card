@@ -1,8 +1,7 @@
 package com.punchcard.bookingsystem.tables;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -12,6 +11,9 @@ public class Activity {
     private String name ;
     private Integer price ;
     private Integer maxSize ;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Booking> bookings;
 
     public Activity() {
     }
