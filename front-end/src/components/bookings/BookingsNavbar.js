@@ -4,11 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useHistory} from "react-router-dom";
 
 export default function BookingsNavbar() {
-    const navName = "/boka";
+    const bookNavName = "/boka";
+    const bookButtonText = "Boka";
+    const bookingsNavName = "/bokningar";
+    const bookingsButtonText = "Bokningar";
 
     return (
         <Navbar bg="primary" variant="dark">
-            <NavButton url={navName}/>
+            <NavButton buttonName={bookingsButtonText} url={bookingsNavName}/>
+            <NavButton buttonName={bookButtonText} url={bookNavName}/>
         </Navbar>
     )
 
@@ -17,6 +21,8 @@ export default function BookingsNavbar() {
 
 function NavButton(props) {
     const url = props.url;
+    const buttonName = props.buttonName;
+
     const history = useHistory();
 
     function handleClick() {
@@ -24,6 +30,6 @@ function NavButton(props) {
     }
 
     return (
-        <Button color="inherit" onClick={handleClick}>Boka</Button>
+        <Button color="inherit" onClick={handleClick}>{buttonName}</Button>
     );
 }

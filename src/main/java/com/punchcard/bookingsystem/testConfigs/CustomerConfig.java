@@ -14,9 +14,11 @@ public class CustomerConfig {
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepository repository) {
         return args -> {
-            Customer viktor = new Customer("073-515 05 11", "Viktor");
+            Customer viktor = new Customer("1", "Viktor");
+            Customer gaben = new Customer("2", "Hej");
 
-            repository.saveAll(List.of(viktor));
+
+            repository.saveAll(List.of(viktor, gaben));
         };
     }
 }
