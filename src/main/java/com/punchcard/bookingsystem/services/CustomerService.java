@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -19,5 +20,12 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    public Optional<Customer> getCustomer(String phoneNr) {
+        if (customerRepository.findById(phoneNr).isPresent()) {
+            return customerRepository.findById(phoneNr);
+        }
+        throw new IllegalStateException("Customer with phone number " + phoneNr + " does not exist.");
     }
 }
