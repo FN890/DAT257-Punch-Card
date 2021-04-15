@@ -1,7 +1,8 @@
 package com.punchcard.bookingsystem.repositories;
 
+import com.punchcard.bookingsystem.tables.Booking;
+import com.punchcard.bookingsystem.tables.BookingID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-//Extends JpaRepository
-public interface BookingRepository {
+public interface BookingRepository extends JpaRepository<Booking, BookingID> {
 }
