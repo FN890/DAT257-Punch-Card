@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, String> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-//  SELECT * FROM Customer WHERE name = ?
-    Optional<Customer> findCustomerByName(String name);
+//  SELECT * FROM Customer WHERE phoneNr = ?
+    Optional<Customer> findCustomerByPhoneNr(String phoneNr);
 }
