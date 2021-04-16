@@ -30,7 +30,7 @@ public class BookingController {
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public Optional<Booking> getById(@PathVariable long id) {
+    public Booking getById(@PathVariable long id) {
         return bookingService.getById(id);
     }
 

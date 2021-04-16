@@ -31,8 +31,13 @@ public class BookingService {
         return bookingRepository.findBetweenDates(fromDate.atStartOfDay(), toDate.atStartOfDay());
     }
 
-    public Optional<Booking> getById(long id) {
-        return bookingRepository.findById(id);
+    public Booking getById(long id) {
+        Optional<Booking> booking = bookingRepository.findById(id);
+        if (booking.isPresent()) {
+            return booking.get();
+        }
+
+        throw new IllegalStateException("Booking with id " + id + " does not exists.");
     }
 
 }
