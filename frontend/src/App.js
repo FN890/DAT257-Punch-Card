@@ -8,6 +8,7 @@ import ExampleRouter from './example-router/ExampleRouter'
 import Bookings from "./components/bookings/Bookings";
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
+const prices = 'Priser'
 const settings = 'Inställningar'
 
 function App() {
@@ -17,8 +18,11 @@ function App() {
         <Route path="/bokningar">
           <Bookings/>
         </Route>
-        <Route path='/boka'>
+        <Route path='/nybokning'>
           <ExampleRouter title={newBooking} />
+        </Route>
+        <Route path='/priser'>
+          <ExampleRouter title={prices} />
         </Route>
         <Route path='/installningar'>
           <ExampleRouter title={settings} />

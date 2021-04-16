@@ -3,6 +3,7 @@ import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
 import { useHistory } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
+import { Divider } from 'primereact/divider';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -18,8 +19,10 @@ export default function BookingsNavbar() {
 function LeftContent() {
     return (
         <React.Fragment>
-            <NavButton buttonName={constants.bookingsButtonText} url={constants.bookingsNavName} />
             <NavButton buttonName={constants.bookButtonText} url={constants.bookNavName} />
+            <Divider layout="vertical" />
+            <NavButton buttonName={constants.bookingsButtonText} url={constants.bookingsNavName} />
+            <NavButton buttonName={constants.pricesButtonText} url={constants.pricesNavName} />
         </React.Fragment>
     )
 }
