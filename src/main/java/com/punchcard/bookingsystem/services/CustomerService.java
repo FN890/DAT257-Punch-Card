@@ -22,26 +22,26 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomer(String phoneNr) {
-        if (customerRepository.findById(phoneNr).isPresent()) {
-            return customerRepository.findById(phoneNr);
+    public Optional<Customer> getCustomer(Long id) {
+        if (customerRepository.findById(id).isPresent()) {
+            return customerRepository.findById(id);
         }
-        throw new IllegalStateException("Customer with phone number " + phoneNr + " does not exists.");
+        throw new IllegalStateException("Customer with id " + id + " does not exists.");
     }
 
     public void addNewCustomer(Customer customer) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(customer.getPhoneNr());
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByPhoneNr(customer.getPhoneNr());
 
         if(optionalCustomer.isPresent()) {
-            throw new IllegalStateException("Customer with phone number: " + customer.getPhoneNr() + " already exists.");
+            throw new IllegalStateException("Customer with phone number " + customer.getPhoneNr() + " already exists.");
         }
         customerRepository.save(customer);
     }
 
-    public void deleteCustomer(String phoneNr) {
-        if (!customerRepository.existsById(phoneNr)) {
-            throw new IllegalStateException("Customer with phone number: " + phoneNr + " does not exists.");
+    public void deleteCustomer(Long id) {
+        if (!customerRepository.existsById(id)) {
+            throw new IllegalStateException("Customer with phone number: " + id + " does not exists.");
         }
-        customerRepository.deleteById(phoneNr);
+        customerRepository.deleteById(id);
     }
 }

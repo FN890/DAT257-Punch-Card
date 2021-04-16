@@ -8,6 +8,20 @@ import java.util.List;
 public class Customer {
 
     @Id
+    @SequenceGenerator(
+            name = "customer_sequence",
+            sequenceName = "customer_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "customer_sequence"
+    )
+    private Long id;
+
+    @Column(
+            unique = true
+    )
     private String phoneNr;
     private String name;
 
@@ -36,5 +50,13 @@ public class Customer {
 
     public void setPhoneNr(String phoneNr) {
         this.phoneNr = phoneNr;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

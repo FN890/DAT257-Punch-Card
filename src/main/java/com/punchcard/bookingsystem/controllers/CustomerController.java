@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping(path = "api/v1/customers")
+@RequestMapping(path = "api/v1/customer")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -25,9 +25,9 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping(path = "/{phoneNr}")
-    public Optional<Customer> getCustomer(@PathVariable("phoneNr") String phoneNr) {
-        return customerService.getCustomer(phoneNr);
+    @GetMapping(path = "{id}")
+    public Optional<Customer> getCustomer(@PathVariable("id") Long id) {
+        return customerService.getCustomer(id);
     }
 
     @PostMapping
@@ -35,9 +35,9 @@ public class CustomerController {
         customerService.addNewCustomer(customer);
     }
 
-    @DeleteMapping(path = "{phoneNr}")
-    public void deleteCustomer(@PathVariable("phoneNr") String phoneNr) {
-        customerService.deleteCustomer(phoneNr);
+    @DeleteMapping(path = "{id}")
+    public void deleteCustomer(@PathVariable("id") Long id) {
+        customerService.deleteCustomer(id);
     }
 
 }

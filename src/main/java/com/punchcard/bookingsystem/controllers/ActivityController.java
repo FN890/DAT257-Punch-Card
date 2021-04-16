@@ -2,9 +2,7 @@ package com.punchcard.bookingsystem.controllers;
 import com.punchcard.bookingsystem.services.ActivityService;
 import com.punchcard.bookingsystem.tables.Activity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,11 @@ public class ActivityController {
     public List<Activity> getAllActivities(){
         return activityService.getAllActivities();
 
+    }
+
+    @PostMapping
+    public void addNewActivity(@RequestBody Activity activity) {
+        activityService.addNewActivity(activity);
     }
 }
 

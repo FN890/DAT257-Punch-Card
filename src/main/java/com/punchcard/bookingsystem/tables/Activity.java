@@ -8,7 +8,22 @@ import java.util.List;
 public class Activity {
 
     @Id
+    @SequenceGenerator(
+            name = "activity_sequence",
+            sequenceName = "activity_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "activity_sequence"
+    )
+    private Long id;
+
+    @Column(
+            unique = true
+    )
     private String name ;
+
     private Integer price ;
     private Integer maxSize ;
 
@@ -38,11 +53,21 @@ public class Activity {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
     public Integer getMaxSize() {
         return maxSize ;
     }
+
     public void setMaxSize() {
         this.maxSize = maxSize ;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 
