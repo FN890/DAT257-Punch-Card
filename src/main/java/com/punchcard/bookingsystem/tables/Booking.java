@@ -1,21 +1,19 @@
 package com.punchcard.bookingsystem.tables;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table
-@IdClass(BookingID.class)
-public class Booking implements Serializable {
+public class Booking {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private LocalDateTime startTime;
-
-    @Id
     private LocalDateTime endTime;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "activityName")
     private Activity activity;
@@ -25,6 +23,10 @@ public class Booking implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customerPhone")
     private Customer customer;
+
+    public long getId() {
+        return this.id;
+    }
 
     public LocalDateTime getStartTime() {
         return this.startTime;

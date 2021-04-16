@@ -25,7 +25,7 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping(path = "{phoneNr}")
+    @GetMapping(path = "/{phoneNr}")
     public Optional<Customer> getCustomer(@PathVariable("phoneNr") String phoneNr) {
         return customerService.getCustomer(phoneNr);
     }
