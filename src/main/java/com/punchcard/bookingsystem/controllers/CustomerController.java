@@ -30,4 +30,9 @@ public class CustomerController {
         return customerService.getCustomer(phoneNr);
     }
 
+    @PostMapping
+    public void addNewCustomer(@RequestBody Customer customer) {
+        customerService.addNewCustomer(customer);
+    }
+
 }
