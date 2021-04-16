@@ -11,4 +11,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 //  SELECT * FROM Customer WHERE phoneNr = ?
     Optional<Customer> findCustomerByPhoneNr(String phoneNr);
+
+//  SELECT * FROM Customer WHERE name = ?
+    Optional<Customer> findCustomerByName(String name);
 }

@@ -22,7 +22,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomer(Long id) {
+    public Optional<Customer> getCustomerById(Long id) {
         if (customerRepository.findById(id).isPresent()) {
             return customerRepository.findById(id);
         }
@@ -43,5 +43,14 @@ public class CustomerService {
             throw new IllegalStateException("Customer with phone number: " + id + " does not exists.");
         }
         customerRepository.deleteById(id);
+    }
+
+    public Optional<Customer> getCustomerByName(String name) {
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByName(name);
+
+        if (optionalCustomer.isEmpty()) {
+            throw new IllegalStateException("Customer with name " + name + " does not exists");
+        }
+        return customerRepository.findCustomerByName(name);
     }
 }

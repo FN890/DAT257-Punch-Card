@@ -5,6 +5,7 @@ import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,14 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping(path = "{id}")
-    public Optional<Customer> getCustomer(@PathVariable("id") Long id) {
-        return customerService.getCustomer(id);
+    @GetMapping(path = "/id/{id}")
+    public Optional<Customer> getCustomerById(@PathVariable("id") Long id) {
+        return customerService.getCustomerById(id);
+    }
+
+    @GetMapping(path = "/name/{name}")
+    public Optional<Customer> getCustomerByName(@PathVariable("name") String name) {
+        return customerService.getCustomerByName(name);
     }
 
     @PostMapping
@@ -35,7 +41,7 @@ public class CustomerController {
         customerService.addNewCustomer(customer);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/id/{id}")
     public void deleteCustomer(@PathVariable("id") Long id) {
         customerService.deleteCustomer(id);
     }

@@ -29,7 +29,9 @@ public class ActivityService {
         }
         activityRepository.save(activity);
     }
-    // Return a specific activity
 
-    // More methods... ?
+    //Method to return a specific activity (by id)
+    //Method to return a specific activity (by name)
+    //Method to delete a specific activity
+    //Hint: look at methods from Customer and Booking to get an idea of how to do it
 }
