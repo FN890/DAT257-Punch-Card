@@ -26,6 +26,22 @@ public class CustomerService {
         if (customerRepository.findById(phoneNr).isPresent()) {
             return customerRepository.findById(phoneNr);
         }
-        throw new IllegalStateException("Customer with phone number " + phoneNr + " does not exist.");
+        throw new IllegalStateException("Customer with phone number " + phoneNr + " does not exists.");
+    }
+
+    public void addNewCustomer(Customer customer) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(customer.getPhoneNr());
+
+        if(optionalCustomer.isPresent()) {
+            throw new IllegalStateException("Customer with phone number: " + customer.getPhoneNr() + " already exists.");
+        }
+        customerRepository.save(customer);
+    }
+
+    public void deleteCustomer(String phoneNr) {
+        if (!customerRepository.existsById(phoneNr)) {
+            throw new IllegalStateException("Customer with phone number: " + phoneNr + " does not exists.");
+        }
+        customerRepository.deleteById(phoneNr);
     }
 }

@@ -1,8 +1,9 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"
+import timeGridPlugin from "@fullcalendar/timegrid"
 import './Calendar.css'
 
-export default function Calendar(){
+export default function Calendar() {
     return (
         <div className='calendar'>
             <FullCalendar
@@ -12,12 +13,27 @@ export default function Calendar(){
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 }}
-                plugins={[dayGridPlugin]}
+                plugins={[dayGridPlugin, timeGridPlugin]}
                 events={[
                     {
                         title: 'Sprint 1',
                         start: '2021-04-12',
-                        end: '2021-04-16'
+                        end: '2021-04-17'
+
+                    },
+                    {
+                        color: 'green',
+                        title: 'gym',
+                        start: '2021-04-16T12:30:00',
+                        end: '2021-04-16T21:30:00',
+                    },
+                    {
+                        //url can be used to link to this specific booking
+                        url: 'bookingNr1337',
+                        color: 'red',
+                        title: 'running',
+                        start: '2021-04-16T11:30:00',
+                        end: '2021-04-16T21:30:00',
                     },
                     {
                         title: 'Sprint 2',
