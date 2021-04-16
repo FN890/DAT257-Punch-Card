@@ -1,9 +1,16 @@
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid"
-import timeGridPlugin from "@fullcalendar/timegrid"
-import './Calendar.css'
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import './Calendar.css';
+import axios from 'axios';
+
 
 export default function Calendar() {
+
+    let state = {
+
+    }
+
     return (
         <div className='calendar'>
             <FullCalendar

@@ -34,26 +34,26 @@ build/
 
 ### front-end ###
 
-front-end/node_modules
-front-end/.pnp
-front-end/.pnp.js
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
 
 # testing
-front-end/coverage
+frontend/coverage
 
 # production
-front-end/build
+frontend/build
 
 # misc
-front-end/.DS_Store
-front-end/.env.local
-front-end/.env.development.local
-front-end/.env.test.local
-front-end/.env.production.local
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
 
-front-end/npm-debug.log*
-front-end/yarn-debug.log*
-front-end/yarn-error.log*
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
 
 src/main/resources/application.properties
 
