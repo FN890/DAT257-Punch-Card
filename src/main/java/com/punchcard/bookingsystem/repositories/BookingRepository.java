@@ -19,7 +19,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(value = "SELECT * FROM Booking WHERE id = ?1", nativeQuery = true)
     Optional<Booking> findById(int id);
 
-    @Query(value = "SELECT * FROM Booking WHERE (:fromDate BETWEEN startTime AND endTime) OR (:toDate BETWEEN startTime AND endTime)", nativeQuery = true)
+    @Query(value = "SELECT * FROM Booking WHERE (:fromDate BETWEEN startTime AND endTime) OR (:toDate BETWEEN startTime AND endTime) OR (:fromDate <= startTime AND :toDate >= endTime)", nativeQuery = true)
     List<Booking> findBetweenDates(@Param("fromDate") LocalDateTime fromDate, @Param("toDate") LocalDateTime toDate);
 
 }
