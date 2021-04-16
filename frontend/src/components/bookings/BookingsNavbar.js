@@ -1,21 +1,36 @@
-import Navbar from 'react-bootstrap/Navbar'
-import { Button, Form, FormControl, Nav } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react'
+import { Button } from 'primereact/button';
+import { Toolbar } from 'primereact/toolbar';
 import { useHistory } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import * as constants from './BookingsNavBarConstants'
 
 
 export default function BookingsNavbar() {
-
     return (
-        <Navbar bg="primary" variant="dark">
+        <Toolbar left={LeftContent} right={rightContent} />
+    )
+}
+
+function LeftContent() {
+    return (
+        <React.Fragment>
             <NavButton buttonName={constants.bookingsButtonText} url={constants.bookingsNavName} />
             <NavButton buttonName={constants.bookButtonText} url={constants.bookNavName} />
-        </Navbar>
+        </React.Fragment>
     )
+}
 
 
+function rightContent() {
+    return (
+        <React.Fragment>
+            <NavButton buttonName={constants.settingsButtonText} url={constants.settingsNavName} />
+        </React.Fragment>
+    )
 }
 
 function NavButton(props) {
@@ -34,9 +49,9 @@ function NavButton(props) {
     return (
         <div>
             {shouldBeEnabled ? (
-                <Button color="inherit" onClick={handleClick}>{buttonName}</Button>
+                <Button label={buttonName} className="p-button-link" onClick={handleClick}></Button>
             ) : (
-                <Button color="inherit" onClick={handleClick} disabled>{buttonName}</Button>
+                <Button label={buttonName} className="p-button-link" onClick={handleClick} disabled></Button>
             )}
         </div>
     );
