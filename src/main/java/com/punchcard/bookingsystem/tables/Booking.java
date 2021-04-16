@@ -24,6 +24,13 @@ public class Booking {
     @JoinColumn(name = "customerPhone")
     private Customer customer;
 
+    public Booking(LocalDateTime startTime, LocalDateTime endTime, Activity activity, Customer customer) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.activity = activity;
+        this.customer = customer;
+    }
+
     public long getId() {
         return this.id;
     }
