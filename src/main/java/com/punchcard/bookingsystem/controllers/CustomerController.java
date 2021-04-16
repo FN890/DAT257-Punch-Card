@@ -35,4 +35,9 @@ public class CustomerController {
         customerService.addNewCustomer(customer);
     }
 
+    @DeleteMapping(path = "{phoneNr}")
+    public void deleteCustomer(@PathVariable("phoneNr") String phoneNr) {
+        customerService.deleteCustomer(phoneNr);
+    }
+
 }

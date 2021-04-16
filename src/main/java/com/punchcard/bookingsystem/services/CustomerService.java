@@ -37,4 +37,11 @@ public class CustomerService {
         }
         customerRepository.save(customer);
     }
+
+    public void deleteCustomer(String phoneNr) {
+        if (!customerRepository.existsById(phoneNr)) {
+            throw new IllegalStateException("Customer with phone number: " + phoneNr + " does not exists.");
+        }
+        customerRepository.deleteById(phoneNr);
+    }
 }
