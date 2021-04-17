@@ -34,4 +34,6 @@ public class ActivityService {
     //Method to return a specific activity (by name)
     //Method to delete a specific activity
     //Hint: look at methods from Customer and Booking to get an idea of how to do it
+
+    //Tips: före en commit/push, kör 'git status' för att se vilka filer ni ändrat så ni inte råkar pusha något fel :)
 }
