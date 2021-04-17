@@ -31,6 +31,9 @@ public class Booking {
         this.customer = customer;
     }
 
+    public Booking() {
+    }
+
     public long getId() {
         return this.id;
     }
