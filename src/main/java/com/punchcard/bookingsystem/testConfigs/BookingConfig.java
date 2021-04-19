@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 @Configuration
 public class BookingConfig {
@@ -30,7 +28,7 @@ public class BookingConfig {
             Activity activity = new Activity("Stuga", 1000, 4);
             activityRepository.save(activity);
 
-            Booking booking = new Booking(startTime, endTime, activity, customer);
+            Booking booking = new Booking();
             bookingRepository.save(booking);
 
         };

@@ -1,7 +1,7 @@
 package com.punchcard.bookingsystem.tables;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -11,76 +11,48 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-
-    @ManyToOne
-    @JoinColumn(name = "activityName")
-    private Activity activity;
-
     private int groupSize;
 
     @ManyToOne
-    @JoinColumn(name = "customerPhone")
+    @JoinColumn(name = "customer_phone")
     private Customer customer;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     public Booking() {}
 
-    public Booking(LocalDateTime startTime, LocalDateTime endTime, Activity activity, Customer customer) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.activity = activity;
+    public Booking(Customer customer, int groupSize, List<Reservation> reservations) {
         this.customer = customer;
+        this.groupSize = groupSize;
+        this.reservations = reservations;
     }
-
-
 
     public long getId() {
         return this.id;
-    }
-
-    public LocalDateTime getStartTime() {
-        return this.startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return this.endTime;
     }
 
     public int getGroupSize() {
         return this.groupSize;
     }
 
-    public Activity getActivity() {
-        return this.activity;
-    }
-
     public Customer getCustomer() {
         return this.customer;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setStartTime(LocalDateTime time) {
-        this.startTime = time;
-    }
-
-    public void setEndTime(LocalDateTime time) {
-        this.endTime = time;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
     public void setGroupSize(int size) {
         this.groupSize = size;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 }

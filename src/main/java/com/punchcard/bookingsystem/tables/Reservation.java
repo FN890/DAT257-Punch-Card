@@ -14,19 +14,20 @@ public class Reservation {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    private int groupSize;
-
     @ManyToOne
     @JoinColumn(name = "activity_name")
     private Activity activity;
 
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
     public Reservation() {}
 
-    public Reservation(LocalDateTime startTime, LocalDateTime endTime, Activity activity, int groupSize) {
+    public Reservation(LocalDateTime startTime, LocalDateTime endTime, Activity activity) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.activity = activity;
-        this.groupSize = groupSize;
     }
 
     public long getId() {
@@ -41,10 +42,6 @@ public class Reservation {
         return endTime;
     }
 
-    public int getGroupSize() {
-        return groupSize;
-    }
-
     public Activity getActivity() {
         return activity;
     }
@@ -55,10 +52,6 @@ public class Reservation {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public void setGroupSize(int groupSize) {
-        this.groupSize = groupSize;
     }
 
     public void setActivity(Activity activity) {
