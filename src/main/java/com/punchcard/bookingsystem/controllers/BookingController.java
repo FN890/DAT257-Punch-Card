@@ -34,7 +34,8 @@ public class BookingController {
     @GetMapping(path = "/bydate", produces = "application/json")
     public List<Booking> getBetweenDates(@RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
                                          @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
-        return bookingService.getByDate(fromDate, toDate);
+        //TODO: Update and/or move
+        return null;
     }
 
 }

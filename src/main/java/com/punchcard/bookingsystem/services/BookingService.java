@@ -27,10 +27,6 @@ public class BookingService {
         return bookingRepository.findByCustomerPhone(phone);
     }
 
-    public List<Booking> getByDate(LocalDate fromDate, LocalDate toDate) {
-        return bookingRepository.findBetweenDates(fromDate.atStartOfDay(), toDate.atStartOfDay());
-    }
-
     public Booking getById(long id) {
         Optional<Booking> booking = bookingRepository.findById(id);
         if (booking.isPresent()) {
