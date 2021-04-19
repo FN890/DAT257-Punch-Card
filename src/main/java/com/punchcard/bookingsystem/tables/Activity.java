@@ -16,9 +16,6 @@ public class Activity {
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Booking> bookings;
 
-    public Activity() {
-    }
-
     public Activity(String name, Integer price, Integer maxSize) {
         this.name = name ;
         this.price = price ;
