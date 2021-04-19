@@ -7,10 +7,10 @@ import { Divider } from 'primereact/divider';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import * as constants from './BookingsNavBarConstants'
+import * as constants from './NavBarConstants'
 
 
-export default function BookingsNavbar() {
+export default function NavBar() {
     return (
         <Toolbar left={LeftContent} right={rightContent} />
     )
