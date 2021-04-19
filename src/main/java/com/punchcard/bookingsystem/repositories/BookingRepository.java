@@ -13,13 +13,13 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query(value = "SELECT * FROM Booking WHERE customerPhone = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM Booking WHERE customer_phone = ?1", nativeQuery = true)
     List<Booking> findByCustomerPhone(int phone);
 
     @Query(value = "SELECT * FROM Booking WHERE id = ?1", nativeQuery = true)
     Optional<Booking> findById(int id);
 
-    @Query(value = "SELECT * FROM Booking WHERE (:fromDate BETWEEN startTime AND endTime) OR (:toDate BETWEEN startTime AND endTime) OR (:fromDate <= startTime AND :toDate >= endTime)", nativeQuery = true)
+    @Query(value = "SELECT * FROM Booking WHERE (:fromDate BETWEEN start_time AND end_time) OR (:toDate BETWEEN start_time AND end_time) OR (:fromDate <= start_time AND :toDate >= end_time)", nativeQuery = true)
     List<Booking> findBetweenDates(@Param("fromDate") LocalDateTime fromDate, @Param("toDate") LocalDateTime toDate);
 
 }
