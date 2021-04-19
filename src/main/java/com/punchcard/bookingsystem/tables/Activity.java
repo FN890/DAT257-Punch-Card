@@ -7,6 +7,9 @@ import java.util.List;
 @Table
 public class Activity {
 
+    //Gjorde så att aktivitet har ett id-nummer (funkar bäst så med implementation).
+    //Skapade även en sekvensgenerator till den så att id skapas automatiskt utan att behöva säga vilket
+    //id-nummer en ny aktivitet ska ha /Viktor
     @Id
     @SequenceGenerator(
             name = "activity_sequence",
