@@ -14,7 +14,7 @@ public class Activity {
     private Integer maxSize ;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Booking> bookings;
+    private List<Reservation> reservations;
 
     public Activity() {}
 
