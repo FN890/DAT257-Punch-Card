@@ -22,7 +22,7 @@ public class ActivityService {
     }
 
     public void addNewActivity(Activity activity) {
-        Optional<Activity> optionalActivity = activityRepository.findActivityByName(activity.getName());
+        Optional<Activity> optionalActivity = activityRepository.findById(activity.getName());
 
         if(optionalActivity.isPresent()) {
             throw new IllegalStateException("Activity with name " + activity.getName() + " already exists");
