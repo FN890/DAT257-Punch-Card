@@ -47,6 +47,14 @@ public class Booking {
         return this.groupSize;
     }
 
+    public Activity getActivity() {
+        return this.activity;
+    }
+
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
     public void setStartTime(LocalDateTime time) {
         this.startTime = time;
     }
@@ -58,4 +66,13 @@ public class Booking {
     public void setGroupSize(int size) {
         this.groupSize = size;
     }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
 }
