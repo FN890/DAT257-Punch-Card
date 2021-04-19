@@ -28,8 +28,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
-    public Customer() {
-    }
+    public Customer() {}
 
     public Customer(String phoneNr, String name) {
         this.phoneNr = phoneNr;

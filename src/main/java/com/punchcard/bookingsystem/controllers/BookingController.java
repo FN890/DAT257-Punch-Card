@@ -4,10 +4,7 @@ import com.punchcard.bookingsystem.services.BookingService;
 import com.punchcard.bookingsystem.tables.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,9 +31,9 @@ public class BookingController {
         return bookingService.getById(id);
     }
 
-    @GetMapping(path = "/bydate/{from}/{to}", produces = "application/json")
-    public List<Booking> getBetweenDates(@PathVariable(value = "from") @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate fromDate,
-                                         @PathVariable(value = "to") @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate toDate) {
+    @GetMapping(path = "/bydate", produces = "application/json")
+    public List<Booking> getBetweenDates(@RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+                                         @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
         return bookingService.getByDate(fromDate, toDate);
     }
 

@@ -24,6 +24,8 @@ public class Booking {
     @JoinColumn(name = "customerPhone")
     private Customer customer;
 
+    public Booking() {}
+
     public Booking(LocalDateTime startTime, LocalDateTime endTime, Activity activity, Customer customer) {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -31,8 +33,7 @@ public class Booking {
         this.customer = customer;
     }
 
-    public Booking() {
-    }
+
 
     public long getId() {
         return this.id;
@@ -56,6 +57,10 @@ public class Booking {
 
     public Customer getCustomer() {
         return this.customer;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setStartTime(LocalDateTime time) {
