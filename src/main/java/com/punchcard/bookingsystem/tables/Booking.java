@@ -59,6 +59,10 @@ public class Booking {
         return this.customer;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setStartTime(LocalDateTime time) {
         this.startTime = time;
     }
