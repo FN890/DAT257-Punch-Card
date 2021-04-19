@@ -17,15 +17,14 @@ public class Booking {
     @JoinColumn(name = "customer_phone")
     private Customer customer;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 
     public Booking() {}
 
-    public Booking(Customer customer, int groupSize, List<Reservation> reservations) {
+    public Booking(Customer customer, int groupSize) {
         this.customer = customer;
         this.groupSize = groupSize;
-        this.reservations = reservations;
     }
 
     public long getId() {

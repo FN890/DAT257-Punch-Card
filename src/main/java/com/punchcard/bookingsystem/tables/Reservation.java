@@ -24,10 +24,11 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(LocalDateTime startTime, LocalDateTime endTime, Activity activity) {
+    public Reservation(LocalDateTime startTime, LocalDateTime endTime, Activity activity, Booking booking) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.activity = activity;
+        this.booking = booking;
     }
 
     public long getId() {
@@ -46,6 +47,10 @@ public class Reservation {
         return activity;
     }
 
+    public long getBooking() {
+        return booking.getId();
+    }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
@@ -58,4 +63,7 @@ public class Reservation {
         this.activity = activity;
     }
 
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
 }
