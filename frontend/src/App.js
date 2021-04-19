@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import ExampleRouter from './example-router/ExampleRouter'
 import Bookings from "./components/bookings/Bookings";
+import NavBar from "./components/navbar/Navbar"
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
 const prices = 'Priser'
@@ -16,14 +17,18 @@ function App() {
     <Router>
       <Switch>
         <Route path="/bokningar">
+          <NavBar/>
           <Bookings/>
         </Route>
         <Route path='/nybokning'>
+        <NavBar/>
           <ExampleRouter title={newBooking} />
         </Route>
         <Route path='/priser'>
+        <NavBar/>
           <ExampleRouter title={prices} />
         </Route>
+        <NavBar/>
         <Route path='/installningar'>
           <ExampleRouter title={settings} />
         </Route>
