@@ -7,24 +7,7 @@ import java.util.List;
 @Table
 public class Activity {
 
-    //Gjorde så att aktivitet har ett id-nummer (funkar bäst så med implementation).
-    //Skapade även en sekvensgenerator till den så att id skapas automatiskt utan att behöva säga vilket
-    //id-nummer en ny aktivitet ska ha /Viktor
     @Id
-    @SequenceGenerator(
-            name = "activity_sequence",
-            sequenceName = "activity_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "activity_sequence"
-    )
-    private Long id;
-
-    @Column(
-            unique = true
-    )
     private String name ;
 
     private Integer price ;
@@ -61,16 +44,9 @@ public class Activity {
         return maxSize ;
     }
 
-    public void setMaxSize() {
+    public void setMaxSize(Integer maxSize) {
         this.maxSize = maxSize ;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
 
