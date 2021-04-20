@@ -12,7 +12,7 @@ import java.util.List;
 public class ActivityConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(ActivityRepository activityRepository) {
+    CommandLineRunner commandLineRunner3(ActivityRepository activityRepository) {
         return args -> {
             Activity bastu = new Activity("Bastu", 500, 7);
 
