@@ -1,8 +1,10 @@
 import React from "react";
-import axios from "axios";
+import ActivityItem from "./ActivityItem";
 
 export default function Prices() {
     return (
-        <h1>Hejsan svejsan</h1>
+        <div>
+            <ActivityItem />
+        </div>
     )
 }
