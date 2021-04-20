@@ -1,10 +1,10 @@
 import React from "react";
-import ActivityItem from "./ActivityItem";
+import ActivityTable from "./ActivityTable" ;
 
 export default function Prices() {
     return (
         <div>
-            <ActivityItem />
+            <ActivityTable />
         </div>
     )
 }
