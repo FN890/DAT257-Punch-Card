@@ -28,15 +28,20 @@ public class BookingConfig {
             Customer customer = new Customer("0740123456", "John");
             customerRepository.save(customer);
 
-            Activity activity = new Activity("Stuga", 1000, 4);
+            Activity activity = new Activity("Stuga", 4000, 4);
             activityRepository.save(activity);
+
+            Activity activity2 = new Activity("Badtunna", 1500, 4);
+            activityRepository.save(activity2);
 
             Booking booking = new Booking(customer, 10);
             Reservation reservation = new Reservation(startTime, endTime, activity, booking);
+            Reservation reservation2 = new Reservation(startTime, endTime, activity2, booking);
 
 
             bookingRepository.save(booking);
             reservationRepository.save(reservation);
+            reservationRepository.save(reservation2);
         };
     }
 
