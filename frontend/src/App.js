@@ -30,7 +30,6 @@ function App() {
           <NavBar />
           <Prices />
         </Route>
-        <NavBar />
         <Route path='/installningar'>
           <ExampleRouter title={settings} />
         </Route>
