@@ -8,6 +8,7 @@ import ExampleRouter from './example-router/ExampleRouter'
 import Bookings from "./components/bookings/Bookings";
 import NavBar from "./components/navbar/Navbar"
 import NewBooking from "./components/new_booking/NewBooking"
+import Prices from "./components/prices/Prices";
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
 const prices = 'Priser'
@@ -26,7 +27,7 @@ function App() {
         </Route>
         <Route path='/priser'>
           <NavBar />
-          <ExampleRouter title={prices} />
+          <Prices />
         </Route>
         <NavBar />
         <Route path='/installningar'>
