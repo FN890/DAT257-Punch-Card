@@ -5,7 +5,6 @@ import svLocale from '@fullcalendar/core/locales/sv';
 import './Calendar.css';
 import React, { useState, useEffect } from 'react';
 import BookingService from "./BookingService";
-import {locale} from "primereact/api";
 
 
 export default function Calendar() {
