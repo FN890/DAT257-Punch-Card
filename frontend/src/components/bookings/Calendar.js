@@ -1,9 +1,11 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import svLocale from '@fullcalendar/core/locales/sv';
 import './Calendar.css';
 import React, { useState, useEffect } from 'react';
 import BookingService from "./BookingService";
+import {locale} from "primereact/api";
 
 
 export default function Calendar() {
@@ -21,6 +23,7 @@ export default function Calendar() {
         <div>
             <div className="calendar">
                 <FullCalendar events={bookings}
+                              locale={svLocale}
                               defaultView="dayGridMonth"
                               headerToolbar={{
                                   left: 'prev,next,today',
