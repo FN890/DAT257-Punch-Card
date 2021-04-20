@@ -7,6 +7,7 @@ import {
 import ExampleRouter from './example-router/ExampleRouter'
 import Bookings from "./components/bookings/Bookings";
 import NavBar from "./components/navbar/Navbar"
+import NewBooking from "./components/new_booking/NewBooking"
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
 const prices = 'Priser'
@@ -17,18 +18,18 @@ function App() {
     <Router>
       <Switch>
         <Route path="/bokningar">
-          <NavBar/>
-          <Bookings/>
+          <NavBar />
+          <Bookings />
         </Route>
         <Route path='/nybokning'>
-        <NavBar/>
-          <ExampleRouter title={newBooking} />
+          <NavBar />
+          <NewBooking/>
         </Route>
         <Route path='/priser'>
-        <NavBar/>
+          <NavBar />
           <ExampleRouter title={prices} />
         </Route>
-        <NavBar/>
+        <NavBar />
         <Route path='/installningar'>
           <ExampleRouter title={settings} />
         </Route>
