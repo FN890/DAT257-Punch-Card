@@ -24,6 +24,7 @@ function App() {
         </Route>
         <Route path='/nybokning'>
           <NavBar />
+          <NewBooking/>
         </Route>
         <Route path='/priser'>
           <NavBar />
