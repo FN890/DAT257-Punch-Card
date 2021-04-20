@@ -3,34 +3,24 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import './Calendar.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import BookingService from "./BookingService";
 
 
 export default function Calendar() {
 
-    const [events, setEvents] = useState([]);
+    const [bookings, setBookings] = useState([]);
 
+    /**
+     * Calls once on initiation and fills bookings array with data from BookingService.js
+     */
     useEffect(() => {
-        axios.get('/api/v1/booking').then(resp => {
-            if(resp.status === 200){
-                let parsedData = (resp.data).map(
-                    obj => {
-                        return{
-                            "title" : obj.id,
-                            "start" : obj.startTime,
-                            "end" : obj.endTime,
-                        }
-                    }
-                )
-                setEvents(parsedData)
-            }
-        });
+        BookingService().then(data => setBookings(data));
     },[]);
 
     return (
         <div>
             <div className="calendar">
-                <FullCalendar events={events}
+                <FullCalendar events={bookings}
                               defaultView="dayGridMonth"
                               headerToolbar={{
                                   left: 'prev,next,today',
