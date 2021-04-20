@@ -24,13 +24,14 @@ function App() {
         </Route>
         <Route path='/nybokning'>
           <NavBar />
-          <NewBooking/>
+          <NewBooking />
         </Route>
         <Route path='/priser'>
           <NavBar />
           <Prices />
         </Route>
         <Route path='/installningar'>
+          <NavBar />
           <ExampleRouter title={settings} />
         </Route>
         <Route exact path="*" render={() => (
