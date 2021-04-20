@@ -27,7 +27,7 @@ export default function CustomerInfo() {
                     <label htmlFor="inputmask">Telefon</label>
                 </span>
             </div>
-            <div className="p-col-1 p-mx-5 p-mb-3">
+            <div className="p-col-1 p-mx-5">
                 <span className="p-float-label">
                     <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.value)} rows={3} autoResize/>
                     <label htmlFor="textarea">Anteckningar</label>

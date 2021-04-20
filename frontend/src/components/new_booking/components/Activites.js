@@ -1,7 +1,5 @@
 export default function Activities() {
-
-    return (
-        <div>
-        </div>
-    )
+   return(
+       <div></div>
+   )
 }
