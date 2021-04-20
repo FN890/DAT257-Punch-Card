@@ -29,7 +29,7 @@ export default function CustomerInfo() {
             </div>
             <div className="p-col-1 p-mx-5 p-mb-3">
                 <span className="p-float-label">
-                    <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.value)} rows={3}/>
+                    <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.value)} rows={3} autoResize/>
                     <label htmlFor="textarea">Anteckningar</label>
                 </span>
             </div>
