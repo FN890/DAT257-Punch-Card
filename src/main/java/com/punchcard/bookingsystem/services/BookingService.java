@@ -23,7 +23,7 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
-    public List<Booking> getByCustomerPhone(int phone) {
+    public List<Booking> getByCustomerPhone(String phone) {
         return bookingRepository.findByCustomerPhone(phone);
     }
 
