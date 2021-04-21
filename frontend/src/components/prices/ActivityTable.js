@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import ActivityService from '../prices/ActivityService';
+import ActivityService from '../services/ActivityService';
 
 export default function ActivityTable()  {
     const [activity, setActivity] = useState([]);
