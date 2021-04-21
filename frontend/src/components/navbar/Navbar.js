@@ -19,10 +19,10 @@ export default function NavBar() {
 function LeftContent() {
     return (
         <React.Fragment>
-            <NavButton buttonName={constants.bookButtonText} url={constants.bookNavName} />
+            <NavButton buttonName={constants.bookButtonText} url={constants.bookNavName} type={'p-button-raised'} />
             <Divider layout="vertical" />
-            <NavButton buttonName={constants.bookingsButtonText} url={constants.bookingsNavName} />
-            <NavButton buttonName={constants.pricesButtonText} url={constants.pricesNavName} />
+            <NavButton buttonName={constants.bookingsButtonText} url={constants.bookingsNavName} type={'p-button-link'} />
+            <NavButton buttonName={constants.pricesButtonText} url={constants.pricesNavName} type={'p-button-link'} />
         </React.Fragment>
     )
 }
@@ -31,7 +31,7 @@ function LeftContent() {
 function rightContent() {
     return (
         <React.Fragment>
-            <NavButton buttonName={constants.settingsButtonText} url={constants.settingsNavName} />
+            <NavButton buttonName={constants.settingsButtonText} url={constants.settingsNavName} type={'p-button-link'}/>
         </React.Fragment>
     )
 }
@@ -39,6 +39,7 @@ function rightContent() {
 function NavButton(props) {
     const url = props.url;
     const buttonName = props.buttonName;
+    const type = props.type;
 
     const location = useLocation();
     const shouldBeEnabled = location.pathname !== url;
@@ -52,9 +53,9 @@ function NavButton(props) {
     return (
         <div>
             {shouldBeEnabled ? (
-                <Button label={buttonName} className="p-button-link" onClick={handleClick}></Button>
+                <Button label={buttonName} className={type} onClick={handleClick}></Button>
             ) : (
-                <Button label={buttonName} className="p-button-link" onClick={handleClick} disabled></Button>
+                <Button label={buttonName} className={type} onClick={handleClick} disabled></Button>
             )}
         </div>
     );
