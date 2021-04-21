@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
-import AllBookingsService from "./AllBookingsService";
+import BookingService from "../services/BookingService";
 import {Toast} from 'primereact/toast';
 
 export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
-    const allBookingsService = new AllBookingsService();
 
     useEffect(() => {
-        allBookingsService.getAllBookings().then(data => setBookings(data));
+        BookingService().then(data => setBookings(data));
     }, []);
 
 

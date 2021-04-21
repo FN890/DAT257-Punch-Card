@@ -4,7 +4,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import svLocale from '@fullcalendar/core/locales/sv';
 import './Calendar.css';
 import React, { useState, useEffect } from 'react';
-import BookingService from "./BookingService";
+import BookingService from "../services/BookingService";
 
 
 export default function Calendar() {
