@@ -22,7 +22,7 @@ public class CustomerController {
     }
 
     /**
-     * Method for returning all customers in the database
+     * Returns all customers in the database
      * @return all customers in the database in JSON format
      */
     @GetMapping
@@ -31,7 +31,7 @@ public class CustomerController {
     }
 
     /**
-     * Method for returning a customer with a specific id
+     * Returns a customer with a specific id
      * @param id, the id number of a customer
      * @return the customer with the specific id
      */
@@ -41,7 +41,7 @@ public class CustomerController {
     }
 
     /**
-     * Method for returning a customer with a specific name
+     * Returns a customer with a specific name
      * @param name, the name of a customer
      * @return the customer with the specific name
      */
@@ -51,7 +51,7 @@ public class CustomerController {
     }
 
     /**
-     * Method that handles inserting a customer in the database
+     * Handles inserting a customer in the database
      * @param customer the customer to be added to the database,
      *                 needs name and phone number
      */
@@ -61,7 +61,7 @@ public class CustomerController {
     }
 
     /**
-     * Method for deleting a customer by id
+     * Deletes a customer by id
      * @param id, the id of the customer to delete
      */
     @DeleteMapping(path = "/id/{id}")
