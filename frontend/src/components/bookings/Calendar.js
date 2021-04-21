@@ -11,6 +11,9 @@ export default function Calendar() {
 
     const [bookings, setBookings] = useState([]);
 
+    /*
+    Should be requested from api instead of hardcoded
+     */
     const colors = {
         "Stuga" : "#008800",
         "Badtunna" : "#ff0000",
@@ -58,18 +61,28 @@ export default function Calendar() {
     return (
         <div>
             <div className="calendar">
-                <FullCalendar events={bookings}
-                              locale={svLocale}
-                              defaultView="dayGridMonth"
-                              headerToolbar={{
-                                  left: 'prev,next,today',
-                                  center: 'title',
-                                  right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                              }}
-                              plugins={[dayGridPlugin, timeGridPlugin]}
-                />
+
+                <FullCalendar
+                    events={bookings}
+                    locale={svLocale}
+                    defaultView="dayGridMonth"
+                    headerToolbar={{
+                        left: 'prev,next,today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    }}
+                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    editable={true}
+                    eventClick={
+                        function (bookingEvent) {
+                            alert(bookingEvent.event.title)
+                        }
+                    }>
+
+                </FullCalendar>
             </div>
         </div>
     );
 }
+
 
