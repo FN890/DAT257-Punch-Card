@@ -25,8 +25,18 @@ export default function Calendar() {
         BookingService().then(function (bookingsArray) {
             (bookingsArray).map(
                 obj => {
+                    console.log(obj)
                     let i;
-                    let bookingsArray = [obj.reservations.length];
+                    let bookingsArray = [obj.reservations.length + 1];
+
+                    bookingsArray[obj.reservations.length] = {
+                        "id": obj.id,
+                        "title": obj.description,
+                        "start": obj.startTime,
+                        "end": obj.endTime,
+                        "backgroundColor": colors.Annat ,
+                        "borderColor": colors.Annat,
+                    }
                     for (i = 0; i < obj.reservations.length; i++) {
                         let activity = obj.reservations[i].activity.name
                         bookingsArray[i] = {
