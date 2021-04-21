@@ -1,19 +1,16 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import ActivityService from "./ActivityService";
-import getActivities from './ActivityService'
+import { DataTable } from 'primereact/datatable';
+import ActivityService from '../prices/ActivityService';
 
-
-const ActivityTable = () => {
-    /**
+export default function ActivityTable()  {
     const [activity, setActivity] = useState([]);
     const activityService = new ActivityService();
 
     useEffect(() => {
         activityService.getActivities().then(data => setActivity(data));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>
@@ -21,9 +18,10 @@ const ActivityTable = () => {
                 <DataTable value={activity}>
                     <Column field="name" header="Aktivitetens namn"></Column>
                     <Column field="price" header="Pris"></Column>
+                    <Column field="maxSize" header="Max antal"></Column>
                 </DataTable>
             </div>
         </div>
     );
-    */
+
 }

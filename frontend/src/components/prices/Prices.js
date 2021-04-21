@@ -1,9 +1,10 @@
 import React from "react";
+import ActivityTable from './ActivityTable';
 
 export default function Prices() {
     return (
         <div>
-            <h1> Råkade förstöra tabellen :(</h1>
+            <ActivityTable/>
         </div>
     )
 }
