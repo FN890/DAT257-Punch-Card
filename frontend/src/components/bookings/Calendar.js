@@ -11,7 +11,7 @@ export default function Calendar() {
 
     const [bookings, setBookings] = useState([]);
 
-    /*
+    /**
     Should be requested from api instead of hardcoded
      */
     const colors = {
