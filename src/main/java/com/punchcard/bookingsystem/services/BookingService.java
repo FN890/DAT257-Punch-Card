@@ -5,7 +5,6 @@ import com.punchcard.bookingsystem.tables.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +30,7 @@ public class BookingService {
         return bookingRepository.findByResponsible(responsible);
     }
 
-    public Booking getById(long id) {
+    public Booking getById(Long id) {
         Optional<Booking> booking = bookingRepository.findById(id);
         if (booking.isPresent()) {
             return booking.get();

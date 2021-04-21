@@ -10,9 +10,9 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private int groupSize;
+    private Integer groupSize;
     private String description;
     private String responsible;
 
@@ -25,16 +25,16 @@ public class Booking {
 
     public Booking() {}
 
-    public Booking(Customer customer, int groupSize) {
+    public Booking(Customer customer, Integer groupSize) {
         this.customer = customer;
         this.groupSize = groupSize;
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public int getGroupSize() {
+    public Integer getGroupSize() {
         return this.groupSize;
     }
 
