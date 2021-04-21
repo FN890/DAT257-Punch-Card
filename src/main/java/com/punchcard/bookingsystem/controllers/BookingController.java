@@ -31,7 +31,7 @@ public class BookingController {
     }
 
     @GetMapping(path = "/customer/{phone}")
-    public List<Booking> getByCustomerPhone(@PathVariable int phone) {
+    public List<Booking> getByCustomerPhone(@PathVariable String phone) {
         return bookingService.getByCustomerPhone(phone);
     }
 
