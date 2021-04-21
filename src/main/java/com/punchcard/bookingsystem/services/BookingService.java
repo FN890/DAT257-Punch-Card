@@ -27,6 +27,10 @@ public class BookingService {
         return bookingRepository.findByCustomerPhone(phone);
     }
 
+    public List<Booking> getByResponsible(String responsible) {
+        return bookingRepository.findByResponsible(responsible);
+    }
+
     public Booking getById(long id) {
         Optional<Booking> booking = bookingRepository.findById(id);
         if (booking.isPresent()) {

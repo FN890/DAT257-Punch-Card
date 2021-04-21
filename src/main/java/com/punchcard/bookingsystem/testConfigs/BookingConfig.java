@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Configuration
 public class BookingConfig {
@@ -35,6 +34,8 @@ public class BookingConfig {
             activityRepository.save(activityVattenSkidor);
 
             Booking booking = new Booking(customer, 10);
+            booking.setDescription("En skolklass med ca 10 intresserade av skidåkning.");
+            booking.setResponsible("Daniel");
 
             Reservation reservationStuga = new Reservation(
                     LocalDateTime.of(2021, 4, 23, 17,0),
