@@ -1,6 +1,7 @@
 package com.punchcard.bookingsystem.tables;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -51,6 +52,30 @@ public class Booking {
 
     public List<Reservation> getReservations() {
         return reservations;
+    }
+
+    @Column(name = "start_time")
+    public LocalDateTime getStartTime() {
+        LocalDateTime earliest = null;
+        for (Reservation r : reservations) {
+            if (earliest == null || earliest.isAfter(r.getStartTime())) {
+                earliest = r.getStartTime();
+            }
+        }
+
+        return earliest;
+    }
+
+    @Column(name = "end_time")
+    public LocalDateTime getEndTime() {
+        LocalDateTime latest = null;
+        for (Reservation r : reservations) {
+            if (latest == null || latest.isBefore(r.getEndTime())) {
+                latest = r.getEndTime();
+            }
+        }
+
+        return latest;
     }
 
     public void setGroupSize(int size) {
