@@ -26,7 +26,7 @@ public class BookingController {
     }
 
     @GetMapping(path = "/{id}")
-    public Booking getById(@PathVariable long id) {
+    public Booking getById(@PathVariable Long id) {
         return bookingService.getById(id);
     }
 
