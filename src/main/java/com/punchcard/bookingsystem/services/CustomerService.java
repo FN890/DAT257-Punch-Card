@@ -18,10 +18,19 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Handles the logic of fetching and returning the customer from the database
+     * @return all customers in the database
+     */
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
+    /**
+     * Handles the logic of fetching a customer from the database with a specific id
+     * @param id, the id of the customer to be fetched from the database
+     * @return the customer with the specific id, if customer with id does not exists it throws an error
+     */
     public Optional<Customer> getCustomerById(Long id) {
         if (customerRepository.findById(id).isPresent()) {
             return customerRepository.findById(id);
@@ -29,6 +38,10 @@ public class CustomerService {
         throw new IllegalStateException("Customer with id " + id + " does not exists.");
     }
 
+    /**
+     * Handles the logic of adding a new customer to the database
+     * @param customer a customer body with name and phone number
+     */
     public void addNewCustomer(Customer customer) {
         Optional<Customer> optionalCustomer = customerRepository.findCustomerByPhoneNr(customer.getPhoneNr());
 
@@ -38,6 +51,10 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    /**
+     * Handles the logic of deleting a customer from the database with a specific id
+     * @param id the id of the customer to delete
+     */
     public void deleteCustomer(Long id) {
         if (!customerRepository.existsById(id)) {
             throw new IllegalStateException("Customer with phone number: " + id + " does not exists.");
@@ -45,6 +62,11 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
+    /**
+     * Handles the logic of fetching a customer from the database with a specific name
+     * @param name the name of the customer to be fetched from the database
+     * @return the customer with the specified name
+     */
     public Optional<Customer> getCustomerByName(String name) {
         Optional<Customer> optionalCustomer = customerRepository.findCustomerByName(name);
 
