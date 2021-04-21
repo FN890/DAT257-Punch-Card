@@ -32,6 +32,9 @@ public class BookingConfig {
             activityRepository.save(activity);
 
             Booking booking = new Booking(customer, 10);
+            booking.setDescription("En skolklass med ca 10 intresserade av skidåkning.");
+            booking.setResponsible("Daniel");
+
             Reservation reservation = new Reservation(startTime, endTime, activity, booking);
 
 

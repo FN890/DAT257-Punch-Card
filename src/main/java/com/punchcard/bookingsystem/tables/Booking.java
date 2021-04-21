@@ -12,6 +12,8 @@ public class Booking {
     private long id;
 
     private int groupSize;
+    private String description;
+    private String responsible;
 
     @ManyToOne
     @JoinColumn(name = "customer_phone")
@@ -35,6 +37,14 @@ public class Booking {
         return this.groupSize;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getResponsible() {
+        return responsible;
+    }
+
     public Customer getCustomer() {
         return this.customer;
     }
@@ -45,6 +55,14 @@ public class Booking {
 
     public void setGroupSize(int size) {
         this.groupSize = size;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setResponsible(String responsible) {
+        this.responsible = responsible;
     }
 
     public void setCustomer(Customer customer) {
