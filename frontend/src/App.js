@@ -18,9 +18,13 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/bokningar">
+        <Route path="/kalender">
           <NavBar />
           <Bookings />
+        </Route>
+        <Route path="/allabokningar">
+          <NavBar />
+
         </Route>
         <Route path='/nybokning'>
           <NavBar />
@@ -35,7 +39,7 @@ function App() {
           <ExampleRouter title={settings} />
         </Route>
         <Route exact path="*" render={() => (
-          <Redirect to='/bokningar' />
+          <Redirect to='/kalender' />
         )} />
       </Switch>
     </Router>

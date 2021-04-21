@@ -21,26 +21,49 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    /**
+     * Method for returning all customers in the database
+     * @return all customers in the database in JSON format
+     */
     @GetMapping
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
+    /**
+     * Method for returning a customer with a specific id
+     * @param id, the id number of a customer
+     * @return the customer with the specific id
+     */
     @GetMapping(path = "/id/{id}")
     public Optional<Customer> getCustomerById(@PathVariable("id") Long id) {
         return customerService.getCustomerById(id);
     }
 
+    /**
+     * Method for returning a customer with a specific name
+     * @param name, the name of a customer
+     * @return the customer with the specific name
+     */
     @GetMapping(path = "/name/{name}")
     public Optional<Customer> getCustomerByName(@PathVariable("name") String name) {
         return customerService.getCustomerByName(name);
     }
 
+    /**
+     * Method that handles inserting a customer in the database
+     * @param customer the customer to be added to the database,
+     *                 needs name and phone number
+     */
     @PostMapping
     public void addNewCustomer(@RequestBody Customer customer) {
         customerService.addNewCustomer(customer);
     }
 
+    /**
+     * Method for deleting a customer by id
+     * @param id, the id of the customer to delete
+     */
     @DeleteMapping(path = "/id/{id}")
     public void deleteCustomer(@PathVariable("id") Long id) {
         customerService.deleteCustomer(id);

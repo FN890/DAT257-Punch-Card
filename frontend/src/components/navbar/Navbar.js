@@ -21,8 +21,11 @@ function LeftContent() {
         <React.Fragment>
             <NavButton buttonName={constants.bookButtonText} url={constants.bookNavName} type={'p-button-raised'} />
             <Divider layout="vertical" />
+            <NavButton buttonName={constants.allBookingsButtonText} url={constants.allBookingsNavName} type={'p-button-link'} />
             <NavButton buttonName={constants.bookingsButtonText} url={constants.bookingsNavName} type={'p-button-link'} />
             <NavButton buttonName={constants.pricesButtonText} url={constants.pricesNavName} type={'p-button-link'} />
+
+
         </React.Fragment>
     )
 }
