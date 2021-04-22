@@ -8,7 +8,7 @@ export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
 
     useEffect(() => {
-        BookingService().then(data => setBookings(data));
+        new BookingService().getAllBookings().then(data => setBookings(data));
     }, []);
 
 

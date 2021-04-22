@@ -1,8 +1,16 @@
 import axios from 'axios';
 
-export default function BookingService() {
+export default class BookingService {
+
     /**
      *  GET request to get JSON of all bookings
      */
-    return axios.get('/api/v1/booking').then(resp => resp.data);
+    getAllBookings() {
+        return axios.get('/api/v1/booking').then(resp => resp.data);
+    }
+
+    getIndividualBooking(id) {
+        return axios.get(`/api/v1/booking/${id}`).then(resp => resp.data);
+    }
+
 }

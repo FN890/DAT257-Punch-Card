@@ -13,6 +13,7 @@ export default function Calendar() {
     const [bookings, setBookings] = useState([]);
     const [displayDialog, setDisplayDialog] = useState(false);
     const [header, setHeader] = useState("");
+    const bookingService = new BookingService();
 
     const hideDialog = () => {
         if(displayDialog === true) {
@@ -24,7 +25,7 @@ export default function Calendar() {
      * Calls once on initiation and fills bookings array with data from BookingService.js
      */
     useEffect(() => {
-        BookingService().then(function (bookingsArray) {
+        bookingService.getAllBookings().then(function (bookingsArray) {
             console.log(bookingsArray)
             let calendarEvents = []
             bookingsArray.forEach(booking => {
