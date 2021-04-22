@@ -4,6 +4,11 @@ import {Column} from 'primereact/column';
 import BookingService from "../services/BookingService";
 import {Toast} from 'primereact/toast';
 
+/**
+ * Creates the table that shows all bookings with customer info
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
 
@@ -24,7 +29,7 @@ export default function AllBookingsTable() {
         toast.current.show({
             severity: 'warn',
             summary: 'Bokning vald',
-            detail: 'place holder event will change to selected booking '+ event.data.responsible,
+            detail: 'place holder event will change to selected booking '+ event.data.customer.name,
             life: 3000
         });
     }
@@ -38,13 +43,14 @@ export default function AllBookingsTable() {
                 <DataTable value={booking} selection={selectedBooking}
                            onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
                            onRowSelect={onRowSelect}>
-                    <Column field="responsible" header="Namn"sortable> </Column>
+                    <Column field="customer.name" header="Namn"sortable> </Column>
                     <Column field="customer.phoneNr" header="Telefon"></Column>
                     <Column field="id" header="Boknings-Id"sortable></Column>
                     <Column field="groupSize" header="Antal personer"sortable></Column>
                     <Column field="startTime" header="Start datum "sortable></Column>
                     <Column field="endTime" header="Slut datum"sortable></Column>
                     <Column field="description" header="Övrigt"></Column>
+                    <Column field="responsible" header="Skapad av" sortable></Column>
                 </DataTable>
         </div>
     );
