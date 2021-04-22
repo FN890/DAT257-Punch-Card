@@ -40,6 +40,10 @@ public class BookingConfig {
             booking.setDescription("En skolklass med ca 10 intresserade av skidåkning.");
             booking.setResponsible("Daniel");
 
+            Booking booking2 = new Booking(customer, 11);
+            booking2.setDescription("En skolklass med ca 11 intresserade av skidåkning.");
+            booking2.setResponsible("Daniel");
+
             Booking booking1 = new Booking(customer1, 8);
             booking1.setDescription("Vill boka badtunnan");
             booking1.setResponsible("Richard");
@@ -62,12 +66,20 @@ public class BookingConfig {
                     activityVattenSkidor,
                     booking);
 
+            Reservation reservationSkidor2 = new Reservation(
+                    LocalDateTime.of(2021, 4, 16, 14,0),
+                    LocalDateTime.of(2021, 4, 18, 16,0),
+                    activityVattenSkidor,
+                    booking2);
+
 
             bookingRepository.save(booking);
             bookingRepository.save(booking1);
+            bookingRepository.save(booking2);
             reservationRepository.save(reservationStuga);
             reservationRepository.save(reservationBad);
             reservationRepository.save(reservationSkidor);
+            reservationRepository.save(reservationSkidor2);
 
         };
     }
