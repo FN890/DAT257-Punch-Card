@@ -1,0 +1,12 @@
+.form {
+    font-size: 15pt;
+    color: rgb(44, 44, 44);
+    display: inline-block;
+}
+
+.value {
+    font-size: 13pt;
+    color: rgb(121, 121, 121);
+    display: inline-block;
+    padding-left: 10pt;
+}
