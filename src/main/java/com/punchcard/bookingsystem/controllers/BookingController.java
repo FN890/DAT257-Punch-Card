@@ -48,4 +48,9 @@ public class BookingController {
         return null;
     }
 
+    @PostMapping
+    public void addNewBooking(@RequestBody Booking booking) {
+        bookingService.addNewBooking(booking);
+    }
+
 }

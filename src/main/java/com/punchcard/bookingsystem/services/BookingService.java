@@ -39,4 +39,7 @@ public class BookingService {
         throw new IllegalStateException("Booking with id " + id + " does not exists.");
     }
 
+    public void addNewBooking(Booking booking) {
+        bookingRepository.save(booking);
+    }
 }
