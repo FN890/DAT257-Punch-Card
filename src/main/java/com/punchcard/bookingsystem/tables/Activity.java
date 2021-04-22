@@ -47,9 +47,5 @@ public class Activity {
         this.maxSize = maxSize ;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
 }
 
