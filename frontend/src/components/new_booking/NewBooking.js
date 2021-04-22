@@ -13,7 +13,7 @@ export default function NewBooking() {
 
     const [state, setState] = useState('');
     const onAddClicked = () => {
-        activites.push(<Activity/>)
+        activites.push(<Activity />)
         setState(state + 1);
     }
     const onRemoveClicked = () => {
@@ -26,12 +26,10 @@ export default function NewBooking() {
 
     return (
         <div className="p-shadow-5 p-m-5">
-            <div className="p-grid p-dir-col">
-                <div className="p-col"><CustomerInfo /></div>
-                <div className="p-col"><ActivitiesButtonGroup onAddActivity={onAddClicked} onRemoveActivity={onRemoveClicked} /></div>
-                <div className="p-col"><Activities activites={activites}/></div>
-                <div className="p-col"><FinishButtonGroup /></div>
-            </div>
+            <div><CustomerInfo /></div>
+            <div><ActivitiesButtonGroup onAddActivity={onAddClicked} onRemoveActivity={onRemoveClicked} /></div>
+            <div><Activities activites={activites} /></div>
+            <div><FinishButtonGroup /></div>
         </div>
     )
 }
