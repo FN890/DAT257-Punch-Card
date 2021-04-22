@@ -30,26 +30,22 @@ export default function AllBookingsTable() {
     }
 
     const [selectedBooking, setSelectedBooking] = useState(null);
+    const [multiSortMeta, setMultiSortMeta] = useState([{ field: 'category', order: -1 }]);
 
     return (
         <div className="p-shadow-5 p-m-5">
-
-
             <Toast ref={toast} />
-
-            <div className="card">
                 <DataTable value={booking} selection={selectedBooking}
                            onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
                            onRowSelect={onRowSelect}>
-                    <Column field="responsible" header="Namn"></Column>
+                    <Column field="responsible" header="Namn"sortable> </Column>
                     <Column field="customer.phoneNr" header="Telefon"></Column>
-                    <Column field="id" header="Boknings-Id"></Column>
-                    <Column field="groupSize" header="Antal personer"></Column>
-                    <Column field="startTime" header="Start datum "></Column>
-                    <Column field="endTime" header="Slut datum"></Column>
+                    <Column field="id" header="Boknings-Id"sortable></Column>
+                    <Column field="groupSize" header="Antal personer"sortable></Column>
+                    <Column field="startTime" header="Start datum "sortable></Column>
+                    <Column field="endTime" header="Slut datum"sortable></Column>
                     <Column field="description" header="Övrigt"></Column>
                 </DataTable>
-            </div>
         </div>
     );
 }
