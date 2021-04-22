@@ -10,6 +10,7 @@ import NewBooking from "./components/new_booking/NewBooking"
 import Prices from "./components/prices/Prices";
 import AllBookingsTable from "./components/allBookingsView/AllBookingsTable";
 import Calendar from "./components/calendar/Calendar";
+import IndividualBooking from './components/individual_booking/IndividualBooking';
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
 const prices = 'Priser'
@@ -23,9 +24,13 @@ function App() {
                     <NavBar/>
                     <Calendar/>
                 </Route>
-                <Route path="/allabokningar">
+                <Route exact path="/allabokningar">
                     <NavBar/>
                     <AllBookingsTable/>
+                </Route>
+                <Route path="/allabokningar/:id">
+                    <NavBar/>
+                    <IndividualBooking/>
                 </Route>
                 <Route path='/nybokning'>
                     <NavBar/>
