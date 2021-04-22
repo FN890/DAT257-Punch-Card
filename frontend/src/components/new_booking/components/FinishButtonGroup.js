@@ -5,9 +5,16 @@ import React, { useState, useEffect } from 'react';
 export default function FinishButtonGroup() {
 
     return (
-        <div className="p-grid p-justify-end p-m-3">
-            <Button label="Avbryt" className="p-button-danger p-button-text p-mr-2"/>
-            <Button label="Skapa bokning" className="p-button-raised" />
+
+        <div className="p-d-flex p-jc-end">
+            <div className="p-mr-2 p-mb-3">
+                <Button label="Avbryt" className="p-button-danger p-button-text p-mr-2" />
+            </div>
+            <div className="p-mr-2 p-mb-3">
+                <Button label="Skapa bokning" className="p-button-raised" />
+            </div>
+
+
         </div>
     )
 }
