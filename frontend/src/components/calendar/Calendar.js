@@ -6,13 +6,17 @@ import { Dialog } from 'primereact/dialog';
 import './Calendar.css';
 import React, { useState, useEffect } from 'react';
 import BookingService from "../services/BookingService";
+import { PrimeIcons } from 'primereact/api';
+import {Divider} from "primereact/divider";
 
 
 export default function Calendar() {
 
     const [bookings, setBookings] = useState([]);
+    const [allData, setAllData] = useState([]);
     const [displayDialog, setDisplayDialog] = useState(false);
     const [header, setHeader] = useState("");
+    const [dialogBody, setDialogBody] = useState("");
     const bookingService = new BookingService();
 
     const hideDialog = () => {
@@ -27,6 +31,7 @@ export default function Calendar() {
     useEffect(() => {
         bookingService.getAllBookings().then(function (bookingsArray) {
             console.log(bookingsArray)
+            setAllData(bookingsArray)
             let calendarEvents = []
             bookingsArray.forEach(booking => {
                 let indvidualBooking = {
@@ -43,8 +48,67 @@ export default function Calendar() {
         })
     },[]);// eslint-disable-line react-hooks/exhaustive-deps
 
-    const fillDialog = (bookingEvent) => {
-        setHeader(bookingEvent.title)
+    const fillDialog = (bookingId) => {
+        let booking = allData.find(booking => booking.id == bookingId)
+        setHeader(booking.description)
+
+        const activites = []
+        booking.reservations.forEach(reservation => {
+            activites.push(
+                <div className="p-m-2 p-d-flex p-justify-between">
+                    <div className="p-text-left">
+                        <b>{reservation.activity.name}</b>
+                    </div>
+                    <div className="p-text-right ">
+                        {new Intl.DateTimeFormat(svLocale.code, {
+                            month: "long",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }).format(new Date(reservation.startTime))}
+                        <i className="pi pi-arrow-right p-mx-3"/>
+                        {new Intl.DateTimeFormat(svLocale.code, {
+                            month: "long",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }).format(new Date(reservation.endTime))}
+                    </div>
+                </div>
+            )
+            if(reservation !== booking.reservations[booking.reservations.length-1]) {
+                activites.push(<Divider/>)
+            }
+        })
+
+        setDialogBody(
+            <div>
+                <div className="p-grid p-justify-even">
+                    <div className="p-card p-p-2 " style={{width:"45%"}}>
+                        <div className="p-m-2 p-text-left">
+                            <b>Kund:</b>   {booking.customer.name}
+                        </div>
+                        <div className="p-m-2 p-text-left">
+                            <b>Mobil:</b>   {booking.customer.phoneNr}
+                        </div>
+                    </div>
+                    <div className="p-card p-p-2" style={{width:"45%"}}>
+                        <div className="p-m-2 p-text-left">
+                            <b>Boknings-id:</b> {booking.id}
+                        </div>
+                        <div className="p-m-2 p-text-left">
+                            <b>Ansvarig:</b> {booking.responsible}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="p-grid p-my-3 p-justify-center">
+                    <div className="p-card p-p-2 " style={{width:"94%"}}>
+                        {activites}
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     function hashCode(str) { // java String#hashCode
@@ -80,13 +144,12 @@ export default function Calendar() {
                     eventClick={
                         function (bookingEvent) {
                             setDisplayDialog(true)
-                            fillDialog(bookingEvent.event)
-                            console.log(bookingEvent.event)
+                            fillDialog(bookingEvent.event.id)
                         }
                     }>
                 </FullCalendar>
                 <Dialog header={header} visible={displayDialog} style={{width: '50vw'}} modal onHide={() => hideDialog()} baseZIndex={1000}>
-                    Content
+                    {dialogBody}
                 </Dialog>
             </div>
         </div>
