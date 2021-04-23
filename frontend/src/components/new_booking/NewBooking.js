@@ -20,9 +20,11 @@ export default function NewBooking() {
         activites.push(<Activity activityNames={activityNames}/>);
         setState(state + 1);
     }
+
     const removeActivity = () => {
-        // TODO
+
     }
+
     useEffect(() => {
         activityService.getActivities().then(function (availableActivites) {
             availableActivites.forEach(activity => {

@@ -22,11 +22,14 @@ export default function Activity(props) {
 
     return (
         <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
-            <div className="p-mb-2">
-                <span className="p-float-label">
+            <div className="p-d-flex p-my-1 ">
+                <span className="p-float-label" style={{width:'85%'}}>
                     <Dropdown id="dropdown" optionLabel="name" options={activityNames} value={activity} onChange={(e) => setActivity(e.value)} />
                     <label htmlFor="dropdown">Aktivitet</label>
                 </span>
+                <div className="p-ml-auto">
+                    <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" />
+                </div>
             </div>
             <div className="p-mb-2">
                 <DateRangePicker
@@ -45,9 +48,7 @@ export default function Activity(props) {
                     numberOfMonths={1}
                 />
             </div>
-            <div className="p-mb-2">
-                <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" />
-            </div>
+
         </div>
 
     )

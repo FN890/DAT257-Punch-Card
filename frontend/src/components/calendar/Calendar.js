@@ -105,7 +105,7 @@ export default function Calendar() {
                 </div>
 
                 <div className="p-grid p-my-3 p-justify-center">
-                    <div className="p-card p-p-2 " style={{width:"94%"}}>
+                    <div className="p-card p-p-2" style={{width:"94%"}}>
                         {activites}
                     </div>
                 </div>
