@@ -5,6 +5,7 @@ import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,26 +25,28 @@ public class ActivityController {
         return activityService.getAllActivities();
 
     }
-    //Method to return a specific activity (by name)
+
     @GetMapping(path = "/name/{name}")
     public Optional<Activity> getActivityByName(@PathVariable("name") String name) {
         return activityService.getActivityByName(name);
     }
 
-    //Skapade denna metod för att testa att id genererades automatiskt /Viktor
     @PostMapping
     public void addNewActivity(@RequestBody Activity activity) {
         activityService.addNewActivity(activity);
     }
 
-    //Method to delete a specific activity (Hint: Will use id)
     @DeleteMapping(path = "/name/{name}")
     public void deleteActivity(@PathVariable("name") String name) {
         activityService.deleteActivity(name);
     }
 
-    //Hint: look at methods from Customer and Booking to get an idea of how to do it
-    //Hint: To find variables that are not primary keys, create method in repository
-    //Hint: Name of method in repository is important for it to actually work!
+    @PutMapping(path = "name/{name}")
+    public void updateActivity(@PathVariable("name") String name,
+                               @RequestParam(required = false) Integer price,
+                               @RequestParam(required = false)Integer maxSize) {
+        activityService.updateActivity(name, price, maxSize);
+    }
+
 }
 
