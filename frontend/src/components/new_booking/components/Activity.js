@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController, FocusedInputShape } from 'react-dates';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
@@ -38,7 +38,7 @@ export default function Activity() {
                     }}
                     focusedInput={focused}
                     onFocusChange={focusedInput => {
-                        setFocused({ focusedInput });
+                        setFocused(focusedInput);
                     }}
                 />
             </div>
