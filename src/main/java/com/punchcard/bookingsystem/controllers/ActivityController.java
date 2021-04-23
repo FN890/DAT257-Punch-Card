@@ -41,6 +41,12 @@ public class ActivityController {
         activityService.deleteActivity(name);
     }
 
+    /**
+     * Handles updating of an activity
+     * @param name the activity to be updated
+     * @param price the new price of the activity
+     * @param maxSize the new max size of the activity
+     */
     @PutMapping(path = "name/{name}")
     public void updateActivity(@PathVariable("name") String name,
                                @RequestParam(required = false) Integer price,

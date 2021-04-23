@@ -49,6 +49,12 @@ public class ActivityService {
         return activityRepository.findById(name);
     }
 
+    /**
+     * Handles the logic of updating an activity
+     * @param name the name of the activity that is to be updated
+     * @param price the new price for the activity
+     * @param maxSize the new max size for the activity
+     */
     @Transactional
     public void updateActivity(String name, Integer price, Integer maxSize) {
         Activity activity = activityRepository.findById(name).orElseThrow(() -> new IllegalStateException(
