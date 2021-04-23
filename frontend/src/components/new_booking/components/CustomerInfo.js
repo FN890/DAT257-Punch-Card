@@ -11,7 +11,7 @@ export default function CustomerInfo() {
     const [customer, setCustomer] = useState('');
     const [phone, setPhone] = useState('');
     const [notes, setNotes] = useState('');
-    const [numberOfStudent, setNumberOfStudent] = useState('');
+    const [numberOfStudent, setNumberOfStudent] = useState(0);
 
     useEffect(() => {
         setPhone(null);
@@ -21,7 +21,7 @@ export default function CustomerInfo() {
     return (
         <div>
             <div className="p-d-flex p-mx-5 p-mb-3">
-                <h2>Skapa ny bokning</h2>
+                <h2>Information</h2>
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
@@ -47,7 +47,7 @@ export default function CustomerInfo() {
                     <label htmlFor="inputGroupSize">Gruppstorlek</label>
                 </span>
             </div>
-            <div className="p-d-flex p-mx-5">
+            <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
                     <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.value)} rows={3} autoResize />
                     <label htmlFor="textarea">Anteckningar</label>

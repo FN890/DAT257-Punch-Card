@@ -5,28 +5,35 @@ import 'react-dates/lib/css/_datepicker.css';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import 'primeflex/primeflex.css';
+import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment'
 
-export default function Activity() {
+export default function Activity(props) {
 
-    const [activity, setActivity] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [focused, setFocused] = useState('');
+    const activityNames = props.activityNames;
+
+    const [activity, setActivity] = useState(null);
+    const [startDate, setStartDate] = useState(moment());
+    const [endDate, setEndDate] = useState(moment());
+    const [focused, setFocused] = useState(null);
+
+    const startDateId = uuidv4();
+    const endDateId = uuidv4();
 
     return (
-        <div className="p-d-flex p-flex-wrap p-ai-center p-mx-5 p-mb-5">
-            <div className="p-mr-2 p-mb-2 p-mr-5">
+        <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
+            <div className="p-mb-2">
                 <span className="p-float-label">
-                    <Dropdown id="dropdown" value={activity} onChange={(e) => setActivity(e.value)} optionLabel="name" />
+                    <Dropdown id="dropdown" optionLabel="name" options={activityNames} value={activity} onChange={(e) => setActivity(e.value)} />
                     <label htmlFor="dropdown">Aktivitet</label>
                 </span>
             </div>
-            <div className="p-mr-2 p-mb-2 p-mr-5">
+            <div className="p-mb-2">
                 <DateRangePicker
                     startDate={startDate}
-                    startDateId="start_date_id"
+                    startDateId={startDateId}
                     endDate={endDate}
-                    endDateId="end_date_id"
+                    endDateId={endDateId}
                     onDatesChange={({ startDate, endDate }) => {
                         setStartDate(startDate);
                         setEndDate(endDate);
@@ -35,10 +42,10 @@ export default function Activity() {
                     onFocusChange={focusedInput => {
                         setFocused(focusedInput);
                     }}
-                    openDirection={'up'}
+                    numberOfMonths={1}
                 />
             </div>
-            <div className="p-mr-2 p-mb-2 p-mr-5">
+            <div className="p-mb-2">
                 <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" />
             </div>
         </div>
