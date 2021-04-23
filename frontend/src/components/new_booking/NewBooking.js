@@ -6,24 +6,27 @@ import Activity from "./components/Activity";
 import Activities from "./components/Activities"
 import React, { useState, useEffect } from 'react';
 import 'primeflex/primeflex.css';
+import { v4 as uuidv4 } from 'uuid';
 
 var activites = [];
 
 export default function NewBooking() {
 
     const [state, setState] = useState('');
-    const onAddClicked = () => {
-        activites.push(<Activity />)
+    const addActivity = () => {
+        const id = uuidv4();
+        activites.push(<Activity activityId={id} />);
         setState(state + 1);
+    }
+    const onAddClicked = () => {
+        addActivity();
     }
     const onRemoveClicked = () => {
         RemoveActivity();
     }
-
     useEffect(() => {
         if (activites.length === 0) {
-            activites.push(<Activity />)
-            setState(state + 1);
+            addActivity();
         }
     }, []);
 
