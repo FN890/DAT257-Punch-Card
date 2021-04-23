@@ -6,8 +6,9 @@ import { Dialog } from 'primereact/dialog';
 import './Calendar.css';
 import React, { useState, useEffect } from 'react';
 import BookingService from "../services/BookingService";
-import { PrimeIcons } from 'primereact/api';
 import {Divider} from "primereact/divider";
+import {Button} from "primereact/button";
+import {useHistory} from "react-router-dom";
 
 
 export default function Calendar() {
@@ -18,6 +19,7 @@ export default function Calendar() {
     const [header, setHeader] = useState("");
     const [dialogBody, setDialogBody] = useState("");
     const bookingService = new BookingService();
+    const history = useHistory();
 
     const hideDialog = () => {
         if(displayDialog === true) {
@@ -84,15 +86,15 @@ export default function Calendar() {
         setDialogBody(
             <div>
                 <div className="p-grid p-justify-even">
-                    <div className="p-card p-p-2 " style={{width:"45%"}}>
+                    <div className="p-card p-p-2 p-mb-2 p-mr-2" style={{width:"45%"}}>
                         <div className="p-m-2 p-text-left">
-                            <b>Kund:</b>   {booking.customer.name}
+                            <b>Kund:</b> {booking.customer.name}
                         </div>
                         <div className="p-m-2 p-text-left">
-                            <b>Mobil:</b>   {booking.customer.phoneNr}
+                            <b>Mobil:</b> {booking.customer.phoneNr}
                         </div>
                     </div>
-                    <div className="p-card p-p-2" style={{width:"45%"}}>
+                    <div className="p-card p-p-2 p-mb-2 p-mr-2" style={{width:"45%"}}>
                         <div className="p-m-2 p-text-left">
                             <b>Boknings-id:</b> {booking.id}
                         </div>
@@ -107,9 +109,13 @@ export default function Calendar() {
                         {activites}
                     </div>
                 </div>
+                <div className="p-grid p-justify-center" style={{marginTop:"5%"}}>
+                    <Button icon="pi pi-arrow-right" iconPos="right" label="Gå till bokning" onClick={() => history.push("/allabokningar/" + booking.id)}/>
+                </div>
             </div>
         )
     }
+
 
     function hashCode(str) { // java String#hashCode
         var hash = 0;
