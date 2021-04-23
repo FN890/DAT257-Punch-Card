@@ -40,6 +40,7 @@ export default function Activity() {
                     onFocusChange={focusedInput => {
                         setFocused(focusedInput);
                     }}
+                    numberOfMonths={1}
                 />
             </div>
             <div className="p-mb-2">
