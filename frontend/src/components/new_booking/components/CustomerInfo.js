@@ -11,7 +11,7 @@ export default function CustomerInfo() {
     const [customer, setCustomer] = useState('');
     const [phone, setPhone] = useState('');
     const [notes, setNotes] = useState('');
-    const [numberOfStudent, setNumberOfStudent] = useState('');
+    const [numberOfStudent, setNumberOfStudent] = useState(0);
 
     useEffect(() => {
         setPhone(null);
