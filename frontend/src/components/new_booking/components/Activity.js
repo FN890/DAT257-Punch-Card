@@ -8,9 +8,11 @@ import 'primeflex/primeflex.css';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment'
 
-export default function Activity() {
+export default function Activity(props) {
 
-    const [activity, setActivity] = useState('');
+    const activityNames = props.activityNames;
+
+    const [activity, setActivity] = useState(null);
     const [startDate, setStartDate] = useState(moment());
     const [endDate, setEndDate] = useState(moment());
     const [focused, setFocused] = useState(null);
@@ -22,7 +24,7 @@ export default function Activity() {
         <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
             <div className="p-mb-2">
                 <span className="p-float-label">
-                    <Dropdown id="dropdown" value={activity} onChange={(e) => setActivity(e.value)} optionLabel="name" />
+                    <Dropdown id="dropdown" optionLabel="name" options={activityNames} value={activity} onChange={(e) => setActivity(e.value)} />
                     <label htmlFor="dropdown">Aktivitet</label>
                 </span>
             </div>

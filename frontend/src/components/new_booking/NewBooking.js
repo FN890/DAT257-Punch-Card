@@ -6,28 +6,34 @@ import Activity from "./components/Activity";
 import Activities from "./components/Activities"
 import React, { useState, useEffect } from 'react';
 import 'primeflex/primeflex.css';
-import { v4 as uuidv4 } from 'uuid';
+import ActivityService from "../services/ActivityService";
 
 var activites = [];
+var activityNames = [];
 
 export default function NewBooking() {
 
+    const activityService = new ActivityService();
     const [state, setState] = useState('');
+
     const addActivity = () => {
-        const id = uuidv4();
-        activites.push(<Activity activityId={id} />);
+        activites.push(<Activity activityNames={activityNames}/>);
         setState(state + 1);
     }
-    const onAddClicked = () => {
-        addActivity();
-    }
-    const onRemoveClicked = () => {
-        RemoveActivity();
+    const removeActivity = () => {
+        // TODO
     }
     useEffect(() => {
+        activityService.getActivities().then(function (availableActivites) {
+            availableActivites.forEach(activity => {
+                let activityName = { "name": activity.name }
+                activityNames.push(activityName);
+            })
+        })
         if (activites.length === 0) {
             addActivity();
         }
+        console.log(activityNames);
     }, []);
 
     return (
@@ -36,15 +42,11 @@ export default function NewBooking() {
                 <div><CustomerInfo /></div>
             </div>
             <div className="p-shadow-5 p-m-3">
-                <div><ActivitiesButtonGroup onAddActivity={onAddClicked} onRemoveActivity={onRemoveClicked} /></div>
+                <div><ActivitiesButtonGroup onAddActivity={addActivity} onRemoveActivity={removeActivity} /></div>
                 <div><Activities activites={activites} /></div>
                 <div><FinishButtonGroup /></div>
             </div>
         </div>
     )
-}
-
-function RemoveActivity() {
-    console.log("Remove");
 }
 
