@@ -2,6 +2,7 @@ package com.punchcard.bookingsystem.controllers;
 
 import com.punchcard.bookingsystem.services.BookingService;
 import com.punchcard.bookingsystem.tables.Booking;
+import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class BookingController {
     }
 
     @GetMapping(path = "/{id}")
-    public Booking getById(@PathVariable Long id) {
+    public Booking getById(@PathVariable("id") Long id) {
         return bookingService.getById(id);
     }
 
@@ -51,6 +52,14 @@ public class BookingController {
     @PostMapping
     public void addNewBooking(@RequestBody Booking booking) {
         bookingService.addNewBooking(booking);
+    }
+
+    @PutMapping(path = "{id}")
+    public void updateBooking(@PathVariable("id") Long id,
+                              @RequestParam(required = false) List<Reservation> reservations,
+                              @RequestParam(required = false) String description,
+                              @RequestParam(required = false) String responsible) {
+        bookingService.updateBooking(id, reservations, description, responsible);
     }
 
 }

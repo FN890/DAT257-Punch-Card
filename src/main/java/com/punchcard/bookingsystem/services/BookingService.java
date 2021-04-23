@@ -2,9 +2,11 @@ package com.punchcard.bookingsystem.services;
 
 import com.punchcard.bookingsystem.repositories.BookingRepository;
 import com.punchcard.bookingsystem.tables.Booking;
+import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +43,23 @@ public class BookingService {
 
     public void addNewBooking(Booking booking) {
         bookingRepository.save(booking);
+    }
+
+    @Transactional
+    public void updateBooking(Long id, List<Reservation> reservations, String description, String responsible) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new IllegalStateException(
+                "Booking with id " + id + " does not exists"));
+
+        if (reservations != null && !reservations.isEmpty() && !reservations.equals(booking.getReservations())) {
+            booking.setReservations(reservations);
+        }
+
+        if (description != null && !description.equals(booking.getDescription())) {
+            booking.setDescription(description);
+        }
+
+        if (responsible != null && !responsible.equals(booking.getResponsible())) {
+            booking.setResponsible(responsible);
+        }
     }
 }

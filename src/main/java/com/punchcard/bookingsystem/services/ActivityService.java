@@ -6,6 +6,7 @@ import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,27 +31,36 @@ public class ActivityService {
         }
         activityRepository.save(activity);
     }
-    //Method to delete a specific activity
+
     public void deleteActivity(String name){
         if(!activityRepository.existsById(name)){
-            throw new IllegalStateException("Activity with name: " + name + "does not exist.");
+            throw new IllegalStateException("Activity with name: " + name + " does not exists");
         }
         activityRepository.deleteById(name);
     }
 
 
-    //Method to return a specific activity (by name)
     public Optional <Activity> getActivityByName(String name) {
         Optional<Activity> optionalActivity = activityRepository.findById(name);
 
         if (optionalActivity.isEmpty()){
-            throw new IllegalStateException("Activity with name " + name + "does not exist");
+            throw new IllegalStateException("Activity with name " + name + " does not exists");
         }
         return activityRepository.findById(name);
     }
 
+    @Transactional
+    public void updateActivity(String name, Integer price, Integer maxSize) {
+        Activity activity = activityRepository.findById(name).orElseThrow(() -> new IllegalStateException(
+                "Activity with name " + name + " does not exists"));
 
-    //Hint: look at methods from Customer and Booking to get an idea of how to do it
+        if (price != null && !price.equals(activity.getPrice())) {
+            activity.setPrice(price);
+        }
 
-    //Tips: före en commit/push, kör 'git status' för att se vilka filer ni ändrat så ni inte råkar pusha något fel :)
+        if (maxSize != null && !maxSize.equals(activity.getMaxSize())) {
+            activity.setMaxSize(maxSize);
+        }
+    }
+
 }
