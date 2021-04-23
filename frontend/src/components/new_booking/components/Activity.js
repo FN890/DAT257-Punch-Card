@@ -14,14 +14,14 @@ export default function Activity() {
     const [focused, setFocused] = useState('');
 
     return (
-        <div className="p-d-flex p-flex-wrap p-ai-center p-mx-5 p-mb-5">
-            <div className="p-mr-2 p-mb-2 p-mr-5">
+        <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
+            <div className="p-mb-2">
                 <span className="p-float-label">
                     <Dropdown id="dropdown" value={activity} onChange={(e) => setActivity(e.value)} optionLabel="name" />
                     <label htmlFor="dropdown">Aktivitet</label>
                 </span>
             </div>
-            <div className="p-mr-2 p-mb-2 p-mr-5">
+            <div className="p-mb-2">
                 <DateRangePicker
                     startDate={startDate}
                     startDateId="start_date_id"
@@ -35,10 +35,9 @@ export default function Activity() {
                     onFocusChange={focusedInput => {
                         setFocused(focusedInput);
                     }}
-                    openDirection={'up'}
                 />
             </div>
-            <div className="p-mr-2 p-mb-2 p-mr-5">
+            <div className="p-mb-2">
                 <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" />
             </div>
         </div>
