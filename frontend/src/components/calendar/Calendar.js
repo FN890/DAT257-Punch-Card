@@ -41,8 +41,8 @@ export default function Calendar() {
                     "title" : booking.description,
                     "start" : booking.startTime,
                     "end" : booking.endTime,
-                    "backgroundColor" : intToRGB(hashCode(booking.description)),
-                    "borderColor" : intToRGB(hashCode(booking.description))
+                    "backgroundColor" : intToRGB(hashCode(booking.responsible)),
+                    "borderColor" : intToRGB(hashCode(booking.responsible))
                 }
                 calendarEvents.push(indvidualBooking)
             })
@@ -117,7 +117,7 @@ export default function Calendar() {
     }
 
 
-    function hashCode(str) { // java String#hashCode
+    function hashCode(str) {
         var hash = 0;
         for (var i = 0; i < str.length; i++) {
             hash = str.charCodeAt(i) + ((hash << 5) - hash);
