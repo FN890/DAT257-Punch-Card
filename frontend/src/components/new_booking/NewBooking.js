@@ -26,6 +26,7 @@ export default function NewBooking() {
     }
 
     useEffect(() => {
+        activityNames = [];
         activityService.getActivities().then(function (availableActivites) {
             availableActivites.forEach(activity => {
                 let activityName = { "name": activity.name }
