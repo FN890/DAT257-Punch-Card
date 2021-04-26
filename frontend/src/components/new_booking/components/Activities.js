@@ -1,10 +1,10 @@
 export default function Activities(props) {
 
-    const activites = props.activites;
+    const activities = props.activities;
 
     return (
         <div>
-            {activites.map((activity, index) => <div key={index}> {activity} </div>)}
+            {activities.map((activity, index) => <div key={index}> {activity} </div>)}
         </div>
     )
 }

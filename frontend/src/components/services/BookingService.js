@@ -13,4 +13,8 @@ export default class BookingService {
         return axios.get(`/api/v1/booking/${id}`).then(resp => resp.data);
     }
 
+    deleteBooking(id) {
+        axios.delete(`/api/v1/booking/${id}`).then(resp => resp.data);
+    }
+
 }
