@@ -3,7 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import svLocale from '@fullcalendar/core/locales/sv';
 import { Dialog } from 'primereact/dialog';
-import './Calendar.css';
+import styles from './Calendar.css';
 import React, { useState, useEffect } from 'react';
 import BookingService from "../services/BookingService";
 import {Divider} from "primereact/divider";
@@ -85,8 +85,8 @@ export default function Calendar() {
 
         setDialogBody(
             <div>
-                <div className="p-grid p-justify-even">
-                    <div className="p-card p-p-2 p-mb-2 p-mr-2" style={{width:"45%"}}>
+                <div className="p-grid p-justify-center ">
+                    <div className="p-card box1">
                         <div className="p-m-2 p-text-left">
                             <b>Kund:</b> {booking.customer.name}
                         </div>
@@ -94,7 +94,7 @@ export default function Calendar() {
                             <b>Mobil:</b> {booking.customer.phoneNr}
                         </div>
                     </div>
-                    <div className="p-card p-p-2 p-mb-2 p-mr-2" style={{width:"45%"}}>
+                    <div className="p-card box1">
                         <div className="p-m-2 p-text-left">
                             <b>Boknings-id:</b> {booking.id}
                         </div>
@@ -104,8 +104,8 @@ export default function Calendar() {
                     </div>
                 </div>
 
-                <div className="p-grid p-my-3 p-justify-center">
-                    <div className="p-card p-p-2" style={{width:"94%"}}>
+                <div className="p-grid p-my-3 p-justify-even">
+                    <div className="p-card p-p-2 activity-card" >
                         {activites}
                     </div>
                 </div>
@@ -131,6 +131,9 @@ export default function Calendar() {
             .toUpperCase();
         return "#" + "00000".substring(0, 6 - c.length) + c;
     }
+    const dialogStyle = {
+        width: "70%",
+    }
 
     return (
         <div>
@@ -154,12 +157,14 @@ export default function Calendar() {
                         }
                     }>
                 </FullCalendar>
-                <Dialog header={header} visible={displayDialog} style={{width: '50vw'}} modal onHide={() => hideDialog()} baseZIndex={1000}>
+                <Dialog className="dialog" header={header} visible={displayDialog} modal onHide={() => hideDialog()} baseZIndex={1000}>
                     {dialogBody}
                 </Dialog>
             </div>
         </div>
     );
+
+
 }
 
 
