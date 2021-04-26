@@ -54,12 +54,17 @@ public class BookingController {
         bookingService.addNewBooking(booking);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/{id}")
     public void updateBooking(@PathVariable("id") Long id,
                               @RequestParam(required = false) List<Reservation> reservations,
                               @RequestParam(required = false) String description,
                               @RequestParam(required = false) String responsible) {
         bookingService.updateBooking(id, reservations, description, responsible);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteBooking(@PathVariable("id") Long id) {
+        bookingService.deleteBooking(id);
     }
 
 }

@@ -62,4 +62,11 @@ public class BookingService {
             booking.setResponsible(responsible);
         }
     }
+
+    public void deleteBooking(Long id) {
+        if (!bookingRepository.existsById(id)) {
+            throw new IllegalStateException("Booking with id " + id + " does not exists.");
+        }
+        bookingRepository.deleteById(id);
+    }
 }
