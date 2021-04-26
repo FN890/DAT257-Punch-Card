@@ -34,12 +34,13 @@
 
     .p-card{
         width: 45%;
-        margin: 2%;
+        margin: 4px;
         padding: 2px;
     }
 
+
     .activity-card{
-        width: 95%;
+        width: 94%;
     }
 }
 

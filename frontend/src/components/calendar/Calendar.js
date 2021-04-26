@@ -85,8 +85,8 @@ export default function Calendar() {
 
         setDialogBody(
             <div>
-                <div className="p-grid p-justify-center ">
-                    <div className="p-card box1">
+                <div className="p-grid p-justify-even ">
+                    <div className="p-card">
                         <div className="p-m-2 p-text-left">
                             <b>Kund:</b> {booking.customer.name}
                         </div>
