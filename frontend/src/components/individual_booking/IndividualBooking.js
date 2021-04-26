@@ -27,7 +27,7 @@ export default function IndividualBooking() {
             });
             setReservations(res);
         });
-    });
+    }, []);
 
     return(
     <div className="p-d-flex p-flex-column p-ai-start p-mx-5 p-mb-5 p-justify-center">
