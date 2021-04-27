@@ -13,8 +13,8 @@ export default class ActivityService {
             {
                 "name": name,
                 "price": price,
-                "maxSize": maxSize//,
-                //"isDaily": isDaily
+                "maxSize": maxSize,
+                "isDaily": isDaily
             })
     }
 
