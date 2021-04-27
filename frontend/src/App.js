@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import ExampleRouter from './example-router/ExampleRouter'
 import NavBar from "./components/navbar/Navbar"
-import NewBooking from "./components/new_booking/NewBooking"
+import NewBooking from "./components/new-booking/NewBooking"
 import Prices from "./components/prices/Prices";
 import AllBookingsTable from "./components/allBookingsView/AllBookingsTable";
 import Calendar from "./components/calendar/Calendar";
