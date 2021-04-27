@@ -11,6 +11,7 @@ import Prices from "./components/prices/Prices";
 import AllBookingsTable from "./components/allBookingsView/AllBookingsTable";
 import Calendar from "./components/calendar/Calendar";
 import IndividualBooking from './components/individual_booking/IndividualBooking';
+import Settings from "./components/settingsView/Settings";
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
 const prices = 'Priser'
@@ -42,7 +43,7 @@ function App() {
                 </Route>
                 <Route path='/installningar'>
                     <NavBar/>
-                    <ExampleRouter title={settings}/>
+                    <Settings/>
                 </Route>
                 <Route exact path="*" render={() => (
                     <Redirect to='/kalender'/>
