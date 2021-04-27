@@ -10,6 +10,7 @@ import ActivityService from "../services/ActivityService";
 
 var activities = [];
 var activityInfo = [];
+let countActivity = 0;
 
 export default function NewBooking() {
 
@@ -17,12 +18,17 @@ export default function NewBooking() {
     const [state, setState] = useState('');
 
     const addActivity = () => {
-        activities.push(<Activity activityInfo={activityInfo}/>);
+        activities.push(<Activity activityInfo={activityInfo}  removeActivity={ (index) => removeActivity(index) } index={activities.length}/>);
         setState(state + 1);
+        countActivity++;
     }
 
-    const removeActivity = () => {
-
+    const removeActivity = (index) => {
+        if(countActivity > 1) {
+            delete activities[index]
+            setState(state - 1)
+            countActivity--;
+        }
     }
 
     useEffect(() => {

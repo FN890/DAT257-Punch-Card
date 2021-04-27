@@ -11,6 +11,8 @@ export default function Activity(props) {
 
     const activityInfo = props.activityInfo;
 
+    const index = props.index
+
     const [activity, setActivity] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -19,6 +21,10 @@ export default function Activity(props) {
     const setSelectedActivity = (value) => {
         daily = value.daily;
         setActivity(value);
+    }
+
+    const handleRemove = () => {
+        props.removeActivity(index)
     }
 
     const getDateSelect = () => {
@@ -66,7 +72,7 @@ export default function Activity(props) {
                     <label htmlFor="dropdown">Aktivitet</label>
                 </span>
                 <div className="p-ml-auto p-mb-2">
-                    <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" />
+                    <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={ () => handleRemove()}/>
                 </div>
             </div>
             {getDateSelect()}
