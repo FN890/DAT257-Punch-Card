@@ -31,7 +31,18 @@ export default function Activity(props) {
     }
 
     const getDateSelect = () => {
-        if (daily === false) {
+        if (activity === null) {
+            return (
+                <DatePicker
+                    selected={startDateTime}
+                    onChange={date => setStartDateTime(date)}
+                    showTimeSelect
+                    dateFormat="d MMMM yyyy HH:mm"
+                    disabled
+                    locale="sv"
+                />
+            )
+        } else if (daily === false) {
             return (
                 <>
                     <div className="p-mb-2">
@@ -78,7 +89,7 @@ export default function Activity(props) {
                     <label htmlFor="dropdown">Aktivitet</label>
                 </span>
                 <div className="p-ml-auto p-mb-2">
-                    <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={ () => handleRemove()}/>
+                    <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={() => handleRemove()} />
                 </div>
             </div>
             {getDateSelect()}
