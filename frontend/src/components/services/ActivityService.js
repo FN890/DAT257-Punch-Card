@@ -8,4 +8,13 @@ export default class ActivityService {
         });
     }
 
+    addActivity(name, price, maxSize) {
+        axios.post('api/v1/activity',
+            {
+                "name": name,
+                "price": price,
+                "maxSize": maxSize
+            })
+    }
+
 }
