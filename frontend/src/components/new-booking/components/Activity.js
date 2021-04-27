@@ -41,6 +41,7 @@ export default function Activity(props) {
                         setStartDate(startDate);
                         setEndDate(endDate);
                     }}
+                    readOnly={true}
                     focusedInput={focused}
                     onFocusChange={focusedInput => {
                         setFocused(focusedInput);
