@@ -17,7 +17,7 @@ public class Activity {
     private Integer maxSize = 10;
 
     @Column(nullable = false)
-    private Boolean isDaily;
+    private boolean isDaily;
 
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
@@ -54,7 +54,7 @@ public class Activity {
         this.maxSize = maxSize ;
     }
 
-    public Boolean getDaily() {
+    public boolean getDaily() {
         return isDaily;
     }
 
