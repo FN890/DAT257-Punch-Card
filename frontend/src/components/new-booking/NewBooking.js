@@ -9,7 +9,7 @@ import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 
 var activities = [];
-var activityNames = [];
+var activityInfo = [];
 
 export default function NewBooking() {
 
@@ -17,7 +17,7 @@ export default function NewBooking() {
     const [state, setState] = useState('');
 
     const addActivity = () => {
-        activities.push(<Activity activityNames={activityNames}/>);
+        activities.push(<Activity activityInfo={activityInfo}/>);
         setState(state + 1);
     }
 
@@ -26,17 +26,16 @@ export default function NewBooking() {
     }
 
     useEffect(() => {
-        activityNames = [];
+        activityInfo = [];
         activityService.getActivities().then(function (availableActivities) {
             availableActivities.forEach(activity => {
-                let activityName = { "name": activity.name }
-                activityNames.push(activityName);
+                activityInfo.push(activity);
             })
         })
         if (activities.length === 0) {
             addActivity();
         }
-        console.log(activityNames);
+
     }, []);
 
     return (
@@ -46,7 +45,7 @@ export default function NewBooking() {
             </div>
             <div className="p-shadow-5 p-m-3">
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} onRemoveActivity={removeActivity} /></div>
-                <div><Activities activities={activities} /></div>
+                <div><Activities activities={activities}/></div>
                 <div><FinishButtonGroup /></div>
             </div>
         </div>
