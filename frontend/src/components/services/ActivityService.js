@@ -8,12 +8,13 @@ export default class ActivityService {
         });
     }
 
-    addActivity(name, price, maxSize) {
+    addActivity(name, price, maxSize, isDaily) {
         axios.post('api/v1/activity',
             {
                 "name": name,
                 "price": price,
-                "maxSize": maxSize
+                "maxSize": maxSize//,
+                //"isDaily": isDaily
             })
     }
 

@@ -17,17 +17,18 @@ public class Activity {
     private Integer maxSize = 10;
 
     @Column(nullable = false)
-    private Boolean isDaily = false;
+    private Boolean isDaily;
 
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 
     public Activity() {}
 
-    public Activity(String name, Integer price, Integer maxSize) {
-        this.name = name ;
-        this.price = price ;
-        this.maxSize = maxSize ;
+    public Activity(String name, Integer price, Integer maxSize, boolean isDaily) {
+        this.name = name;
+        this.price = price;
+        this.maxSize = maxSize;
+        this.isDaily = isDaily;
     }
     public void setName(String name) {
         this.name = name;
