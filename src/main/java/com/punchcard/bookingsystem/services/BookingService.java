@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,14 +45,19 @@ public class BookingService {
     }
 
     public void addNewBooking(Booking booking) {
+        Booking newBooking = new Booking(booking.getCustomer(), booking.getGroupSize());
+        newBooking.setResponsible(booking.getResponsible());
+        newBooking.setDescription(booking.getDescription());
+        List<Reservation> reservations = new ArrayList();
         for (Reservation r : booking.getReservations()) {
             if (!reservationService.isAvailable(r)) {
                 throw new IllegalStateException("Overlapping reservation " + r.getActivity() + " in this booking.");
             }
-
+            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
+            reservations.add(reservation);
         }
-
-        bookingRepository.save(booking);
+        newBooking.setReservations(reservations);
+        bookingRepository.save(newBooking);
     }
 
     @Transactional
