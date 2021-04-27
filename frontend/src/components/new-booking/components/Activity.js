@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import 'primeflex/primeflex.css';
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import sv from "date-fns/locale/sv";
+
+registerLocale("sv", sv);
 
 var daily = true;
 
@@ -38,6 +41,7 @@ export default function Activity(props) {
                             selectsStart
                             startDate={startDate}
                             endDate={endDate}
+                            locale="sv"
                         />
                     </div>
                     <div className="p-mb-2">
@@ -48,6 +52,7 @@ export default function Activity(props) {
                             startDate={startDate}
                             endDate={endDate}
                             minDate={startDate}
+                            locale="sv"
                         />
                     </div>
                 </>
@@ -58,7 +63,8 @@ export default function Activity(props) {
                     selected={startDateTime}
                     onChange={date => setStartDateTime(date)}
                     showTimeSelect
-                    dateFormat="MMMM d, yyyy h:mm aa"
+                    dateFormat="d MMMM yyyy HH:mm"
+                    locale="sv"
                 />
             )
         }
