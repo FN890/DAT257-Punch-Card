@@ -30,7 +30,7 @@ public class BookingConfig {
             Activity activityStuga = new Activity("Stuga", 4000, 4, false);
             activityRepository.save(activityStuga);
 
-            Activity activityBad = new Activity("Badtunna", 1500, 4, false);
+            Activity activityBad = new Activity("Badtunna", 1500, 4, true);
             activityRepository.save(activityBad);
 
             Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true);
