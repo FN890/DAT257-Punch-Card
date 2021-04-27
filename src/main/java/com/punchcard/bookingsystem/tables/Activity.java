@@ -10,8 +10,11 @@ public class Activity {
     @Id
     private String name ;
 
-    private Integer price ;
-    private Integer maxSize ;
+    @Column(nullable = false)
+    private Integer price = 0;
+
+    @Column(nullable = false)
+    private Integer maxSize = 10;
 
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<Reservation> reservations;

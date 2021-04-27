@@ -12,12 +12,14 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer groupSize;
+    private Integer groupSize = 0;
     private String description;
+
+    @Column(nullable = false)
     private String responsible;
 
     @ManyToOne
-    @JoinColumn(name = "customer_phone")
+    @JoinColumn(name = "customer_phone", nullable = false)
     private Customer customer;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -19,10 +19,10 @@ public class Customer {
     )
     private Long id;
 
-    @Column(
-            unique = true
-    )
+    @Column(unique = true)
     private String phoneNr;
+
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
