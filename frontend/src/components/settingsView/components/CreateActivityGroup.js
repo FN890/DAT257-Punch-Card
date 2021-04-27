@@ -4,16 +4,28 @@ import 'primeflex/primeflex.css';
 import {Button} from "primereact/button";
 import {InputNumber} from "primereact/inputnumber";
 import {RadioButton} from "primereact/radiobutton";
+import ActivityService from "../../services/ActivityService";
 
 export default function CreateActivityGroup(props) {
 
-    const onCreateActivity = props.onCreateActivity;
 
-    const [activityType, setActivityType] = useState(false);
+    const [isDaily, setIsDaily] = useState(true);
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState(null);
+    const [maxPeople, setMaxPeople] = useState(null);
+
+    const activityService = new ActivityService();
+
+    function onCreateActivity() {
+        console.log(isDaily)
+        console.log(price)
+        console.log(name)
+        console.log(maxPeople)
+        activityService.addActivity(name, price, maxPeople, isDaily)
+    }
 
     const setActivity = (e) => {
-        setActivityType(e.value);
-
+        setIsDaily(e.value);
     }
 
     return (
@@ -24,33 +36,35 @@ export default function CreateActivityGroup(props) {
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
-                <InputText id="activityName"></InputText>
+                <InputText id="activityName" value={name} onChange={(e) => setName(e.target.value)}></InputText>
                      <label htmlFor="activityName">Namn</label>
                 </span>
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                <span className="p-float-label">
-                <InputNumber id="maxPeople"></InputNumber>
+                <InputNumber id="maxPeople" value={maxPeople} onChange={(e) => setMaxPeople(e.value)}
+                             min={0} max={100}></InputNumber>
                    <label htmlFor="maxPeople">Max antal personer</label>
                 </span>
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                <span className="p-float-label">
-                <InputNumber id="price"></InputNumber>
+                <InputNumber id="price" value={price} onChange={(e) => setPrice(e.value)} min={0}
+                ></InputNumber>
                    <label htmlFor="price">Pris</label>
                 </span>
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <div className="p-field-radiobutton">
                     <RadioButton inputId="hourly" name="activityType" value={false} onChange={(e) => setActivity(e)}
-                                 checked={activityType === false}/>
+                                 checked={isDaily === false}/>
                     <label htmlFor="hourly">Timvis bokning</label>
                 </div>
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <div className="p-field-radiobutton">
                     <RadioButton inputId="daily" name="activityType" value={true} onChange={(e) => setActivity(e)}
-                                 checked={activityType === true}/>
+                                 checked={isDaily === true}/>
                     <label htmlFor="hourly">Daglig bokning</label>
                 </div>
             </div>
