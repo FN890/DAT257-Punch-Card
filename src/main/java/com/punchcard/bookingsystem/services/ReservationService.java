@@ -22,4 +22,8 @@ public class ReservationService {
         return reservationRepository.findBetweenDates(startDate.atStartOfDay(), endDate.atStartOfDay());
     }
 
+    public boolean isAvailable(Reservation reservation) {
+        return reservationRepository.findOccupied(reservation.getStartTime(), reservation.getEndTime(), reservation.getActivity().getName()).isEmpty();
+    }
+
 }

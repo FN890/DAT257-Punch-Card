@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final ReservationService reservationService;
 
     @Autowired
-    public BookingService(BookingRepository bookingRepository) {
+    public BookingService(BookingRepository bookingRepository, ReservationService reservationService) {
         this.bookingRepository = bookingRepository;
+        this.reservationService = reservationService;
     }
 
     public List<Booking> getAllBookings() {
@@ -42,6 +45,13 @@ public class BookingService {
     }
 
     public void addNewBooking(Booking booking) {
+        for (Reservation r : booking.getReservations()) {
+            if (!reservationService.isAvailable(r)) {
+                throw new IllegalStateException("Overlapping reservation " + r.getActivity() + " in this booking.");
+            }
+
+        }
+
         bookingRepository.save(booking);
     }
 
