@@ -21,6 +21,8 @@ public class Booking {
     @Column(nullable = false)
     private boolean paid = false;
 
+    private Integer price = null;
+
     @ManyToOne
     @JoinColumn(name = "customer_phone", nullable = false)
     private Customer customer;
@@ -53,6 +55,19 @@ public class Booking {
 
     public boolean isPaid() {
         return paid;
+    }
+
+    public int getPrice() {
+        if (price == null) {
+            int total = 0;
+            for (Reservation r : reservations) {
+             total += r.getActivity().getPrice();
+            }
+
+            return total;
+        }
+
+        return price;
     }
 
     public Customer getCustomer() {
@@ -101,6 +116,10 @@ public class Booking {
 
     public void setPaid(boolean paid) {
         this.paid = paid;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public void setCustomer(Customer customer) {
