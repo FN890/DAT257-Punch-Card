@@ -3,6 +3,8 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import BookingService from "../services/BookingService";
 import {useHistory, useLocation} from "react-router-dom";
+import { Button } from 'primereact/button';
+import ActivityService from "../services/ActivityService";
 
 /**
  * Creates the table that shows all bookings with customer info
@@ -11,6 +13,7 @@ import {useHistory, useLocation} from "react-router-dom";
  */
 export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
+    const bookingService = new BookingService();
 
     useEffect(() => {
         new BookingService().getAllBookings().then(data => setBookings(data));
@@ -27,14 +30,20 @@ export default function AllBookingsTable() {
     const history = useHistory();
 
     const onRowSelect = (event) => {
-
         history.push("/allabokningar/" + event.data.id);
-
     }
 
 
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
+
+    const actionBodyTemplate = (rowData) => {
+        return (
+            <React.Fragment>
+                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success p-mr-2" onClick={() => onRowSelect} />
+            </React.Fragment>
+        );
+    }
 
     return (
         <div className="p-shadow-5 p-m-5">
@@ -50,6 +59,7 @@ export default function AllBookingsTable() {
                 <Column field="endTime" header="Slut datum" sortable></Column>
                 <Column field="description" header="Övrigt"></Column>
                 <Column field="responsible" header="Skapad av" sortable></Column>
+                <Column body={actionBodyTemplate}></Column>
             </DataTable>
         </div>
     );

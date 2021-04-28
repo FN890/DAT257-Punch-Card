@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useParams } from 'react-router';
 import 'primeflex/primeflex.css';
 import './IndividualBooking.css';
 import { Button } from 'primereact/button';
-
 import BookingService from '../services/BookingService';
 import Reservation from './components/Reservation';
+import { Dialog } from 'primereact/dialog';
+import {Redirect, useHistory} from 'react-router-dom';
+
 
 export default function IndividualBooking() {
     const { id } = useParams();
     const [booking, setBooking] = useState({});
     const [reservations, setReservations] = useState([]);
     const [customer, setCustomer] = useState({})
+    const [deleteBookingDialog, setDeleteBookingDialog] = useState(false);
+    const [deleteBookingsDialog, setDeleteBookingsDialog] = useState(false);
+    const history = useHistory();
+
 
     const bookingService = new BookingService();
 
@@ -28,6 +34,29 @@ export default function IndividualBooking() {
             setReservations(res);
         });
     }, []);
+
+
+    const hideDeleteBookingDialog = () => {
+        setDeleteBookingDialog(false);
+    }
+    const confirmDeleteBooking = () => {
+        setBooking(booking);
+        setDeleteBookingDialog(true);
+    }
+
+    const deleteProduct = () => {
+        bookingService.deleteBooking(id)
+        setDeleteBookingDialog(false);
+        history.push("/allabokningar");
+        window.location.reload(false);
+    }
+
+    const deleteBookingDialogFooter = (
+        <React.Fragment>
+            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog} />
+            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteProduct} />
+        </React.Fragment>
+    );
 
     return(
     <div className="p-d-flex p-flex-column p-ai-start p-mx-5 p-mb-5 p-justify-center">
@@ -56,8 +85,14 @@ export default function IndividualBooking() {
         </div>
         <div className="p-m-3 p-grid" style={{width: "70%"}}>
             <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col" />
-            <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col" />
+            <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col" onClick={() => confirmDeleteBooking(id)}/>
         </div>
+        <Dialog visible={deleteBookingDialog} style={{ width: '450px' }} header="Bekräfta borttagning" modal footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
+            <div className="confirmation-content">
+                <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem'}} />
+                {booking && <span>Är du säker på att du vill ta bort bokningen?</span>}
+            </div>
+        </Dialog>
     </div>
 
     );
