@@ -7,6 +7,7 @@ import Activities from "./components/Activities"
 import React, { useState, useEffect } from 'react';
 import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
+import PriceCalculation from "./components/PriceCalculation";
 
 var activities = [];
 var activityInfo = [];
@@ -21,6 +22,8 @@ export default function NewBooking() {
         activities.push(<Activity activityInfo={activityInfo}  removeActivity={ (index) => removeActivity(index) } index={activities.length}/>);
         setState(state + 1);
         countActivity++;
+        //Method to add price for this activity to total price.
+        //
     }
 
     const removeActivity = (index) => {
@@ -53,6 +56,7 @@ export default function NewBooking() {
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} onRemoveActivity={removeActivity} /></div>
                 <div><Activities activities={activities}/></div>
                 <div><FinishButtonGroup /></div>
+                <div><PriceCalculation /></div>
             </div>
         </div>
     )
