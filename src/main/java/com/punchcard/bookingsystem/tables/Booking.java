@@ -18,6 +18,9 @@ public class Booking {
     @Column(nullable = false)
     private String responsible;
 
+    @Column(nullable = false)
+    private boolean paid = false;
+
     @ManyToOne
     @JoinColumn(name = "customer_phone", nullable = false)
     private Customer customer;
@@ -46,6 +49,10 @@ public class Booking {
 
     public String getResponsible() {
         return responsible;
+    }
+
+    public boolean isPaid() {
+        return paid;
     }
 
     public Customer getCustomer() {
@@ -90,6 +97,10 @@ public class Booking {
 
     public void setResponsible(String responsible) {
         this.responsible = responsible;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
     public void setCustomer(Customer customer) {
