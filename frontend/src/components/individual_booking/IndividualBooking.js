@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 import BookingService from '../services/BookingService';
 import Reservation from './components/Reservation';
 import { Dialog } from 'primereact/dialog';
-import {Redirect, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 
 export default function IndividualBooking() {
@@ -15,9 +15,7 @@ export default function IndividualBooking() {
     const [reservations, setReservations] = useState([]);
     const [customer, setCustomer] = useState({})
     const [deleteBookingDialog, setDeleteBookingDialog] = useState(false);
-    const [deleteBookingsDialog, setDeleteBookingsDialog] = useState(false);
     const history = useHistory();
-
 
     const bookingService = new BookingService();
 
@@ -53,8 +51,8 @@ export default function IndividualBooking() {
 
     const deleteBookingDialogFooter = (
         <React.Fragment>
-            <Button label="No" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog} />
-            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteProduct} />
+            <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog} />
+            <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={deleteProduct} />
         </React.Fragment>
     );
 
@@ -85,7 +83,7 @@ export default function IndividualBooking() {
         </div>
         <div className="p-m-3 p-grid" style={{width: "70%"}}>
             <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col" />
-            <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col" onClick={() => confirmDeleteBooking(id)}/>
+            <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col" onClick={() => confirmDeleteBooking()}/>
         </div>
         <Dialog visible={deleteBookingDialog} style={{ width: '450px' }} header="Bekräfta borttagning" modal footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
             <div className="confirmation-content">
