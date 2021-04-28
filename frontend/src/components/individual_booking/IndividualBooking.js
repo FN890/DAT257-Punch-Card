@@ -46,7 +46,7 @@ export default function IndividualBooking() {
         bookingService.deleteBooking(id)
         setDeleteBookingDialog(false);
         history.push("/allabokningar");
-        window.location.reload(false);
+        //window.location.reload(false);
     }
 
     const deleteBookingDialogFooter = (
