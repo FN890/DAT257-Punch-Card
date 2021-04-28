@@ -61,7 +61,7 @@ public class BookingService {
     }
 
     @Transactional
-    public void updateBooking(Long id, List<Reservation> reservations, String description, String responsible) {
+    public void updateBooking(Long id, List<Reservation> reservations, String description, String responsible, boolean paid) {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "Booking with id " + id + " does not exists"));
 
@@ -76,6 +76,12 @@ public class BookingService {
         if (responsible != null && !responsible.equals(booking.getResponsible())) {
             booking.setResponsible(responsible);
         }
+
+        if (paid != booking.isPaid()) {
+            booking.setPaid(paid);
+        }
+
+        bookingRepository.save(booking);
     }
 
     public void deleteBooking(Long id) {
