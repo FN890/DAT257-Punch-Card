@@ -14,8 +14,10 @@ import ActivityService from "../services/ActivityService";
  */
 export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
+    const [updateTable, setUpdateTable] = useState()
 
     useEffect(() => {
+        setUpdateTable(updateTable + 1)
         new BookingService().getAllBookings().then(data => setBookings(data));
     }, []);
 
