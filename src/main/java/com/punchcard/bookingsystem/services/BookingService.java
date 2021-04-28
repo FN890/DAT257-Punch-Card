@@ -2,6 +2,7 @@ package com.punchcard.bookingsystem.services;
 
 import com.punchcard.bookingsystem.repositories.BookingRepository;
 import com.punchcard.bookingsystem.tables.Booking;
+import com.punchcard.bookingsystem.tables.Customer;
 import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,13 @@ public class BookingService {
 
     private final BookingRepository bookingRepository;
     private final ReservationService reservationService;
+    private final CustomerService customerService;
 
     @Autowired
-    public BookingService(BookingRepository bookingRepository, ReservationService reservationService) {
+    public BookingService(BookingRepository bookingRepository, ReservationService reservationService, CustomerService customerService) {
         this.bookingRepository = bookingRepository;
         this.reservationService = reservationService;
+        this.customerService = customerService;
     }
 
     public List<Booking> getAllBookings() {
@@ -46,6 +49,8 @@ public class BookingService {
 
     public void addNewBooking(Booking booking) {
         Booking newBooking = new Booking(booking.getCustomer(), booking.getGroupSize());
+        Customer customer = new Customer(booking.getCustomer().getPhoneNr(), booking.getCustomer().getName());
+        newBooking.setCustomer(customer);
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
         List<Reservation> reservations = new ArrayList();
@@ -56,6 +61,7 @@ public class BookingService {
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
         }
+        customerService.addNewCustomer(customer);
         newBooking.setReservations(reservations);
         bookingRepository.save(newBooking);
     }
