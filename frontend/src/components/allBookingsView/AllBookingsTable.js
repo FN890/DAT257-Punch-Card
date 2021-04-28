@@ -3,8 +3,9 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import BookingService from "../services/BookingService";
 import {useHistory, useLocation} from "react-router-dom";
-import { Button } from 'primereact/button';
+import {Button} from 'primereact/button';
 import ActivityService from "../services/ActivityService";
+import {ScrollPanel} from "primereact/scrollpanel";
 
 
 /**
@@ -41,27 +42,27 @@ export default function AllBookingsTable() {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-user-edit" className="p-button-rounded p-button-success p-mr-2" onClick={() => onRowSelect} />
+                <Button icon="pi pi-user-edit" className="p-button-rounded p-button-success p-mr-2"
+                        onClick={() => onRowSelect}/>
             </React.Fragment>
         );
     }
 
     return (
         <div className="p-shadow-5 p-m-5">
-
-            <DataTable value={booking} selection={selectedBooking}
-                       onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
-                       onRowSelect={onRowSelect}>
-                <Column field="customer.name" header="Namn" sortable></Column>
-                <Column field="customer.phoneNr" header="Telefon"></Column>
-                <Column field="id" header="Boknings-Id" sortable></Column>
-                <Column field="groupSize" header="Antal personer" sortable></Column>
-                <Column field="startTime" header="Start datum " sortable></Column>
-                <Column field="endTime" header="Slut datum" sortable></Column>
-                <Column field="description" header="Övrigt"></Column>
-                <Column field="responsible" header="Skapad av" sortable></Column>
-                <Column body={actionBodyTemplate}></Column>
-            </DataTable>
+                <DataTable value={booking} scrollable  scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
+                           onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
+                           onRowSelect={onRowSelect}>
+                    <Column field="customer.name" header="Namn" headerStyle={{ width: '80px' }} sortable></Column>
+                    <Column field="customer.phoneNr" header="Telefon" headerStyle={{ width: '120px' }}></Column>
+                    <Column field="id" header="Boknings-Id" headerStyle={{ width: '120px' }} sortable></Column>
+                    <Column field="groupSize" header="Antal personer" headerStyle={{ width: '120px' }} sortable></Column>
+                    <Column field="startTime" header="Start datum " headerStyle={{ width: '160px' }} sortable></Column>
+                    <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column>
+                    <Column field="description" header="Övrigt" headerStyle={{ width: '300px' }}></Column>
+                    <Column field="responsible" header="Ansvarig" headerStyle={{ width: '160px' }} sortable></Column>
+                    <Column body={actionBodyTemplate}></Column>
+                </DataTable>
         </div>
     );
 }
