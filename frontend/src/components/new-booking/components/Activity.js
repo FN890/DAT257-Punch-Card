@@ -28,7 +28,7 @@ export default function Activity(props) {
     const [startDateTime, setStartDateTime] = useState(new Date());
 
     const setSelectedActivity = (value) => {
-        daily = value.daily;
+        daily = value.hourly;
         setActivity(value);
         console.log(reservations)
 
