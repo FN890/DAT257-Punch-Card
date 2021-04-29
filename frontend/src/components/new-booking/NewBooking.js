@@ -34,7 +34,7 @@ export default function NewBooking() {
     const removeActivity = (index) => {
         if (countActivity > 1) {
             delete activities[index]
-            // Implement this: delete activityStates[index] (with for loop?)
+            removeActivityState(index);
             setState(state - 1)
             countActivity--;
         }
@@ -51,8 +51,18 @@ export default function NewBooking() {
     }
 
     const addActivityState = (index, activityState) => {
-        delete activityStates[index];
+        removeActivityState(index);
         activityStates.push({ "index": index, "activityState": activityState })
+    }
+
+    const removeActivityState = (index) => {
+        let i;
+        for (i = 0; i < activityStates.length; i++) {
+            if (activityStates[i].index == index) {
+                activityStates.splice(i, 1);
+                break;
+            }
+        }
     }
 
     const addInfo = (info) => {

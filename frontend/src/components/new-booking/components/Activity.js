@@ -22,7 +22,7 @@ export default function Activity(props) {
 
     const onActivityStateChanged = props.onActivityStateChanged;
 
-    const [activity, setActivity] = useState(null);
+    const [activity, setActivity] = useState("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [startDateTime, setStartDateTime] = useState(new Date());
