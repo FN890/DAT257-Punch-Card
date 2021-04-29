@@ -49,8 +49,7 @@ public class BookingService {
 
     public void addNewBooking(Booking booking) {
         Booking newBooking = new Booking(booking.getCustomer(), booking.getGroupSize());
-        Customer customer = new Customer(booking.getCustomer().getPhoneNr(), booking.getCustomer().getName());
-        newBooking.setCustomer(customer);
+        Customer customer = new Customer();
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
         List<Reservation> reservations = new ArrayList();
@@ -61,7 +60,14 @@ public class BookingService {
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
         }
-        customerService.addNewCustomer(customer);
+        try {
+            customerService.addNewCustomer(booking.getCustomer());
+            customer = booking.getCustomer();
+        } catch (IllegalStateException e) {
+            Optional<Customer> optionalCustomer = customerService.getCustomerByPhone(booking.getCustomer().getPhoneNr());
+            customer = optionalCustomer.get();
+        }
+        newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
         bookingRepository.save(newBooking);
     }

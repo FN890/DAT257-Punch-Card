@@ -75,4 +75,13 @@ public class CustomerService {
         }
         return customerRepository.findCustomerByName(name);
     }
+
+    public Optional<Customer> getCustomerByPhone(String phoneNr) {
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByPhoneNr(phoneNr);
+
+        if (optionalCustomer.isEmpty()) {
+            throw new IllegalStateException("Customer with phone number " + phoneNr + " does not exists");
+        }
+        return customerRepository.findCustomerByPhoneNr(phoneNr);
+    }
 }

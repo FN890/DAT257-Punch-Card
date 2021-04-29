@@ -50,6 +50,11 @@ public class CustomerController {
         return customerService.getCustomerByName(name);
     }
 
+    @GetMapping(path = "/phone/{phoneNr}")
+    public Optional<Customer> getCustomerByPhone(@PathVariable("phoneNr") String phoneNr) {
+        return customerService.getCustomerByPhone(phoneNr);
+    }
+
     /**
      * Handles inserting a customer in the database
      * @param customer the customer to be added to the database,

@@ -25,7 +25,7 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
     public Customer() {}
