@@ -1,4 +1,3 @@
-import { ScrollPanel } from 'primereact/scrollpanel';
 import CustomerInfo from "./components/CustomerInfo"
 import FinishButtonGroup from "./components/FinishButtonGroup"
 import ActivitiesButtonGroup from './components/ActivitesButtonGroup';
@@ -8,18 +7,21 @@ import React, { useState, useEffect } from 'react';
 import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import PriceCalculation from "./components/PriceCalculation";
+import BookingService from "../services/BookingService";
 
 var activities = [];
 var activityInfo = [];
 let countActivity = 0;
+let reservations = [];
 
 export default function NewBooking() {
 
     const activityService = new ActivityService();
+    const bookingService = new BookingService();
     const [state, setState] = useState('');
 
     const addActivity = () => {
-        activities.push(<Activity activityInfo={activityInfo}  removeActivity={ (index) => removeActivity(index) } index={activities.length}/>);
+        activities.push(<Activity activityInfo={activityInfo}  removeActivity={ (index) => removeActivity(index) } index={activities.length} reservations={reservations}/>);
         setState(state + 1);
         countActivity++;
         //Method to add price for this activity to total price.
@@ -41,6 +43,15 @@ export default function NewBooking() {
                 activityInfo.push(activity);
             })
         })
+
+        bookingService.getAllBookings().then(function (bookings){
+                bookings.forEach(booking => {
+                    booking.reservations.forEach(reservation => {
+                        reservations.push(reservation)
+                    })
+                })
+            }
+        )
         if (activities.length === 0) {
             addActivity();
         }

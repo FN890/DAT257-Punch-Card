@@ -8,13 +8,17 @@ import sv from "date-fns/locale/sv";
 
 registerLocale("sv", sv);
 
-var daily = true;
+let daily = true;
 
 export default function Activity(props) {
 
     const activityInfo = props.activityInfo;
 
     const index = props.index
+
+    let unavailableDates = [];
+    let unavailableTimes = [];
+    const reservations = props.reservations;
 
     const [activity, setActivity] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
@@ -24,6 +28,21 @@ export default function Activity(props) {
     const setSelectedActivity = (value) => {
         daily = value.daily;
         setActivity(value);
+        console.log(reservations)
+
+        unavailableDates = [];
+        unavailableTimes = []
+        reservations.forEach(reservation => {
+            if(value.name === reservation.activity.name){
+                if(daily){
+                    let startDate = new Date(reservation.startTime).getDate();
+                    console.log(startDate)
+                }else{
+
+                }
+            }
+
+        })
     }
 
     const handleRemove = () => {
@@ -53,6 +72,7 @@ export default function Activity(props) {
                             startDate={startDate}
                             endDate={endDate}
                             locale="sv"
+                            excludeDates={[new Date()]}
                         />
                     </div>
                     <div className="p-mb-2">
@@ -64,6 +84,7 @@ export default function Activity(props) {
                             endDate={endDate}
                             minDate={startDate}
                             locale="sv"
+                            excludeDates={[new Date()]}
                         />
                     </div>
                 </>
