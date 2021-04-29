@@ -22,6 +22,9 @@ export default function NewBooking() {
     const bookingService = new BookingService();
     const [state, setState] = useState('');
 
+    /**
+     * Adds an activity component to new booking.
+     */
     const addActivity = () => {
         activities.push(<Activity activityInfo={activityInfo} removeActivity={(index) => removeActivity(index)} index={activities.length} reservations={reservations}
             onActivityStateChanged={addActivityState} />);
@@ -31,6 +34,9 @@ export default function NewBooking() {
         //
     }
 
+    /**
+    * Removes an activity component from new booking.
+    */
     const removeActivity = (index) => {
         if (countActivity > 1) {
             delete activities[index]
@@ -40,21 +46,20 @@ export default function NewBooking() {
         }
     }
 
-    const createBookingPressed = () => {
-        let reservations = []
-        let i;
-        for (i = 0; i < activityStates.length; i++) {
-            reservations.push(activityStates[i].activityState);
-        }
-        bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName }, reservations);
-    }
-
+    /**
+     * Adds an activity state to activityStates.
+     * @param {*} index 
+     * @param {*} activityState 
+     */
     const addActivityState = (index, activityState) => {
         removeActivityState(index);
         activityStates.push({ "index": index, "activityState": activityState })
     }
 
+    /**
+     * Removes an activity state from activityStates.
+     * @param {*} index 
+     */
     const removeActivityState = (index) => {
         let i;
         for (i = 0; i < activityStates.length; i++) {
@@ -65,9 +70,26 @@ export default function NewBooking() {
         }
     }
 
+    /**
+     * Adds info to bookingInfo.
+     * @param {*} info 
+     */
     const addInfo = (info) => {
         bookingInfo = info;
         console.log(bookingInfo);
+    }
+
+    /**
+     * Collects the relevant data and sends a POST request with BookingService.
+     */
+    const createBookingPressed = () => {
+        let reservations = []
+        let i;
+        for (i = 0; i < activityStates.length; i++) {
+            reservations.push(activityStates[i].activityState);
+        }
+        bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
+            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName }, reservations);
     }
 
     useEffect(() => {
