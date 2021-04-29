@@ -20,6 +20,8 @@ export default function Activity(props) {
     let unavailableTimes = [];
     const reservations = props.reservations;
 
+    const onActivityStateChanged = props.onActivityStateChanged;
+
     const [activity, setActivity] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -33,11 +35,11 @@ export default function Activity(props) {
         unavailableDates = [];
         unavailableTimes = []
         reservations.forEach(reservation => {
-            if(value.name === reservation.activity.name){
-                if(daily){
+            if (value.name === reservation.activity.name) {
+                if (daily) {
                     let startDate = new Date(reservation.startTime).getDate();
                     console.log(startDate)
-                }else{
+                } else {
 
                 }
             }
@@ -101,6 +103,13 @@ export default function Activity(props) {
             )
         }
     }
+
+    useEffect(() => {
+        if (activity != null) {
+            let state = { "startTime": startDate.toISOString(), "endTime": endDate.toISOString(), "activity": { "name": activity.name } };
+            onActivityStateChanged(index, state);
+        }
+    });
 
     return (
         <div className="p-fluid p-ai-center p-mx-5 p-mb-5">

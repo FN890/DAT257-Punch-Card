@@ -5,7 +5,9 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import 'primeflex/primeflex.css';
 
-export default function CustomerInfo() {
+export default function BookingInfo(props) {
+
+    const onInfoChanged = props.onInfoChanged;
 
     const [responsible, setResponsible] = useState('');
     const [customer, setCustomer] = useState('');
@@ -14,9 +16,8 @@ export default function CustomerInfo() {
     const [numberOfStudent, setNumberOfStudent] = useState(0);
 
     useEffect(() => {
-        setPhone(null);
-        setNumberOfStudent(null);
-    }, []);
+        onInfoChanged({ "groupSize": numberOfStudent, "description": "TEST", "responsible": responsible, "customerName": customer, "customerPhone": phone });
+    });
 
     return (
         <div>
