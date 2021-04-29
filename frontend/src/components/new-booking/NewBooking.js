@@ -8,6 +8,7 @@ import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import PriceCalculation from "./components/PriceCalculation";
 import BookingService from "../services/BookingService";
+import BookingOverview from "./components/BookingOverView";
 
 var activities = [];
 var activityInfo = [];
@@ -123,7 +124,9 @@ export default function NewBooking() {
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} onRemoveActivity={removeActivity} /></div>
                 <div><Activities activities={activities} /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
-                <div><PriceCalculation /></div>
+            </div>
+            <div className="p-shadow-5 p-m-3">
+                <div><BookingOverview/></div>
             </div>
         </div>
     )
