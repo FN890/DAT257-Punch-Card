@@ -34,7 +34,7 @@ export default function NewBooking() {
     const removeActivity = (index) => {
         if (countActivity > 1) {
             delete activities[index]
-            delete activityStates[index]
+            // Implement this: delete activityStates[index] (with for loop?)
             setState(state - 1)
             countActivity--;
         }
