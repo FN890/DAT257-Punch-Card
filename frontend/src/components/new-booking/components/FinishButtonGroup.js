@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 
 export default function FinishButtonGroup(props) {
 
+    /**
+     * Method used for notifying parent component that create booking button has been clicked.
+     */
     const onCreateBookingPressed = props.onCreateBookingPressed;
 
     return (

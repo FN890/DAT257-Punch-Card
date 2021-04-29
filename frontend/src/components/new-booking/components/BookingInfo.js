@@ -7,6 +7,9 @@ import 'primeflex/primeflex.css';
 
 export default function BookingInfo(props) {
 
+    /**
+     * Method for sending the latest info to the parent component.
+     */
     const onInfoChanged = props.onInfoChanged;
 
     const [responsible, setResponsible] = useState('');

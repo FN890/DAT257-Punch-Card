@@ -19,7 +19,10 @@ export default function Activity(props) {
     let unavailableDates = [];
     let unavailableTimes = [];
     const reservations = props.reservations;
-
+   
+    /**
+     * Method for sending the latest activity state to the parent component.
+     */
     const onActivityStateChanged = props.onActivityStateChanged;
 
     const [activity, setActivity] = useState("");
