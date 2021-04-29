@@ -19,7 +19,8 @@ export default function BookingInfo(props) {
     const [numberOfStudent, setNumberOfStudent] = useState(0);
 
     useEffect(() => {
-        onInfoChanged({ "groupSize": numberOfStudent, "description": "TEST", "responsible": responsible, "customerName": customer, "customerPhone": phone });
+        console.log(notes);
+        onInfoChanged({ "groupSize": numberOfStudent, "description": notes, "responsible": responsible, "customerName": customer, "customerPhone": phone });
     });
 
     return (
@@ -53,7 +54,7 @@ export default function BookingInfo(props) {
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
-                    <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.value)} rows={3} autoResize />
+                    <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} autoResize />
                     <label htmlFor="textarea">Anteckningar</label>
                 </span>
             </div>

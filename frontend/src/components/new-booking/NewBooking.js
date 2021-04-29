@@ -8,7 +8,7 @@ import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import PriceCalculation from "./components/PriceCalculation";
 import BookingService from "../services/BookingService";
-import BookingOverview from "./components/BookingOverView";
+import BookingOverview from "./components/BookingOverview";
 
 var activities = [];
 var activityInfo = [];
