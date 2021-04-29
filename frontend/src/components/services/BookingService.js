@@ -17,4 +17,18 @@ export default class BookingService {
         axios.delete(`/api/v1/booking/${id}`).then(resp => resp.data);
     }
 
+    postBooking(groupSize, description, responsible, paid, price, customer, reservations){
+        axios.post(`/api/v1/booking/`, {
+            "groupSize" : groupSize,
+            "description" : description,
+            "responsible" : responsible,
+            "paid" : paid,
+            "price" : price,
+            "customer" : customer,
+            "reservations" : reservations
+        }).then((response) => {
+            return response;
+        });
+    }
+
 }
