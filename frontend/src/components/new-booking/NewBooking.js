@@ -123,10 +123,10 @@ export default function NewBooking() {
             <div className="p-shadow-5 p-m-3">
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} onRemoveActivity={removeActivity} /></div>
                 <div><Activities activities={activities} /></div>
-                <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
             <div className="p-shadow-5 p-m-3">
                 <div><BookingOverview/></div>
+                <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>
     )
