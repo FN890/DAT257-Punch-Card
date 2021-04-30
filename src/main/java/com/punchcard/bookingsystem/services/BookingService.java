@@ -55,7 +55,7 @@ public class BookingService {
         List<Reservation> reservations = new ArrayList();
         for (Reservation r : booking.getReservations()) {
             if (!reservationService.isAvailable(r)) {
-                throw new IllegalStateException("Overlapping reservation " + r.getActivity() + " in this booking.");
+                throw new IllegalStateException("Overlapping reservation " + r.getActivity().getName() + " in this booking.");
             }
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
