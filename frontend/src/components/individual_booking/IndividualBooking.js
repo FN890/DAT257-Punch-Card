@@ -57,10 +57,10 @@ export default function IndividualBooking() {
     );
 
     return(
-    <div className="p-d-flex p-flex-column p-ai-start p-mx-5 p-mb-5 p-justify-center">
-        <div className="p-shadow-5 p-m-3" style={{width: "70%"}}>
-            <div className="p-justify-even p-d-flex p-flex-column p-flex-md-row" style={{padding: "5%"}}>
-                <div className="p-card p-p-2 p-mb-2 p-mr-2" style={{width:"60%"}}>
+    <div className="p-grid p-jc-center">
+        <div className="p-shadow-5 p-m-3 p-col-12" style={{width: "60%"}}>
+            <div className="p-grid p-jc-center" style={{margin: "30pt 0 0 0"}}>
+                <div className="p-card p-col-6" style={{width: "150pt", margin: "0 30pt"}}>
                     <div className="p-m-2 p-text-left">
                         <b>Kund:</b> {customer.name}
                     </div>
@@ -68,7 +68,7 @@ export default function IndividualBooking() {
                         <b>Mobil:</b> {customer.phoneNr}
                     </div>
                 </div>
-                <div className="p-card p-p-2 p-mb-2 p-mr-2" style={{width:"60%"}}>
+                <div className="p-card p-col-6" style={{width: "150pt", margin: "0 30pt"}}>
                     <div className="p-m-2 p-text-left">
                         <b>Boknings-id:</b> {booking.id}
                     </div>
@@ -77,13 +77,28 @@ export default function IndividualBooking() {
                     </div>
                 </div>
             </div>
+            <div className="p-grid p-jc-center" style={{margin: "30pt 0 0 0"}}>
+            <div className="p-col-6" style={{width: "150pt"}, {margin: "0 30pt"}}>
+                    <div className="p-m-2 p-text-center">
+                        <b>Beskrivning:</b> {booking.description}
+                    </div>
+                </div>
+            <div className="p-col-6" style={{width: "150pt"}, {margin: "0 30pt"}}>
+                    <div className="p-text-center p-col-12">
+                        <b>Pris:</b> {booking.price}
+                    </div>
+                    <div className="p-text-center p-col-12">
+                        <b>Betald:</b> {booking.paid ? "Ja" : "Nej"}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="p-shadow-5 p-m-3" style={{width: "70%"}}>
+        <div className="p-shadow-5 p-m-3 p-col-12" style={{width: "60%"}}>
             {reservations}
         </div>
-        <div className="p-m-3 p-grid" style={{width: "70%"}}>
-            <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col" />
-            <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col" onClick={() => confirmDeleteBooking()}/>
+        <div className="p-m-3 p-grid" style={{width: "40%"}}>
+            <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col p-shadow-5" style={{margin: "0 30pt 0 0"}}/>
+            <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col p-shadow-5" onClick={() => confirmDeleteBooking()}/>
         </div>
         <Dialog visible={deleteBookingDialog} style={{ width: '450px' }} header="Bekräfta borttagning" modal footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
             <div className="confirmation-content">
