@@ -8,7 +8,7 @@ import sv from "date-fns/locale/sv";
 
 registerLocale("sv", sv);
 
-let daily = true;
+let hourly = false;
 
 export default function Activity(props) {
 
@@ -16,8 +16,6 @@ export default function Activity(props) {
 
     const index = props.index
 
-    let unavailableDates = [];
-    let unavailableTimes = [];
     const reservations = props.reservations;
    
     /**
@@ -29,25 +27,49 @@ export default function Activity(props) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [startDateTime, setStartDateTime] = useState(new Date());
+    const [update, setUpdate] = useState(0);
+    const [unDates, setUnDates] = useState([]);
+    const [unTimes, setUnTimes] = useState([]);
 
     const setSelectedActivity = (value) => {
-        daily = value.hourly;
+        hourly = value.hourly;
         setActivity(value);
-        console.log(reservations)
+        //console.log(reservations)
 
-        unavailableDates = [];
-        unavailableTimes = []
+        let unavailableDates = [];
+        let unavailableTimes = []
         reservations.forEach(reservation => {
             if (value.name === reservation.activity.name) {
-                if (daily) {
-                    let startDate = new Date(reservation.startTime).getDate();
-                    console.log(startDate)
+                if (!hourly) {
+                    let startDate = new Date(reservation.startTime)
+                    let endDate = new Date(reservation.endTime).setHours(24)
+                    while (startDate < endDate){
+                        unavailableDates.push(new Date(startDate))
+                        startDate.setDate(startDate.getDate() + 1)
+                    }
                 } else {
+                    /*
+                    let startTime = new Date(reservation.startTime)
+                    let endTime = new Date(reservation.endTime)
+                    console.log(startTime)
+                    console.log(endTime)
+                    while (startTime < endTime){
+                        unavailableTimes.push(new Date(startTime))
+                        startTime.setDate(startTime.getMinutes() + 30)
+                    }
+                    console.log(unavailableDates)
 
+                     */
                 }
+            }else {
+                //console.log(value.name + " !== " + reservation.activity.name)
             }
 
         })
+
+        setUnDates(unavailableDates)
+        //setUnTimes(unavailableTimes)
+        setUpdate(update + 1)
     }
 
     const handleRemove = () => {
@@ -55,7 +77,7 @@ export default function Activity(props) {
     }
 
     const getDateSelect = () => {
-        if (activity === null) {
+        if (activity === "") {
             return (
                 <DatePicker
                     selected={startDateTime}
@@ -66,7 +88,7 @@ export default function Activity(props) {
                     locale="sv"
                 />
             )
-        } else if (daily === false) {
+        } else if (hourly === false) {
             return (
                 <>
                     <div className="p-mb-2">
@@ -77,7 +99,7 @@ export default function Activity(props) {
                             startDate={startDate}
                             endDate={endDate}
                             locale="sv"
-                            excludeDates={[new Date()]}
+                            excludeDates={unDates}
                         />
                     </div>
                     <div className="p-mb-2">
@@ -89,12 +111,12 @@ export default function Activity(props) {
                             endDate={endDate}
                             minDate={startDate}
                             locale="sv"
-                            excludeDates={[new Date()]}
+                            excludeDates={unDates}
                         />
                     </div>
                 </>
             )
-        } else if (daily === true) {
+        } else if (hourly === true) {
             return (
                 <DatePicker
                     selected={startDateTime}
@@ -102,6 +124,7 @@ export default function Activity(props) {
                     showTimeSelect
                     dateFormat="d MMMM yyyy HH:mm"
                     locale="sv"
+                    excludeTimes={unTimes}
                 />
             )
         }

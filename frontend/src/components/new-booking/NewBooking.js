@@ -10,27 +10,33 @@ import PriceCalculation from "./components/PriceCalculation";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
 
-var activities = [];
 var activityInfo = [];
 var activityStates = [];
 var bookingInfo;
-let countActivity = 0;
 let reservations = [];
 
 export default function NewBooking() {
 
     const activityService = new ActivityService();
     const bookingService = new BookingService();
-    const [state, setState] = useState('');
+    const [state, setState] = useState(0);
+
+    const [activities, setActivities] = useState([]);
 
     /**
      * Adds an activity component to new booking.
      */
     const addActivity = () => {
-        activities.push(<Activity activityInfo={activityInfo} removeActivity={(index) => removeActivity(index)} index={activities.length} reservations={reservations}
-            onActivityStateChanged={addActivityState} />);
+        let activState = activities;
+        activState.push(<Activity
+            activityInfo={activityInfo}
+            removeActivity={(index) => removeActivity(index)}
+            index={activities.length}
+            reservations={reservations}
+            onActivityStateChanged={addActivityState}/>)
+        setActivities(activState);
+
         setState(state + 1);
-        countActivity++;
         //Method to add price for this activity to total price.
         //
     }
@@ -39,12 +45,18 @@ export default function NewBooking() {
     * Removes an activity component from new booking.
     */
     const removeActivity = (index) => {
-        if (countActivity > 1) {
-            delete activities[index]
+        let activState = activities;
+
+        let countActivities = activState.filter((x) => { return x !== undefined }).length
+
+        if (countActivities > 1) {
+            delete activState[index]
+            setActivities(activState)
             removeActivityState(index);
-            setState(state - 1)
-            countActivity--;
         }
+        //console.log(countActivities)
+        //setActivities(activState)
+        setState(state + 1);
     }
 
     /**
@@ -77,7 +89,7 @@ export default function NewBooking() {
      */
     const addInfo = (info) => {
         bookingInfo = info;
-        console.log(bookingInfo);
+       // console.log(bookingInfo);
     }
 
     /**
