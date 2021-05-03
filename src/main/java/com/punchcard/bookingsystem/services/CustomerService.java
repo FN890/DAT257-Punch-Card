@@ -43,10 +43,15 @@ public class CustomerService {
      * @param customer a customer body with name and phone number
      */
     public void addNewCustomer(Customer customer) {
-        Optional<Customer> optionalCustomer = customerRepository.findCustomerByPhoneNr(customer.getPhoneNr());
+        Optional<Customer> optionalCustomerPhone = customerRepository.findCustomerByPhoneNr(customer.getPhoneNr());
+        Optional<Customer> optionalCustomerEmail = customerRepository.findCustomerByEmail(customer.getEmail());
 
-        if(optionalCustomer.isPresent()) {
+        if(optionalCustomerPhone.isPresent()) {
             throw new IllegalStateException("Customer with phone number " + customer.getPhoneNr() + " already exists.");
+        }
+
+        if(optionalCustomerEmail.isPresent()) {
+            throw new IllegalStateException("Customer with email " + customer.getEmail() + " already exists.");
         }
         customerRepository.save(customer);
     }
@@ -83,5 +88,14 @@ public class CustomerService {
             throw new IllegalStateException("Customer with phone number " + phoneNr + " does not exists");
         }
         return customerRepository.findCustomerByPhoneNr(phoneNr);
+    }
+
+    public Optional<Customer> getCustomerByEmail(String email) {
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByEmail(email);
+
+        if (optionalCustomer.isEmpty()) {
+            throw new IllegalStateException("Customer with email " + email + " does not exists");
+        }
+        return customerRepository.findCustomerByEmail(email);
     }
 }

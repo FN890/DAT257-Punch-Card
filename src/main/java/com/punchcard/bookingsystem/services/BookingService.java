@@ -31,10 +31,17 @@ public class BookingService {
     }
 
     public List<Booking> getByCustomerPhone(String phone) {
-        return bookingRepository.findByCustomerPhone(phone);
+        if(bookingRepository.findByCustomerPhoneNr(phone).isEmpty()) {
+            throw new IllegalStateException("Booking with customer phone number " + phone + " does not exists.");
+        }
+
+        return bookingRepository.findByCustomerPhoneNr(phone);
     }
 
     public List<Booking> getByResponsible(String responsible) {
+        if(bookingRepository.findByResponsible(responsible).isEmpty()) {
+            throw new IllegalStateException("Booking with responsible " + responsible + " does not exists.");
+        }
         return bookingRepository.findByResponsible(responsible);
     }
 
@@ -45,6 +52,20 @@ public class BookingService {
         }
 
         throw new IllegalStateException("Booking with id " + id + " does not exists.");
+    }
+
+    public List<Booking> getByCustomerEmail(String email) {
+        if(bookingRepository.findByCustomerEmail(email).isEmpty()) {
+            throw new IllegalStateException("Booking customer email " + email + " does not exists.");
+        }
+        return bookingRepository.findByCustomerEmail(email);
+    }
+
+    public List<Booking> getByCustomerName(String name) {
+        if(bookingRepository.findByCustomerName(name).isEmpty()) {
+            throw new IllegalStateException("Booking customer name " + name + " does not exists.");
+        }
+        return bookingRepository.findByCustomerName(name);
     }
 
     public void addNewBooking(Booking booking) {
@@ -60,6 +81,7 @@ public class BookingService {
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
         }
+
         try {
             customerService.addNewCustomer(booking.getCustomer());
             customer = booking.getCustomer();
@@ -67,6 +89,7 @@ public class BookingService {
             Optional<Customer> optionalCustomer = customerService.getCustomerByPhone(booking.getCustomer().getPhoneNr());
             customer = optionalCustomer.get();
         }
+
         newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
         bookingRepository.save(newBooking);

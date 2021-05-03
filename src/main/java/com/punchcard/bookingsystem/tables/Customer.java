@@ -25,14 +25,18 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
     public Customer() {}
 
-    public Customer(String phoneNr, String name) {
+    public Customer(String phoneNr, String name, String email) {
         this.phoneNr = phoneNr;
         this.name = name;
+        this.email = email;
     }
 
     public void setName(String name) {
@@ -49,6 +53,14 @@ public class Customer {
 
     public void setPhoneNr(String phoneNr) {
         this.phoneNr = phoneNr;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getId() {
