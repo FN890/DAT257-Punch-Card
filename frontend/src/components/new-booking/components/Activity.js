@@ -48,28 +48,30 @@ export default function Activity(props) {
                         startDate.setDate(startDate.getDate() + 1)
                     }
                 } else {
-                    /*
-                    let startTime = new Date(reservation.startTime)
-                    let endTime = new Date(reservation.endTime)
-                    console.log(startTime)
-                    console.log(endTime)
-                    while (startTime < endTime){
-                        unavailableTimes.push(new Date(startTime))
-                        startTime.setDate(startTime.getMinutes() + 30)
-                    }
-                    console.log(unavailableDates)
-
-                     */
+                    unavailableTimes.push(new Date(reservation.startTime))
+                    unavailableTimes.push(new Date(reservation.endTime))
                 }
             }else {
-                //console.log(value.name + " !== " + reservation.activity.name)
             }
 
         })
 
         setUnDates(unavailableDates)
-        //setUnTimes(unavailableTimes)
+        setUnTimes(unavailableTimes)
         setUpdate(update + 1)
+    }
+    const filterPassedTime = time => {
+        let startTime = null;
+        let endTime = null;
+        const selectedDate = new Date(time);
+        for(let i=0; i<unTimes.length-1; i+=2){
+            startTime = new Date(unTimes[i]);
+            endTime = new Date(unTimes[i+1]);
+            if(selectedDate.getTime() >= startTime.getTime() && selectedDate.getTime() <= endTime.getTime()){
+                return false;
+            }
+        }
+        return true;
     }
 
     const handleRemove = () => {
@@ -124,7 +126,7 @@ export default function Activity(props) {
                     showTimeSelect
                     dateFormat="d MMMM yyyy HH:mm"
                     locale="sv"
-                    excludeTimes={unTimes}
+                    filterTime={filterPassedTime}
                 />
             )
         }
