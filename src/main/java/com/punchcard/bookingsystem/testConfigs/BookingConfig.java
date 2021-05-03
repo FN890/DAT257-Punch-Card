@@ -43,10 +43,12 @@ public class BookingConfig {
             Booking booking2 = new Booking(customer, 11);
             booking2.setDescription("En skolklass med ca 11 intresserade av skidåkning.");
             booking2.setResponsible("Daniel");
+            booking2.setPaid(true);
 
             Booking booking1 = new Booking(customer1, 8);
             booking1.setDescription("Vill boka badtunnan");
             booking1.setResponsible("Richard");
+            booking1.setPaid(true);
 
             Reservation reservationStuga = new Reservation(
                     LocalDateTime.of(2021, 4, 23, 17,0),

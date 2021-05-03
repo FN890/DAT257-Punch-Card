@@ -17,9 +17,27 @@ export default class BookingService {
     }
 
     /**
+     * GET request to get JSON of wheter a booking has been paid.
+     */
+    isPaid(id) {
+        return axios.get(`/api/v1/booking/${id}`).then(resp => resp.data);
+    }
+
+    /**
+     * POST request to edit already existing booking
+     */
+    postPayment(id, paid) {
+        axios.post(`/api/v1/booking/${id}`,
+            {"paid": paid}).then((response) => {
+            return response;
+        })
+    }
+
+    /**
      * DELETE request to delete specific booking.
      * @param {*} id 
      */
+
     deleteBooking(id) {
         axios.delete(`/api/v1/booking/${id}`).then(resp => resp.data);
     }
