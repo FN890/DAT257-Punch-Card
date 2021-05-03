@@ -6,6 +6,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {Button} from 'primereact/button';
 import ActivityService from "../services/ActivityService";
 import {ScrollPanel} from "primereact/scrollpanel";
+import {InputText} from "primereact/inputtext";
 
 
 /**
@@ -16,6 +17,7 @@ import {ScrollPanel} from "primereact/scrollpanel";
 export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
     const [updateTable, setUpdateTable] = useState()
+    const [globalFilter, setGlobalFilter] = useState(null);
 
     useEffect(() => {
         setUpdateTable(updateTable + 1)
@@ -48,15 +50,24 @@ export default function AllBookingsTable() {
         );
     }
 
+    const renderHeader = (globalFilterKey) => {
+        return (
+            <span className="p-input-icon-left p-d-flex">
+                <i className="pi pi-search" />
+                <InputText type="sök" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Sök efter bokning" />
+            </span>
+        );
+    }
+
     return (
-        <div className="p-shadow-5 p-m-5">
+        <div className="p-shadow-2 p-m-5">
                 <DataTable value={booking} scrollable  scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
                            onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
-                           onRowSelect={onRowSelect}>
-                    <Column field="customer.name" header="Namn" headerStyle={{ width: '80px' }} sortable></Column>
+                           onRowSelect={onRowSelect} globalFilter={globalFilter} header={renderHeader(globalFilter)}>
+                    <Column field="customer.name" header="Namn" headerStyle={{ width: '110px' }} sortable></Column>
                     <Column field="customer.phoneNr" header="Telefon" headerStyle={{ width: '120px' }}></Column>
-                    <Column field="id" header="Boknings-Id" headerStyle={{ width: '120px' }} sortable></Column>
-                    <Column field="groupSize" header="Antal personer" headerStyle={{ width: '120px' }} sortable></Column>
+                    <Column field="id" header="Boknings-Id" headerStyle={{ width: '150px' }} sortable></Column>
+                    <Column field="groupSize" header="Antal personer" headerStyle={{ width: '170px' }} sortable></Column>
                     <Column field="startTime" header="Start datum " headerStyle={{ width: '160px' }} sortable></Column>
                     <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column>
                     <Column field="description" header="Övrigt" headerStyle={{ width: '300px' }}></Column>
