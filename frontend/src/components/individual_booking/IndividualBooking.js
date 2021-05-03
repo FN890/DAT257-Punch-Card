@@ -78,12 +78,12 @@ export default function IndividualBooking() {
                 </div>
             </div>
             <div className="p-grid p-jc-center" style={{margin: "30pt 0 0 0"}}>
-            <div className="p-col-6" style={{width: "150pt"}, {margin: "0 30pt"}}>
+            <div className="p-col-6" style={{width: "150pt", margin: "0 30pt"}}>
                     <div className="p-m-2 p-text-center">
                         <b>Beskrivning:</b> {booking.description}
                     </div>
                 </div>
-            <div className="p-col-6" style={{width: "150pt"}, {margin: "0 30pt"}}>
+            <div className="p-col-6" style={{width: "150pt", margin: "0 30pt"}}>
                     <div className="p-text-center p-col-12">
                         <b>Pris:</b> {booking.price}
                     </div>
