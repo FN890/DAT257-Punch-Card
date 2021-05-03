@@ -33,7 +33,7 @@ export default function NewBooking() {
             removeActivity={(index) => removeActivity(index)}
             index={activities.length}
             reservations={reservations}
-            onActivityStateChanged={addActivityState}/>)
+            onActivityStateChanged={addActivityState} />)
         setActivities(activState);
 
         setState(state + 1);
@@ -89,7 +89,7 @@ export default function NewBooking() {
      */
     const addInfo = (info) => {
         bookingInfo = info;
-       // console.log(bookingInfo);
+        console.log(bookingInfo);
     }
 
     /**
@@ -102,7 +102,7 @@ export default function NewBooking() {
             reservations.push(activityStates[i].activityState);
         }
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName }, reservations);
+            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email}, reservations);
     }
 
     useEffect(() => {
@@ -137,7 +137,7 @@ export default function NewBooking() {
                 <div><Activities activities={activities} /></div>
             </div>
             <div className="p-shadow-5 p-m-3">
-                <div><BookingOverview/></div>
+                <div><BookingOverview /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>

@@ -36,6 +36,10 @@ public class BookingConfig {
             Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true);
             activityRepository.save(activityVattenSkidor);
 
+            Booking booking3 = new Booking(customer, 10);
+            booking3.setDescription("Vill boka stugan i en vecka.");
+            booking3.setResponsible("Gustav");
+
             Booking booking = new Booking(customer, 10);
             booking.setDescription("En skolklass med ca 10 intresserade av skidåkning.");
             booking.setResponsible("Daniel");
@@ -50,15 +54,18 @@ public class BookingConfig {
             booking1.setResponsible("Richard");
             booking1.setPaid(true);
 
+            LocalDateTime start = LocalDateTime.now();
+            LocalDateTime end = LocalDateTime.now().plusWeeks(1);
+
             Reservation reservationStuga = new Reservation(
-                    LocalDateTime.of(2021, 4, 23, 17,0),
-                    LocalDateTime.of(2021, 4, 25, 12,0),
+                    start,
+                    end,
                     activityStuga,
-                    booking);
+                    booking3);
 
             Reservation reservationBad = new Reservation(
-                    LocalDateTime.of(2021, 4, 24, 21,0),
-                    LocalDateTime.of(2021, 4, 24, 22,0),
+                    LocalDateTime.of(2021, 5, 24, 21,0),
+                    LocalDateTime.of(2021, 5, 24, 22,0),
                     activityBad,
                     booking1);
 
@@ -78,6 +85,7 @@ public class BookingConfig {
             bookingRepository.save(booking);
             bookingRepository.save(booking1);
             bookingRepository.save(booking2);
+            bookingRepository.save(booking3);
             reservationRepository.save(reservationStuga);
             reservationRepository.save(reservationBad);
             reservationRepository.save(reservationSkidor);
