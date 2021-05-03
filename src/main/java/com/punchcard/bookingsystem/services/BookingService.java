@@ -60,6 +60,7 @@ public class BookingService {
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
         }
+
         try {
             customerService.addNewCustomer(booking.getCustomer());
             customer = booking.getCustomer();
@@ -67,6 +68,7 @@ public class BookingService {
             Optional<Customer> optionalCustomer = customerService.getCustomerByPhone(booking.getCustomer().getPhoneNr());
             customer = optionalCustomer.get();
         }
+
         newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
         bookingRepository.save(newBooking);

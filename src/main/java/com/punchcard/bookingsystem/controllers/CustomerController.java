@@ -55,6 +55,11 @@ public class CustomerController {
         return customerService.getCustomerByPhone(phoneNr);
     }
 
+    @GetMapping(path = "/email/{email}")
+    public Optional<Customer> getCustomerByEmail(@PathVariable("email") String email) {
+        return customerService.getCustomerByEmail(email);
+    }
+
     /**
      * Handles inserting a customer in the database
      * @param customer the customer to be added to the database,

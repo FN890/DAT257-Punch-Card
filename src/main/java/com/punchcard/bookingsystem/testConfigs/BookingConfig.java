@@ -21,10 +21,10 @@ public class BookingConfig {
     CommandLineRunner commandLineRunner2(BookingRepository bookingRepository, ActivityRepository activityRepository, CustomerRepository customerRepository, ReservationRepository reservationRepository) {
         return args -> {
 
-            Customer customer = new Customer("0740123456", "John");
+            Customer customer = new Customer("0740123456", "John", "John@hotmail.com");
             customerRepository.save(customer);
 
-            Customer customer1 = new Customer("0740123336", "Greg");
+            Customer customer1 = new Customer("0740123336", "Greg", "greg@gmail.com");
             customerRepository.save(customer1);
 
             Activity activityStuga = new Activity("Stuga", 4000, 4, false);
