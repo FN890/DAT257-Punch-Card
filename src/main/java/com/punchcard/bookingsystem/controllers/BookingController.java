@@ -31,9 +31,19 @@ public class BookingController {
         return bookingService.getById(id);
     }
 
-    @GetMapping(path = "/customer/{phone}")
-    public List<Booking> getByCustomerPhone(@PathVariable String phone) {
-        return bookingService.getByCustomerPhone(phone);
+    @GetMapping(path = "/customer/phone/{phoneNr}")
+    public List<Booking> getByCustomerPhone(@PathVariable String phoneNr) {
+        return bookingService.getByCustomerPhone(phoneNr);
+    }
+
+    @GetMapping(path = "/customer/email/{email}")
+    public List<Booking> getByCustomerEmail(@PathVariable String email) {
+        return bookingService.getByCustomerEmail(email);
+    }
+
+    @GetMapping(path = "/customer/name/{name}")
+    public List<Booking> getByCustomerName(@PathVariable String name) {
+        return bookingService.getByCustomerName(name);
     }
 
     @GetMapping(path = "/responsible/{responsible}")

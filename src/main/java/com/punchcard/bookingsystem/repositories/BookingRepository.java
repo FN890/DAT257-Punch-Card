@@ -11,13 +11,14 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query(value = "SELECT * FROM Booking WHERE customer_phone = ?1", nativeQuery = true)
-    List<Booking> findByCustomerPhone(String phone);
+    List<Booking> findByCustomerPhoneNr(String phoneNr);
 
-    @Query(value = "SELECT * FROM Booking WHERE id = ?1", nativeQuery = true)
     Optional<Booking> findById(int id);
 
-    @Query(value = "SELECT * FROM Booking WHERE responsible = ?1", nativeQuery = true)
     List<Booking> findByResponsible(String responsible);
+
+    List<Booking> findByCustomerEmail(String email);
+
+    List<Booking> findByCustomerName(String name);
 
 }
