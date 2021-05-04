@@ -5,7 +5,12 @@ import {DataTable} from 'primereact/datatable';
 import ActivityService from '../services/ActivityService';
 import './ActivityTable.css';
 
-
+/**
+ * Creates a table with all the available activities
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function ActivityTable(props) {
     const [activity, setActivity] = useState([]);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
@@ -18,7 +23,9 @@ export default function ActivityTable(props) {
     const priceBodyTemplate = (rowData) => {
         return formatCurrency(rowData.price);
     }
-
+    /**
+     * Calls once on initiation to get all the activities from the database
+     */
     useEffect(() => {
         activityService.getActivities().then(data => setActivity(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -29,7 +36,10 @@ export default function ActivityTable(props) {
         </div>
     );
     let footer = `Det finns totalt ${activity ? activity.length : 0} aktiviteter tillagda.`;
-    if (props.activities == undefined) {
+    /**
+     * used to check if data is passed from a prop or not
+     */
+    if (props.activities === undefined) {
         return (
             <div className="p-shadow-5 p-m-5">
                 <DataTable value={activity} header={header} footer={footer}>
@@ -40,6 +50,9 @@ export default function ActivityTable(props) {
             </div>
         );
     }
+    /**
+     * This is used if activities is a prop passed down from a parent component
+     */
     footer = `Det finns totalt ${activity ? props.activities.length : 0} aktiviteter tillagda.`;
     return (
         <div className="p-shadow-5 p-m-5">
