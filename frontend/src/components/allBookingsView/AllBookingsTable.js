@@ -5,6 +5,7 @@ import BookingService from "../services/BookingService";
 import {useHistory} from "react-router-dom";
 import {Button} from 'primereact/button';
 import { ToggleButton } from 'primereact/togglebutton';
+import {InputText} from "primereact/inputtext";
 /**
  * Creates the table that shows all bookings with customer info
  * @returns {JSX.Element}
@@ -16,6 +17,7 @@ export default function AllBookingsTable() {
     const [updateTable, setUpdateTable] = useState()
     const [checked, setChecked] = useState([]);
     const [selectedBooking, setSelectedBooking] = useState(null);
+    const [globalFilter, setGlobalFilter] = useState(null);
 
     const history = useHistory();
 
@@ -48,11 +50,11 @@ export default function AllBookingsTable() {
             console.log("Weird it is already paid for")
         }
         else {
-            setChecked(true)
         }
     }
 
     const actionTemplate = (rowData) => {
+        console.log(rowData)
         return (
             <React.Fragment>
                 <Button icon="pi pi-user-edit" className="p-button-rounded p-button-success p-mr-2"
@@ -62,14 +64,26 @@ export default function AllBookingsTable() {
         );
     }
 
+    const renderHeader = (globalFilterKey) => {
+        return (
+            <div className="p-d-flex">
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Sök efter bokning" />
+                </span>
+            </div>
+        );
+    }
+
+
     return (
         <div className="p-shadow-5 p-m-5">
                 <DataTable value={booking} scrollable  scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
-                           onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id">
-                    <Column field="customer.name" header="Namn" headerStyle={{ width: '80px' }} sortable></Column>
+                           onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id" header={renderHeader(globalFilter)} globalFilter={globalFilter}>
+                    <Column field="customer.name" header="Namn" headerStyle={{ width: '110px' }} sortable></Column>
                     <Column field="customer.phoneNr" header="Telefon" headerStyle={{ width: '120px' }}></Column>
-                    <Column field="id" header="Boknings-Id" headerStyle={{ width: '120px' }} sortable></Column>
-                    <Column field="groupSize" header="Antal personer" headerStyle={{ width: '120px' }} sortable></Column>
+                    <Column field="id" header="Boknings-Id" headerStyle={{ width: '150px' }} sortable></Column>
+                    <Column field="groupSize" header="Antal personer" headerStyle={{ width: '180px' }} sortable></Column>
                     {/*<Column field="startTime" header="Start datum " headerStyle={{ width: '160px' }} sortable></Column>
                     <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column> */}
                     <Column field="description" header="Övrigt" headerStyle={{ width: '300px' }}></Column>
