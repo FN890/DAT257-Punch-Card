@@ -33,7 +33,7 @@ export default function NewBooking() {
         activitiesArray.push({
             "id": id, "activity": <Activity
                 activityInfo={activityInfo}
-                removeActivity={(index) => removeActivity(index)}
+                removeActivity={removeActivity}
                 reservations={reservations}
                 id={id}
                 onActivityStateChanged={addActivityState} />
