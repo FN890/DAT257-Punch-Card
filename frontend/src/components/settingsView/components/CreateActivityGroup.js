@@ -6,6 +6,7 @@ import {InputNumber} from "primereact/inputnumber";
 import {RadioButton} from "primereact/radiobutton";
 import ActivityService from "../../services/ActivityService";
 import Prices from "../../prices/Prices";
+import {Editor} from "primereact/editor";
 
 export default function CreateActivityGroup() {
     const activityService = new ActivityService();
@@ -14,6 +15,7 @@ export default function CreateActivityGroup() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(null);
     const [maxPeople, setMaxPeople] = useState(null);
+    const [faq, setFaq] = useState()
 
     /**
      * Posts a new activity to the database
@@ -22,12 +24,20 @@ export default function CreateActivityGroup() {
      * which causes a rerender
      */
     function onCreateActivity() {
+        console.log(faq);
         activityService.addActivity(name, price, maxPeople, isDaily).then(() => activityService.getActivities().then(data => setActivities(data)))
     }
 
     const setActivity = (e) => {
         setIsDaily(e.value);
     }
+    const header = (
+        <span className="ql-formats">
+        <button className="ql-bold" aria-label="Bold"></button>
+        <button className="ql-italic" aria-label="Italic"></button>
+        <button className="ql-underline" aria-label="Underline"></button>
+    </span>
+    );
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-5 p-mb-5">
@@ -54,6 +64,12 @@ export default function CreateActivityGroup() {
                 ></InputNumber>
                    <label htmlFor="price">Pris</label>
                 </span>
+                </div>
+                <div className="p-d-flex p-mx-5 p-mb-5">
+
+                    <Editor style={{height: '200px', width: '200px'}} value={""}
+                            onTextChange={(e) => setFaq(e.htmlValue)} headerTemplate={header}
+                            placeholder={" FAQ Saker som är bra att veta om denna aktivitet är:"}/>
                 </div>
                 <div className="p-d-flex p-mx-5 p-mb-5">
                     <div className="p-field-radiobutton">
