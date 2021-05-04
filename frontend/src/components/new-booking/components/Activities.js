@@ -4,7 +4,7 @@ export default function Activities(props) {
 
     return (
         <div>
-            {activities.map((activity, index) => <div key={index}> {activity} </div>)}
+            {activities.map((component, index) => <div key={index}> {component.activity} </div>)}
         </div>
     )
 }

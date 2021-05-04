@@ -5,19 +5,19 @@ import 'primeflex/primeflex.css';
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import sv from "date-fns/locale/sv";
+import { is, tr } from 'date-fns/locale';
 
 registerLocale("sv", sv);
 
 let hourly = false;
+let isRemoved = false;
 
 export default function Activity(props) {
 
     const activityInfo = props.activityInfo;
-
-    const index = props.index
-
+    const id = props.id;
     const reservations = props.reservations;
-   
+
     /**
      * Method for sending the latest activity state to the parent component.
      */
@@ -43,7 +43,7 @@ export default function Activity(props) {
                 if (!hourly) {
                     let startDate = new Date(reservation.startTime)
                     let endDate = new Date(reservation.endTime).setHours(24)
-                    while (startDate < endDate){
+                    while (startDate < endDate) {
                         unavailableDates.push(new Date(startDate))
                         startDate.setDate(startDate.getDate() + 1)
                     }
@@ -51,7 +51,7 @@ export default function Activity(props) {
                     unavailableTimes.push(new Date(reservation.startTime))
                     unavailableTimes.push(new Date(reservation.endTime))
                 }
-            }else {
+            } else {
             }
 
         })
@@ -64,10 +64,10 @@ export default function Activity(props) {
         let startTime = null;
         let endTime = null;
         const selectedDate = new Date(time);
-        for(let i=0; i<unTimes.length-1; i+=2){
+        for (let i = 0; i < unTimes.length - 1; i += 2) {
             startTime = new Date(unTimes[i]);
-            endTime = new Date(unTimes[i+1]);
-            if(selectedDate.getTime() >= startTime.getTime() && selectedDate.getTime() <= endTime.getTime()){
+            endTime = new Date(unTimes[i + 1]);
+            if (selectedDate.getTime() >= startTime.getTime() && selectedDate.getTime() <= endTime.getTime()) {
                 return false;
             }
         }
@@ -75,7 +75,9 @@ export default function Activity(props) {
     }
 
     const handleRemove = () => {
-        props.removeActivity(index)
+        isRemoved = true;
+        props.removeActivity(id)
+        setUpdate(update + 1)
     }
 
     const getDateSelect = () => {
@@ -132,27 +134,42 @@ export default function Activity(props) {
         }
     }
 
+    const ActivtyComponent = () => {
+        {console.log(isRemoved)}
+        if (isRemoved) {
+            return (
+                <div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
+                    <div className="p-d-flex p-my-1 ">
+                        <span className="p-float-label" style={{ width: '80%' }}>
+                            <Dropdown id="dropdown" optionLabel="name" options={activityInfo} value={activity} onChange={(e) => setSelectedActivity(e.value)} />
+                            <label htmlFor="dropdown">Aktivitet</label>
+                        </span>
+                        <div className="p-ml-auto p-mb-2">
+                            <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={() => handleRemove()} />
+                        </div>
+                    </div>
+                    {getDateSelect()}
+                </div>
+
+            )
+        }
+    }
+
     useEffect(() => {
+        isRemoved = false;
         if (activity != null) {
             let state = { "startTime": startDate.toISOString(), "endTime": endDate.toISOString(), "activity": { "name": activity.name } };
-            onActivityStateChanged(index, state);
+            onActivityStateChanged(id, state);
         }
     });
 
-    return (
-        <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
-            <div className="p-d-flex p-my-1 ">
-                <span className="p-float-label" style={{ width: '80%' }}>
-                    <Dropdown id="dropdown" optionLabel="name" options={activityInfo} value={activity} onChange={(e) => setSelectedActivity(e.value)} />
-                    <label htmlFor="dropdown">Aktivitet</label>
-                </span>
-                <div className="p-ml-auto p-mb-2">
-                    <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={() => handleRemove()} />
-                </div>
-            </div>
-            {getDateSelect()}
-        </div>
-
+    return(
+        <ActivtyComponent/>
     )
 
 }

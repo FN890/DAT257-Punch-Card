@@ -9,6 +9,7 @@ import ActivityService from "../services/ActivityService";
 import PriceCalculation from "./components/PriceCalculation";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
+import { v4 as uuidv4 } from 'uuid';
 
 var activityInfo = [];
 var activityStates = [];
@@ -27,14 +28,17 @@ export default function NewBooking() {
      * Adds an activity component to new booking.
      */
     const addActivity = () => {
-        let activState = activities;
-        activState.push(<Activity
-            activityInfo={activityInfo}
-            removeActivity={(index) => removeActivity(index)}
-            index={activities.length}
-            reservations={reservations}
-            onActivityStateChanged={addActivityState} />)
-        setActivities(activState);
+        let activitiesArray = activities;
+        const id = uuidv4();
+        activitiesArray.push({
+            "id": id, "activity": <Activity
+                activityInfo={activityInfo}
+                removeActivity={(index) => removeActivity(index)}
+                reservations={reservations}
+                id={id}
+                onActivityStateChanged={addActivityState} />
+        })
+        setActivities(activitiesArray);
 
         setState(state + 1);
         //Method to add price for this activity to total price.
@@ -44,19 +48,19 @@ export default function NewBooking() {
     /**
     * Removes an activity component from new booking.
     */
-    const removeActivity = (index) => {
-        let activState = activities;
-
-        let countActivities = activState.filter((x) => { return x !== undefined }).length
-
-        if (countActivities > 1) {
-            delete activState[index]
-            setActivities(activState)
-            removeActivityState(index);
+    const removeActivity = (id) => {
+        console.log(id);
+        let activitiesArray = activities;
+        let i;
+        console.log(activitiesArray.length);
+        for (i = 0; i < activitiesArray.length; i++) {
+            if (activitiesArray[i].id == id) {
+                activitiesArray.splice(i, 1);
+                break;
+            }
         }
-        //console.log(countActivities)
-        //setActivities(activState)
-        setState(state + 1);
+        removeActivityState(id);
+        setActivities(activitiesArray);
     }
 
     /**
@@ -64,19 +68,19 @@ export default function NewBooking() {
      * @param {*} index 
      * @param {*} activityState 
      */
-    const addActivityState = (index, activityState) => {
-        removeActivityState(index);
-        activityStates.push({ "index": index, "activityState": activityState })
+    const addActivityState = (id, activityState) => {
+        removeActivityState(id);
+        activityStates.push({ "id": id, "activityState": activityState })
     }
 
     /**
      * Removes an activity state from activityStates.
      * @param {*} index 
      */
-    const removeActivityState = (index) => {
+    const removeActivityState = (id) => {
         let i;
         for (i = 0; i < activityStates.length; i++) {
-            if (activityStates[i].index == index) {
+            if (activityStates[i].id == id) {
                 activityStates.splice(i, 1);
                 break;
             }
@@ -102,7 +106,7 @@ export default function NewBooking() {
             reservations.push(activityStates[i].activityState);
         }
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email}, reservations);
+            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations);
     }
 
     useEffect(() => {
