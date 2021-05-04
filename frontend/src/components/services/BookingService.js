@@ -24,13 +24,10 @@ export default class BookingService {
     }
 
     /**
-     * POST request to edit already existing booking
+     * PUT request to edit already existing booking
      */
-    postPayment(id, paid) {
-        axios.post(`/api/v1/booking/${id}`,
-            {"paid": paid}).then((response) => {
-            return response;
-        })
+    putPayment(id, paid) {
+        axios.put(`/api/v1/booking/${id}?paid=${paid}`).then(resp => {return resp.data})
     }
 
     /**
