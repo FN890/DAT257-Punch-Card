@@ -15,14 +15,14 @@ export default function CreateActivityGroup() {
     const [price, setPrice] = useState(null);
     const [maxPeople, setMaxPeople] = useState(null);
 
-
+    /**
+     * Posts a new activity to the database
+     * after the new activity has been posted it requests
+     * all the activities and uses setActivities to set new info
+     * which causes a rerender
+     */
     function onCreateActivity() {
-        console.log(isDaily)
-        console.log(price)
-        console.log(name)
-        console.log(maxPeople)
         activityService.addActivity(name, price, maxPeople, isDaily).then(() => activityService.getActivities().then(data => setActivities(data)))
-        console.log(activities)
     }
 
     const setActivity = (e) => {
