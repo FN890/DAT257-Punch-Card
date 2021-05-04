@@ -6,6 +6,8 @@ import {useHistory} from "react-router-dom";
 import {Button} from 'primereact/button';
 import { ToggleButton } from 'primereact/togglebutton';
 import {InputText} from "primereact/inputtext";
+import {Dialog} from "primereact/dialog";
+import {FooterCell} from "primereact/components/datatable/FooterCell";
 /**
  * Creates the table that shows all bookings with customer info
  * @returns {JSX.Element}
@@ -15,17 +17,19 @@ import {InputText} from "primereact/inputtext";
 export default function AllBookingsTable() {
     const [booking, setBookings] = useState([]);
     const [updateTable, setUpdateTable] = useState()
-    const [checked, setChecked] = useState([]);
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
+    const [deletePaidDialog, setDeletePaidDialog] = useState(false);
 
     const history = useHistory();
+
+    let data ;
 
     useEffect(() => {
         setUpdateTable(updateTable + 1)
         new BookingService().getAllBookings().then(data => {
             setBookings(data)
-            setChecked(data.paid)
+
         });
     }, []);
 
@@ -41,27 +45,56 @@ export default function AllBookingsTable() {
         history.push("/allabokningar/" + event.id);
     }
 
+    const hidePaidDialog = () => {
+        setDeletePaidDialog(false);
+    }
+    const confirmPaid = () => {
+        setBookings(booking) ;
+        setDeletePaidDialog(true);
+    }
+
     /**
      * Function to handle a payment
      * @param event
      */
+
+    const confirmDeletePayment = (event) => {
+        setBookings(booking) ;
+        setDeletePaidDialog(true);
+    }
+
     const onClickPaid = (event) => {
         if (event.paid) {
-            console.log("Weird it is already paid for")
+            new BookingService().putPayment(event.id, false)
+            {/* This needs to be fixed */}
+            window.location.reload(false);
         }
-        else {
+        else{
+            new BookingService().putPayment(event.id, true)
+            {/* This needs to be fixed */}
+            window.location.reload(false);
         }
+        setDeletePaidDialog(false);
+
+    }
+
+    const deletePaymentDialogFooter = () => {
+        return (
+            <React.Fragment>
+                <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hidePaidDialog} />
+                <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={(data) => onClickPaid(data)} />
+            </React.Fragment>
+        );
     }
 
     const actionTemplate = (rowData) => {
-        console.log(rowData)
         return (
             <React.Fragment>
                 <Button icon="pi pi-user-edit" className="p-button-rounded p-button-success p-mr-2"
                         onClick={() => onClickButton(rowData)}/>
-                <ToggleButton onLabel="Betalt" offLabel="Ej betalt" onIcon="pi pi-check" offIcon="pi pi-times" checked={checked} onChange={() => onClickPaid(rowData)} />
+                <ToggleButton onLabel="Betalt" offLabel="Ej betalt" onIcon="pi pi-check" offIcon="pi pi-times" checked={rowData.paid} onChange={() => confirmDeletePayment(rowData)} />
             </React.Fragment>
-        );
+    );
     }
 
     const renderHeader = (globalFilterKey) => {
@@ -78,7 +111,7 @@ export default function AllBookingsTable() {
 
     return (
         <div className="p-shadow-5 p-m-5">
-                <DataTable value={booking} scrollable  scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
+                <DataTable value={booking} scrollable scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
                            onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id" header={renderHeader(globalFilter)} globalFilter={globalFilter}>
                     <Column field="customer.name" header="Namn" headerStyle={{ width: '110px' }} sortable></Column>
                     <Column field="customer.phoneNr" header="Telefon" headerStyle={{ width: '120px' }}></Column>
@@ -89,8 +122,16 @@ export default function AllBookingsTable() {
                     <Column field="description" header="Övrigt" headerStyle={{ width: '300px' }}></Column>
                     <Column field="responsible" header="Ansvarig" headerStyle={{ width: '160px' }} sortable></Column>
                     <Column body={actionTemplate}></Column>
+
                 </DataTable>
+            <Dialog visible={deletePaidDialog} style={{ width: '450px' }} header="Bekräfta ändring av betalning" modal footer={deletePaymentDialogFooter} onHide={hidePaidDialog}>
+                <div className="confirmation-content">
+                    <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem'}} />
+                    {booking && <span>Är du säker på att du vill ändra betalningen?</span>}
+                </div>
+            </Dialog>
         </div>
+
     );
 }
 
