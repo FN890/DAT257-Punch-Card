@@ -135,7 +135,6 @@ export default function Activity(props) {
     }
 
     const ActivtyComponent = () => {
-        {console.log(isRemoved)}
         if (isRemoved) {
             return (
                 <div>

@@ -49,10 +49,8 @@ export default function NewBooking() {
     * Removes an activity component from new booking.
     */
     const removeActivity = (id) => {
-        console.log(id);
         let activitiesArray = activities;
         let i;
-        console.log(activitiesArray.length);
         for (i = 0; i < activitiesArray.length; i++) {
             if (activitiesArray[i].id == id) {
                 activitiesArray.splice(i, 1);
@@ -93,7 +91,6 @@ export default function NewBooking() {
      */
     const addInfo = (info) => {
         bookingInfo = info;
-        console.log(bookingInfo);
     }
 
     /**
