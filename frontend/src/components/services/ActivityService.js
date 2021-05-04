@@ -8,14 +8,23 @@ export default class ActivityService {
         });
     }
 
-    addActivity(name, price, maxSize, isDaily) {
-        axios.post('api/v1/activity',
-            {
-                "name": name,
-                "price": price,
-                "maxSize": maxSize,
-                "isDaily": isDaily
-            })
-    }
+   async addActivity(name, price, maxSize, isDaily) {
+        try {
+            const resp = await axios.post('api/v1/activity',
+                {
+                    "name": name,
+                    "price": price,
+                    "maxSize": maxSize,
+                    "isDaily": isDaily
+                })
+            console.log(resp);
+        }
+            catch (err){
+                console.log(err);
+            }
+
+        }
+
+
 
 }

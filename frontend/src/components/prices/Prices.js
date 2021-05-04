@@ -1,10 +1,10 @@
 import React from "react";
 import ActivityTable from './ActivityTable';
 
-export default function Prices() {
+export default function Prices(props) {
     return (
         <div>
-            <ActivityTable/>
+            <ActivityTable activities={props.activities}/>
         </div>
     )
 }
