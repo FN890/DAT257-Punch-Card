@@ -14,14 +14,17 @@ export default function BookingInfo(props) {
 
     const [responsible, setResponsible] = useState('');
     const [isPaid, setPaid] = useState('');
+    const [email, setEmail] = useState('');
     const [customer, setCustomer] = useState('');
     const [phone, setPhone] = useState('');
     const [notes, setNotes] = useState('');
     const [numberOfStudent, setNumberOfStudent] = useState(0);
 
     useEffect(() => {
-        console.log(notes);
-        onInfoChanged({ "groupSize": numberOfStudent, "paid": isPaid, "description": notes, "responsible": responsible, "customerName": customer, "customerPhone": phone });
+        onInfoChanged({
+            "groupSize": numberOfStudent, "paid": isPaid, "description": notes,
+            "responsible": responsible, "customerName": customer, "customerPhone": phone, "email": email
+        });
     });
 
     return (
@@ -45,6 +48,12 @@ export default function BookingInfo(props) {
                 <span className="p-float-label">
                     <InputText id="name" value={customer} onChange={(e) => setCustomer(e.target.value)} />
                     <label htmlFor="name">Kundnamn</label>
+                </span>
+            </div>
+            <div className="p-d-flex p-mx-5 p-mb-5">
+                <span className="p-float-label">
+                    <InputText id="name" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="name">E-post</label>
                 </span>
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
