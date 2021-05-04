@@ -10,6 +10,7 @@ import PriceCalculation from "./components/PriceCalculation";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
 import { v4 as uuidv4 } from 'uuid';
+import { useHistory } from "react-router-dom";
 
 var activityInfo = [];
 var activityStates = [];
@@ -20,6 +21,7 @@ export default function NewBooking() {
 
     const activityService = new ActivityService();
     const bookingService = new BookingService();
+    const history = useHistory();
     const [state, setState] = useState(0);
 
     const [activities, setActivities] = useState([]);
@@ -103,7 +105,9 @@ export default function NewBooking() {
             reservations.push(activityStates[i].activityState);
         }
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations);
+            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then(() => {
+                history.push("/allabokningar")
+            });
     }
 
     useEffect(() => {

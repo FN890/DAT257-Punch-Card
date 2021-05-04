@@ -27,7 +27,7 @@ export default class BookingService {
      * PUT request to edit already existing booking
      */
     putPayment(id, paid) {
-        axios.put(`/api/v1/booking/${id}?paid=${paid}`).then(resp => {return resp.data})
+        axios.put(`/api/v1/booking/${id}?paid=${paid}`).then(resp => { return resp.data })
     }
 
     /**
@@ -50,8 +50,7 @@ export default class BookingService {
      * @param {*} reservations 
      */
     postBooking(groupSize, description, responsible, paid, price, customer, reservations) {
-        console.log(customer);
-        axios.post(`/api/v1/booking/`, {
+        return axios.post(`/api/v1/booking/`, {
             "groupSize": groupSize,
             "description": description,
             "responsible": responsible,
@@ -59,9 +58,7 @@ export default class BookingService {
             "price": price,
             "customer": customer,
             "reservations": reservations
-        }).then((response) => {
-            return response;
-        });
+        })
     }
 
 }
