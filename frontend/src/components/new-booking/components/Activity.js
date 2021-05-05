@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import 'primeflex/primeflex.css';
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import moment from 'moment'
+import { v4 as uuidv4 } from 'uuid';
 
 let hourly = false;
 let isRemoved = false;
@@ -18,12 +23,15 @@ export default function Activity(props) {
     const onActivityStateChanged = props.onActivityStateChanged;
 
     const [activity, setActivity] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [startDateTime, setStartDateTime] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [focused, setFocused] = useState(null);
     const [update, setUpdate] = useState(0);
     const [unDates, setUnDates] = useState([]);
     const [unTimes, setUnTimes] = useState([]);
+
+    const startDateId = uuidv4();
+    const endDateId = uuidv4();
 
     const setSelectedActivity = (value) => {
         hourly = value.hourly;
@@ -77,21 +85,61 @@ export default function Activity(props) {
     const getDateSelect = () => {
         if (activity === "") {
             return (
-                <div>
-
-                </div>
+                <DateRangePicker
+                    startDate={startDate}
+                    startDateId={startDateId}
+                    endDate={endDate}
+                    endDateId={endDateId}
+                    onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate);
+                        setEndDate(endDate);
+                    }}
+                    readOnly={true}
+                    focusedInput={focused}
+                    onFocusChange={focusedInput => {
+                        setFocused(focusedInput);
+                    }}
+                    numberOfMonths={1}
+                    disabled
+                />
             )
         } else if (hourly === false) {
             return (
-                <div>
-
-                </div>
+                <DateRangePicker
+                    startDate={startDate}
+                    startDateId={startDateId}
+                    endDate={endDate}
+                    endDateId={endDateId}
+                    onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate);
+                        setEndDate(endDate);
+                    }}
+                    readOnly={true}
+                    focusedInput={focused}
+                    onFocusChange={focusedInput => {
+                        setFocused(focusedInput);
+                    }}
+                    numberOfMonths={1}
+                />
             )
         } else if (hourly === true) {
             return (
-                <div>
-
-                </div>
+                <DateRangePicker
+                    startDate={startDate}
+                    startDateId={startDateId}
+                    endDate={endDate}
+                    endDateId={endDateId}
+                    onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate);
+                        setEndDate(endDate);
+                    }}
+                    readOnly={true}
+                    focusedInput={focused}
+                    onFocusChange={focusedInput => {
+                        setFocused(focusedInput);
+                    }}
+                    numberOfMonths={1}
+                />
             )
         }
     }
@@ -124,7 +172,7 @@ export default function Activity(props) {
     useEffect(() => {
         isRemoved = false;
         if (activity != null) {
-            let state = { "startTime": startDate.toISOString(), "endTime": endDate.toISOString(), "activity": { "name": activity.name } };
+            let state = { "startTime": startDate, "endTime": endDate, "activity": { "name": activity.name } };
             onActivityStateChanged(id, state);
         }
     });
