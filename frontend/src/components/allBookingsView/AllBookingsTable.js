@@ -108,10 +108,10 @@ export default function AllBookingsTable() {
         );
     }
 
-
+    let footer = `Det finns totalt ${booking ? booking.length : 0} bokningar.`;
     return (
         <div className="p-shadow-5 p-m-5">
-                <DataTable value={booking} scrollable scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
+                <DataTable footer={footer} value={booking} scrollable scrollWidth="300px" style={{ width: '100%' }} selection={selectedBooking}
                            onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id" header={renderHeader(globalFilter)} globalFilter={globalFilter}>
                     <Column field="customer.name" header="Namn" headerStyle={{ width: '110px' }} sortable></Column>
                     <Column field="customer.phoneNr" header="Telefon" headerStyle={{ width: '120px' }}></Column>
