@@ -71,6 +71,8 @@ public class ActivityService {
         if (faq != null && !faq.equals(activity.getFaq())) {
             activity.setFaq(faq);
         }
+
+        activityRepository.save(activity);
     }
 
 }
