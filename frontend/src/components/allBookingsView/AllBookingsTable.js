@@ -121,7 +121,7 @@ export default function AllBookingsTable() {
                     <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column> */}
                     <Column field="description" header="Övrigt" headerStyle={{ width: '300px' }}></Column>
                     <Column field="responsible" header="Ansvarig" headerStyle={{ width: '160px' }} sortable></Column>
-                    <Column body={actionTemplate}></Column>
+                    <Column headerStyle={{ width: '200px' }} body={actionTemplate}></Column>
 
                 </DataTable>
             <Dialog visible={deletePaidDialog} style={{ width: '450px' }} header="Bekräfta ändring av betalning" modal footer={deletePaymentDialogFooter} onHide={hidePaidDialog}>
