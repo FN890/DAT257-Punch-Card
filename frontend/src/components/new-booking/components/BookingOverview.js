@@ -7,7 +7,7 @@ export default function BookingOverview(props) {
 
     useEffect( () => {
 
-    }, [])
+    }, []);
 
 
     return (
