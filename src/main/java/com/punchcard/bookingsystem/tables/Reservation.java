@@ -1,7 +1,11 @@
 package com.punchcard.bookingsystem.tables;
 
+import com.fasterxml.jackson.datatype.jsr310.ser.MonthDaySerializer;
+
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table
@@ -52,6 +56,19 @@ public class Reservation {
 
     public long getBooking() {
         return booking.getId();
+    }
+
+    public int getPrice() {
+        int total = 0;
+        total += activity.getPrice();
+
+        long hours = ChronoUnit.HOURS.between(startTime, endTime);
+        total += hours * activity.getHourlyPrice();
+
+        long days = ChronoUnit.DAYS.between(startTime, endTime);
+        total += days * activity.getDailyPrice();
+
+        return total;
     }
 
     public void setStartTime(LocalDateTime startTime) {

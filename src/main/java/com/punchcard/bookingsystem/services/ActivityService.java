@@ -56,11 +56,20 @@ public class ActivityService {
      * @param maxSize the new max size for the activity
      */
     @Transactional
-    public void updateActivity(String name, Integer price, Integer maxSize, String faq) {
+    public void updateActivity(String name, Integer price, Integer hourlyPrice, Integer dailyPrice, Integer pricePerPerson, Integer maxSize, String faq) {
         Activity activity = activityRepository.findById(name).orElseThrow(() -> new IllegalStateException(
                 "Activity with name " + name + " does not exists"));
 
         if (price != null && !price.equals(activity.getPrice())) {
+            activity.setPrice(price);
+        }
+        if (hourlyPrice != null && !hourlyPrice.equals(activity.getHourlyPrice())) {
+            activity.setPrice(price);
+        }
+        if (dailyPrice != null && !dailyPrice.equals(activity.getDailyPrice())) {
+            activity.setPrice(price);
+        }
+        if (pricePerPerson != null && !pricePerPerson.equals(activity.getPricePerPerson())) {
             activity.setPrice(price);
         }
 

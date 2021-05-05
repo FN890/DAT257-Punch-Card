@@ -61,9 +61,8 @@ public class Booking {
         if (price == null) {
             int total = 0;
             for (Reservation r : reservations) {
-             total += r.getActivity().getPrice();
+                total += r.getPrice();
             }
-
             return total;
         }
 

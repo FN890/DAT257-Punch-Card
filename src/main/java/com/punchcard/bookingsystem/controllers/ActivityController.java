@@ -50,9 +50,12 @@ public class ActivityController {
     @PutMapping(path = "name/{name}")
     public void updateActivity(@PathVariable("name") String name,
                                @RequestParam(required = false) Integer price,
+                               @RequestParam(required = false) Integer hourlyPrice,
+                               @RequestParam(required = false) Integer dailyPrice,
+                               @RequestParam(required = false) Integer pricePerPerson,
                                @RequestParam(required = false) Integer maxSize,
                                @RequestParam(required = false) String faq) {
-        activityService.updateActivity(name, price, maxSize, faq);
+        activityService.updateActivity(name, price, hourlyPrice, dailyPrice, pricePerPerson, maxSize, faq);
     }
 
 }
