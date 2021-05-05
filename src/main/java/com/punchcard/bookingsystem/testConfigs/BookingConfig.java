@@ -27,13 +27,13 @@ public class BookingConfig {
             Customer customer1 = new Customer("0740123336", "Greg", "greg@gmail.com");
             customerRepository.save(customer1);
 
-            Activity activityStuga = new Activity("Stuga", 4000, 4, false);
+            Activity activityStuga = new Activity("Stuga", 4000, 4, false, "Stugan är röd.");
             activityRepository.save(activityStuga);
 
-            Activity activityBad = new Activity("Badtunna", 1500, 4, true);
+            Activity activityBad = new Activity("Badtunna", 1500, 4, true, "<b>Bad<b>tunna är <b>B<b>allt");
             activityRepository.save(activityBad);
 
-            Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true);
+            Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true, "Boat go vrom vrom");
             activityRepository.save(activityVattenSkidor);
 
             Booking booking3 = new Booking(customer, 10);

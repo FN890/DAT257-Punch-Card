@@ -19,16 +19,19 @@ public class Activity {
     @Column(nullable = false)
     private boolean hourly = false;
 
+    private String faq;
+
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 
     public Activity() {}
 
-    public Activity(String name, Integer price, Integer maxSize, boolean hourly) {
+    public Activity(String name, Integer price, Integer maxSize, boolean hourly, String faq) {
         this.name = name;
         this.price = price;
         this.maxSize = maxSize;
         this.hourly = hourly;
+        this.faq = faq;
     }
     public void setName(String name) {
         this.name = name;
@@ -62,5 +65,12 @@ public class Activity {
         this.hourly = hourly;
     }
 
+    public String getFaq() {
+        return faq;
+    }
+
+    public void setFaq(String faq) {
+        this.faq = faq;
+    }
 }
 

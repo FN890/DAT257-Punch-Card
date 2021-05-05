@@ -8,14 +8,15 @@ export default class ActivityService {
         });
     }
 
-   async addActivity(name, price, maxSize, isDaily) {
+   async addActivity(name, price, maxSize, isDaily, faq) {
         try {
             const resp = await axios.post('api/v1/activity',
                 {
                     "name": name,
                     "price": price,
                     "maxSize": maxSize,
-                    "isDaily": isDaily
+                    "isDaily": isDaily,
+                    "faq": faq
                 })
             console.log(resp);
         }

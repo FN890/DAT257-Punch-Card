@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import 'primeflex/primeflex.css';
-import DatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import sv from "date-fns/locale/sv";
-import { is, tr } from 'date-fns/locale';
-
-registerLocale("sv", sv);
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import moment from 'moment'
+import { v4 as uuidv4 } from 'uuid';
 
 let hourly = false;
 let isRemoved = false;
@@ -24,12 +23,15 @@ export default function Activity(props) {
     const onActivityStateChanged = props.onActivityStateChanged;
 
     const [activity, setActivity] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [startDateTime, setStartDateTime] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [focused, setFocused] = useState(null);
     const [update, setUpdate] = useState(0);
     const [unDates, setUnDates] = useState([]);
     const [unTimes, setUnTimes] = useState([]);
+
+    const startDateId = uuidv4();
+    const endDateId = uuidv4();
 
     const setSelectedActivity = (value) => {
         hourly = value.hourly;
@@ -83,52 +85,60 @@ export default function Activity(props) {
     const getDateSelect = () => {
         if (activity === "") {
             return (
-                <DatePicker
-                    selected={startDateTime}
-                    onChange={date => setStartDateTime(date)}
-                    showTimeSelect
-                    dateFormat="d MMMM yyyy HH:mm"
+                <DateRangePicker
+                    startDate={startDate}
+                    startDateId={startDateId}
+                    endDate={endDate}
+                    endDateId={endDateId}
+                    onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate);
+                        setEndDate(endDate);
+                    }}
+                    readOnly={true}
+                    focusedInput={focused}
+                    onFocusChange={focusedInput => {
+                        setFocused(focusedInput);
+                    }}
+                    numberOfMonths={1}
                     disabled
-                    locale="sv"
                 />
             )
         } else if (hourly === false) {
             return (
-                <>
-                    <div className="p-mb-2">
-                        <DatePicker
-                            selected={startDate}
-                            onChange={date => setStartDate(date)}
-                            selectsStart
-                            startDate={startDate}
-                            endDate={endDate}
-                            locale="sv"
-                            excludeDates={unDates}
-                        />
-                    </div>
-                    <div className="p-mb-2">
-                        <DatePicker
-                            selected={endDate}
-                            onChange={date => setEndDate(date)}
-                            selectsEnd
-                            startDate={startDate}
-                            endDate={endDate}
-                            minDate={startDate}
-                            locale="sv"
-                            excludeDates={unDates}
-                        />
-                    </div>
-                </>
+                <DateRangePicker
+                    startDate={startDate}
+                    startDateId={startDateId}
+                    endDate={endDate}
+                    endDateId={endDateId}
+                    onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate);
+                        setEndDate(endDate);
+                    }}
+                    readOnly={true}
+                    focusedInput={focused}
+                    onFocusChange={focusedInput => {
+                        setFocused(focusedInput);
+                    }}
+                    numberOfMonths={1}
+                />
             )
         } else if (hourly === true) {
             return (
-                <DatePicker
-                    selected={startDateTime}
-                    onChange={date => setStartDateTime(date)}
-                    showTimeSelect
-                    dateFormat="d MMMM yyyy HH:mm"
-                    locale="sv"
-                    filterTime={filterPassedTime}
+                <DateRangePicker
+                    startDate={startDate}
+                    startDateId={startDateId}
+                    endDate={endDate}
+                    endDateId={endDateId}
+                    onDatesChange={({ startDate, endDate }) => {
+                        setStartDate(startDate);
+                        setEndDate(endDate);
+                    }}
+                    readOnly={true}
+                    focusedInput={focused}
+                    onFocusChange={focusedInput => {
+                        setFocused(focusedInput);
+                    }}
+                    numberOfMonths={1}
                 />
             )
         }
@@ -162,13 +172,13 @@ export default function Activity(props) {
     useEffect(() => {
         isRemoved = false;
         if (activity != null) {
-            let state = { "startTime": startDate.toISOString(), "endTime": endDate.toISOString(), "activity": { "name": activity.name } };
+            let state = { "startTime": startDate, "endTime": endDate, "activity": { "name": activity.name } };
             onActivityStateChanged(id, state);
         }
     });
 
-    return(
-        <ActivtyComponent/>
+    return (
+        <ActivtyComponent />
     )
 
 }

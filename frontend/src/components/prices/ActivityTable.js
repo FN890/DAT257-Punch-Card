@@ -42,10 +42,10 @@ export default function ActivityTable(props) {
     if (props.activities === undefined) {
         return (
             <div className="p-shadow-5 p-m-5">
-                <DataTable value={activity} header={header} footer={footer}>
-                    <Column field="name" header="Aktivitetens namn" sortable></Column>
-                    <Column field="price" header="Pris" body={priceBodyTemplate} sortable></Column>
-                    <Column field="maxSize" header="Max antal" sortable></Column>
+                <DataTable style={{ width: '100%' }} scrollable scrollWidth="300px" value={activity} header={header} footer={footer}>
+                    <Column  headerStyle={{ width: '150px' }} field="name" header="Aktivitetens namn" sortable></Column>
+                    <Column headerStyle={{ width: '150px' }} field="price" header="Pris" body={priceBodyTemplate} sortable></Column>
+                    <Column headerStyle={{ width: '150px' }} field="maxSize" header="Max antal" sortable></Column>
                 </DataTable>
             </div>
         );
@@ -56,10 +56,10 @@ export default function ActivityTable(props) {
     footer = `Det finns totalt ${activity ? props.activities.length : 0} aktiviteter tillagda.`;
     return (
         <div className="p-shadow-5 p-m-5">
-            <DataTable value={props.activities} header={header} footer={footer}>
-                <Column field="name" header="Aktivitetens namn" sortable></Column>
-                <Column field="price" header="Pris" body={priceBodyTemplate} sortable></Column>
-                <Column field="maxSize" header="Max antal" sortable></Column>
+            <DataTable  scrollable scrollWidth="300px" value={props.activities} header={header} footer={footer}>
+                <Column headerStyle={{ width: '150px' }} field="name" header="Aktivitetens namn" sortable></Column>
+                <Column headerStyle={{ width: '150px' }} field="price" header="Pris" body={priceBodyTemplate} sortable></Column>
+                <Column headerStyle={{ width: '150px' }} field="maxSize" header="Max antal" sortable></Column>
             </DataTable>
         </div>
     );

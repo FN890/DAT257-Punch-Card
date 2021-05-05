@@ -25,7 +25,7 @@ export default function CreateActivityGroup() {
      */
     function onCreateActivity() {
         console.log(faq);
-        activityService.addActivity(name, price, maxPeople, isDaily).then(() => activityService.getActivities().then(data => setActivities(data)))
+        activityService.addActivity(name, price, maxPeople, isDaily, faq).then(() => activityService.getActivities().then(data => setActivities(data)))
     }
 
     const setActivity = (e) => {

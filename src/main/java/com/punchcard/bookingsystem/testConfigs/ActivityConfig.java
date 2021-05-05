@@ -15,7 +15,7 @@ public class ActivityConfig {
     @Bean
     CommandLineRunner commandLineRunner3(ActivityRepository activityRepository) {
         return args -> {
-            Activity bastu = new Activity("Bastu", 500, 7, true);
+            Activity bastu = new Activity("Bastu", 500, 7, true, "Det är varmt inne i bastun.");
             activityRepository.saveAll(List.of(bastu));
 
         };
