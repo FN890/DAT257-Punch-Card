@@ -2,12 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import 'primeflex/primeflex.css';
-import DatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import sv from "date-fns/locale/sv";
-import { is, tr } from 'date-fns/locale';
-
-registerLocale("sv", sv);
 
 let hourly = false;
 let isRemoved = false;
@@ -83,53 +77,21 @@ export default function Activity(props) {
     const getDateSelect = () => {
         if (activity === "") {
             return (
-                <DatePicker
-                    selected={startDateTime}
-                    onChange={date => setStartDateTime(date)}
-                    showTimeSelect
-                    dateFormat="d MMMM yyyy HH:mm"
-                    disabled
-                    locale="sv"
-                />
+                <div>
+
+                </div>
             )
         } else if (hourly === false) {
             return (
-                <>
-                    <div className="p-mb-2">
-                        <DatePicker
-                            selected={startDate}
-                            onChange={date => setStartDate(date)}
-                            selectsStart
-                            startDate={startDate}
-                            endDate={endDate}
-                            locale="sv"
-                            excludeDates={unDates}
-                        />
-                    </div>
-                    <div className="p-mb-2">
-                        <DatePicker
-                            selected={endDate}
-                            onChange={date => setEndDate(date)}
-                            selectsEnd
-                            startDate={startDate}
-                            endDate={endDate}
-                            minDate={startDate}
-                            locale="sv"
-                            excludeDates={unDates}
-                        />
-                    </div>
-                </>
+                <div>
+
+                </div>
             )
         } else if (hourly === true) {
             return (
-                <DatePicker
-                    selected={startDateTime}
-                    onChange={date => setStartDateTime(date)}
-                    showTimeSelect
-                    dateFormat="d MMMM yyyy HH:mm"
-                    locale="sv"
-                    filterTime={filterPassedTime}
-                />
+                <div>
+
+                </div>
             )
         }
     }
@@ -167,8 +129,8 @@ export default function Activity(props) {
         }
     });
 
-    return(
-        <ActivtyComponent/>
+    return (
+        <ActivtyComponent />
     )
 
 }
