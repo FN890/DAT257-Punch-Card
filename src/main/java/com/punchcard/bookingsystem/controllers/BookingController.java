@@ -8,7 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/booking", produces = "application/json")
@@ -57,6 +59,17 @@ public class BookingController {
                                          @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
 
         return null;
+    }
+
+    @GetMapping(path = "/pre")
+    public Map<String, Integer> calculatePreBooking(@RequestBody List<Reservation> reservations) {
+        int total = 0;
+        for (Reservation r : reservations) {
+            total += r.getPrice();
+        }
+        Map<String, Integer> value = new HashMap<>();
+        value.put("price", total);
+        return value;
     }
 
     @PostMapping
