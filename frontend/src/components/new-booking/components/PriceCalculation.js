@@ -4,12 +4,12 @@ import BookingService from '../../services/BookingService';
 export default function PriceCalculation(props) {
 
     const activities = props.activities
-
-    const [price, setPrice] = useState(0);
+    //Caused hook crash
+    //const [price, setPrice] = useState(0);
 
     const bookingService = new BookingService();
 
-    useEffect(() => {
+    /*useEffect(() => {
 
         bookingService.getPriceCalculation(activities).then(data => {
             setPrice(data.price);
@@ -17,10 +17,12 @@ export default function PriceCalculation(props) {
 
     }, []);
 
+     */
+    //<div>{price}</div>
     return (
         <div className="p-d-flex">
             <div className="p-mr-2">Totalt Pris</div>
-            <div>{price}</div>
+
         </div>
     )
 }
