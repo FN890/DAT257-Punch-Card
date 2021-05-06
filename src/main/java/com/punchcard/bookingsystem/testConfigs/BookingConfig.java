@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Configuration
 public class BookingConfig {
@@ -22,19 +23,15 @@ public class BookingConfig {
         return args -> {
 
             Customer customer = new Customer("0740123456", "John", "John@hotmail.com");
-            customerRepository.save(customer);
-
             Customer customer1 = new Customer("0740123336", "Greg", "greg@gmail.com");
-            customerRepository.save(customer1);
+
+            customerRepository.saveAll(List.of(customer, customer1));
 
             Activity activityStuga = new Activity("Stuga", 4000, 4, false, "Stugan är röd.");
-            activityRepository.save(activityStuga);
-
-            Activity activityBad = new Activity("Badtunna", 1500, 4, true, "<b>Bad<b>tunna är <b>B<b>allt");
-            activityRepository.save(activityBad);
-
+            Activity activityBad = new Activity("Badtunna", 1500, 4, true, "Badtunnan tar lite tid att värma");
             Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true, "Boat go vrom vrom");
-            activityRepository.save(activityVattenSkidor);
+
+            activityRepository.saveAll(List.of(activityStuga, activityBad, activityVattenSkidor));
 
             Booking booking3 = new Booking(customer, 10);
             booking3.setDescription("Vill boka stugan i en vecka.");
@@ -82,14 +79,9 @@ public class BookingConfig {
                     booking2);
 
 
-            bookingRepository.save(booking);
-            bookingRepository.save(booking1);
-            bookingRepository.save(booking2);
-            bookingRepository.save(booking3);
-            reservationRepository.save(reservationStuga);
-            reservationRepository.save(reservationBad);
-            reservationRepository.save(reservationSkidor);
-            reservationRepository.save(reservationSkidor2);
+            bookingRepository.saveAll(List.of(booking, booking1, booking2, booking3));
+
+            reservationRepository.saveAll(List.of(reservationStuga, reservationBad, reservationSkidor, reservationSkidor2));
 
         };
     }

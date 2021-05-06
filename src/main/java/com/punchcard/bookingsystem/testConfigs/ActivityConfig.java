@@ -16,8 +16,8 @@ public class ActivityConfig {
     CommandLineRunner commandLineRunner3(ActivityRepository activityRepository) {
         return args -> {
             Activity bastu = new Activity("Bastu", 500, 7, true, "Det är varmt inne i bastun.");
-            activityRepository.saveAll(List.of(bastu));
 
+            activityRepository.saveAll(List.of(bastu));
         };
     }
 }
