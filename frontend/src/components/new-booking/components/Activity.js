@@ -76,6 +76,10 @@ export default function Activity(props) {
         return true;
     }
 
+    const filterBlockedDates = day => {
+        return unDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
+    }
+
     const handleRemove = () => {
         isRemoved = true;
         props.removeActivity(id)
@@ -114,12 +118,13 @@ export default function Activity(props) {
                         setStartDate(startDate);
                         setEndDate(endDate);
                     }}
-                    readOnly={true}
                     focusedInput={focused}
+                    readOnly={true}
                     onFocusChange={focusedInput => {
                         setFocused(focusedInput);
                     }}
                     numberOfMonths={1}
+                    isDayBlocked={filterBlockedDates}
                 />
             )
         } else if (hourly === true) {
@@ -133,8 +138,8 @@ export default function Activity(props) {
                         setStartDate(startDate);
                         setEndDate(endDate);
                     }}
-                    readOnly={true}
                     focusedInput={focused}
+                    readOnly={true}
                     onFocusChange={focusedInput => {
                         setFocused(focusedInput);
                     }}
