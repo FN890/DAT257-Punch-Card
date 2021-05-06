@@ -12,7 +12,7 @@ export default function PriceCalculation(props) {
 
     useEffect(() => {
 
-        if (activityStates) {
+        if (activityStates.length !== 0 && activityStates[0].activityState.activity.name !== undefined) {
             bookingService.getPriceCalculation(activityStates).then(resp => {
                 setPrice(resp.price);
             });
