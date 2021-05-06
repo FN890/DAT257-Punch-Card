@@ -12,8 +12,20 @@ export default function PriceCalculation(props) {
 
     useEffect(() => {
 
-        if (activityStates.length !== 0 && activityStates[0].activityState.activity.name !== undefined) {
-            bookingService.getPriceCalculation(activityStates).then(resp => {
+        const preBookings = [];
+        activityStates.forEach(state => {
+            if (state.startTime && state.endTime && state.activity.name) {
+                preBookings.push({
+                    startTime: state.startTime,
+                    endTime: state.endTime,
+                    activityName: state.activity.name
+                });
+            }
+        });
+
+        if (preBookings.length !== 0) {
+            bookingService.getPriceCalculation(preBookings).then(resp => {
+                console.log(resp);
                 setPrice(resp.price);
             });
         }
