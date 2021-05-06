@@ -4,6 +4,7 @@ import React, {useEffect} from 'react';
 export default function BookingOverview(props) {
 
     const activities = props.activites
+    const activityStates = props.activityStates;
 
     useEffect( () => {
 
@@ -11,6 +12,6 @@ export default function BookingOverview(props) {
 
 
     return (
-       <PriceCalculation activities={activities}/>
+       <PriceCalculation activityStates={activityStates}/>
     )
 }

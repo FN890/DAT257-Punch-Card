@@ -43,11 +43,7 @@ export default function NewBooking() {
         setActivities(activitiesArray);
 
         setState(state + 1);
-        //Method to add price for this activity to total price.
-        //
-        let priceCalculation = new PriceCalculation(activitiesArray)
-        let hours = priceCalculation.calculateDuration
-        console.log(hours)
+
     }
 
     /**
@@ -150,7 +146,7 @@ export default function NewBooking() {
                 <div><Activities activities={activities} /></div>
             </div>
             <div className="p-shadow-5 p-m-3">
-                <div><BookingOverview activites={activities}/></div>
+                <div><BookingOverview activites={activities} activityStates={activityStates} /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>

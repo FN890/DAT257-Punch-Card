@@ -38,6 +38,12 @@ public class Reservation {
         this.booking = booking;
     }
 
+    public Reservation(LocalDateTime startTime, LocalDateTime endTime, Activity activity) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.activity = activity;
+    }
+
     public long getId() {
         return this.id;
     }
