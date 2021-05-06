@@ -27,7 +27,7 @@ public class ActivityController {
     }
 
     @GetMapping(path = "/name/{name}")
-    public Optional<Activity> getActivityByName(@PathVariable("name") String name) {
+    public Activity getActivityByName(@PathVariable("name") String name) {
         return activityService.getActivityByName(name);
     }
 

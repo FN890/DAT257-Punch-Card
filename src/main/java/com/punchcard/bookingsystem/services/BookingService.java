@@ -1,6 +1,8 @@
 package com.punchcard.bookingsystem.services;
 
+import com.punchcard.bookingsystem.bodies.PreBooking;
 import com.punchcard.bookingsystem.repositories.BookingRepository;
+import com.punchcard.bookingsystem.tables.Activity;
 import com.punchcard.bookingsystem.tables.Booking;
 import com.punchcard.bookingsystem.tables.Customer;
 import com.punchcard.bookingsystem.tables.Reservation;
@@ -8,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BookingService {
@@ -18,12 +18,14 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final ReservationService reservationService;
     private final CustomerService customerService;
+    private final ActivityService activityService;
 
     @Autowired
-    public BookingService(BookingRepository bookingRepository, ReservationService reservationService, CustomerService customerService) {
+    public BookingService(BookingRepository bookingRepository, ReservationService reservationService, CustomerService customerService, ActivityService activityService) {
         this.bookingRepository = bookingRepository;
         this.reservationService = reservationService;
         this.customerService = customerService;
+        this.activityService = activityService;
     }
 
     public List<Booking> getAllBookings() {
@@ -66,6 +68,18 @@ public class BookingService {
             throw new IllegalStateException("Booking customer name " + name + " does not exists.");
         }
         return bookingRepository.findByCustomerName(name);
+    }
+
+    public Map<String, Integer> calculatePreBooking(List<PreBooking> preBookings) {
+        int total = 0;
+        for (PreBooking p : preBookings) {
+            Activity a = activityService.getActivityByName(p.getActivityName());
+            Reservation r = new Reservation(p.getStartTime(), p.getEndTime(), a);
+            total += r.getPrice();
+        }
+        Map<String, Integer> value = new HashMap<>();
+        value.put("price", total);
+        return value;
     }
 
     public void addNewBooking(Booking booking) {

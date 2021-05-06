@@ -10,7 +10,7 @@ export default function PriceCalculation(props) {
 
     const bookingService = new BookingService();
 
-    useEffect(async () => {
+    useEffect(() => {
 
         if (activityStates) {
             bookingService.getPriceCalculation(activityStates).then(resp => {

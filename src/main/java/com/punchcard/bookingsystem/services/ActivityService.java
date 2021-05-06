@@ -40,13 +40,13 @@ public class ActivityService {
     }
 
 
-    public Optional <Activity> getActivityByName(String name) {
+    public Activity getActivityByName(String name) {
         Optional<Activity> optionalActivity = activityRepository.findById(name);
 
         if (optionalActivity.isEmpty()){
             throw new IllegalStateException("Activity with name " + name + " does not exists");
         }
-        return activityRepository.findById(name);
+        return optionalActivity.get();
     }
 
     /**

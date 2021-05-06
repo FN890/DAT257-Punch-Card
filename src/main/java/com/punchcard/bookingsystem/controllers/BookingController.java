@@ -1,5 +1,6 @@
 package com.punchcard.bookingsystem.controllers;
 
+import com.punchcard.bookingsystem.bodies.PreBooking;
 import com.punchcard.bookingsystem.services.BookingService;
 import com.punchcard.bookingsystem.tables.Booking;
 import com.punchcard.bookingsystem.tables.Reservation;
@@ -62,14 +63,8 @@ public class BookingController {
     }
 
     @GetMapping(path = "/pre")
-    public Map<String, Integer> calculatePreBooking(@RequestBody List<Reservation> reservations) {
-        int total = 0;
-        for (Reservation r : reservations) {
-            total += r.getPrice();
-        }
-        Map<String, Integer> value = new HashMap<>();
-        value.put("price", total);
-        return value;
+    public Map<String, Integer> calculatePreBooking(@RequestBody List<PreBooking> preBookings) {
+        return bookingService.calculatePreBooking(preBookings);
     }
 
     @PostMapping
