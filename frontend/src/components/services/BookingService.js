@@ -31,12 +31,12 @@ export default class BookingService {
      * PUT request to edit already existing booking
      */
     putPayment(id, paid) {
-        axios.put(`/api/v1/booking/${id}?paid=${paid}`).then(resp => { return resp.data })
+       return axios.put(`/api/v1/booking/${id}?paid=${paid}`).then(resp => resp.data);
     }
 
     /**
      * DELETE request to delete specific booking.
-     * @param {*} id 
+     * @param {*} id
      */
 
     deleteBooking(id) {
@@ -44,14 +44,14 @@ export default class BookingService {
     }
 
     /**
-     * POST request to create a new booking. 
-     * @param {*} groupSize 
-     * @param {*} description 
-     * @param {*} responsible 
-     * @param {*} paid 
-     * @param {*} price 
-     * @param {*} customer 
-     * @param {*} reservations 
+     * POST request to create a new booking.
+     * @param {*} groupSize
+     * @param {*} description
+     * @param {*} responsible
+     * @param {*} paid
+     * @param {*} price
+     * @param {*} customer
+     * @param {*} reservations
      */
     postBooking(groupSize, description, responsible, paid, price, customer, reservations) {
         return axios.post(`/api/v1/booking/`, {
