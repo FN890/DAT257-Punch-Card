@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from "react-router-dom";
 
 var activityInfo = [];
+var activityStates = [];
 var bookingInfo;
 let reservations = [];
 
@@ -21,17 +22,17 @@ export default function NewBooking() {
     const activityService = new ActivityService();
     const bookingService = new BookingService();
     const history = useHistory();
-
     const [state, setState] = useState(0);
+
     const [activities, setActivities] = useState([]);
-    const [activityStates, setActivityStates] = useState([]);
 
     /**
      * Adds an activity component to new booking.
      */
     const addActivity = () => {
+        let activitiesArray = activities;
         const id = uuidv4();
-        activities.push({
+        activitiesArray.push({
             "id": id, "activity": <Activity
                 activityInfo={activityInfo}
                 removeActivity={removeActivity}
@@ -39,20 +40,26 @@ export default function NewBooking() {
                 id={id}
                 onActivityStateChanged={addActivityState} />
         })
-        setActivities(activities);
+        setActivities(activitiesArray);
+
         setState(state + 1);
-        console.log(activities.length);
-        console.log(activityStates.length);
+
     }
 
     /**
     * Removes an activity component from new booking.
     */
     const removeActivity = (id) => {
-        setActivities(activities.filter(activity => activity.id !== id));
+        let activitiesArray = activities;
+        let i;
+        for (i = 0; i < activitiesArray.length; i++) {
+            if (activitiesArray[i].id == id) {
+                activitiesArray.splice(i, 1);
+                break;
+            }
+        }
         removeActivityState(id);
-        console.log(activities.length);
-        console.log(activityStates.length);
+        setActivities(activitiesArray);
     }
 
     /**
@@ -62,7 +69,7 @@ export default function NewBooking() {
      */
     const addActivityState = (id, activityState) => {
         removeActivityState(id);
-        setActivityStates(activityStates => [...activityStates, activityState]);
+        activityStates.push({ "id": id, "activityState": activityState })
     }
 
     /**
@@ -70,7 +77,18 @@ export default function NewBooking() {
      * @param {*} index 
      */
     const removeActivityState = (id) => {
-        setActivityStates(activityStates.filter(state => state.id !== id));
+        if (activityStates.length === 1) {
+            activityStates = [];
+            return;
+        } else {
+            let i;
+            for (i = 0; i < activityStates.length; i++) {
+                if (activityStates[i].id == id) {
+                    activityStates.splice(i, 1);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -112,14 +130,16 @@ export default function NewBooking() {
             })
         }
         )
+        if (activities.length === 0) {
+            addActivity();
+        }
+
     }, []);
 
     const activityChangedCallback = () => {
         //Send this function to every activity.js
         //When this is called, re-render BookingOverview.js
     }
-
-    //<div><BookingOverview activites={activities} activityStates={activityStates} /></div>
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-5 p-mb-5">
@@ -131,6 +151,7 @@ export default function NewBooking() {
                 <div><Activities activities={activities} /></div>
             </div>
             <div className="p-shadow-5 p-m-3">
+                <div><BookingOverview activites={activities} activityStates={activityStates} /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>
