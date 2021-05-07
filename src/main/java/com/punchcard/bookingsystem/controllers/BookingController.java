@@ -62,7 +62,7 @@ public class BookingController {
         return null;
     }
 
-    @GetMapping(path = "/pre")
+    @PostMapping(path = "/pre")
     public Map<String, Integer> calculatePreBooking(@RequestBody List<PreBooking> preBookings) {
         return bookingService.calculatePreBooking(preBookings);
     }
