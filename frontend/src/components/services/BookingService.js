@@ -24,9 +24,7 @@ export default class BookingService {
     }
 
     getPriceCalculation(preBookings) {
-        return axios.get('/api/v1/booking/pre', {
-            preBookings: preBookings
-        }).then(resp => resp.data);
+        return axios.get('/api/v1/booking/pre', [preBookings]).then(resp => resp.data);
     }
 
     /**
