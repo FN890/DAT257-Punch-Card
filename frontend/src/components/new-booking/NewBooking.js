@@ -77,11 +77,16 @@ export default function NewBooking() {
      * @param {*} index 
      */
     const removeActivityState = (id) => {
-        let i;
-        for (i = 0; i < activityStates.length; i++) {
-            if (activityStates[i].id == id) {
-                activityStates.splice(i, 1);
-                break;
+        if (activityStates.length === 1) {
+            activityStates = [];
+            return;
+        } else {
+            let i;
+            for (i = 0; i < activityStates.length; i++) {
+                if (activityStates[i].id == id) {
+                    activityStates.splice(i, 1);
+                    break;
+                }
             }
         }
     }
