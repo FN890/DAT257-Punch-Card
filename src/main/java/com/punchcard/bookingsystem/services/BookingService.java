@@ -31,7 +31,14 @@ public class BookingService {
     }
 
     public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+        List<Booking> bookingList = bookingRepository.findAll();
+        bookingList.sort(new Comparator<Booking>() {
+            @Override
+            public int compare(Booking o1, Booking o2) {
+                return (int) (o2.getId() - o1.getId());
+            }
+        });
+        return bookingList;
     }
 
     public List<Booking> getByCustomerPhone(String phone) {
