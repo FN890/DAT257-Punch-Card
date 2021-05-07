@@ -11,14 +11,14 @@ export default function PriceCalculation(props) {
     const bookingService = new BookingService();
 
     useEffect(() => {
-
         const preBookings = [];
         activityStates.forEach(state => {
-            if (state.startTime && state.endTime && state.activity.name) {
+            const aState = state.activityState;
+            if (aState.startTime && aState.endTime && aState.activity.name) {
                 preBookings.push({
-                    startTime: state.startTime,
-                    endTime: state.endTime,
-                    activityName: state.activity.name
+                    startTime: aState.startTime,
+                    endTime: aState.endTime,
+                    activityName: aState.activity.name
                 });
             }
         });
@@ -31,7 +31,7 @@ export default function PriceCalculation(props) {
         }
         
 
-    }, []);
+    }, [JSON.stringify(props.activityStates)]);
 
      
     return (
