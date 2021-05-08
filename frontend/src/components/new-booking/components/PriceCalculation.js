@@ -13,12 +13,11 @@ export default function PriceCalculation(props) {
     useEffect(() => {
         const preBookings = [];
         activityStates.forEach(state => {
-            const aState = state.activityState;
-            if (aState.startTime && aState.endTime && aState.activity.name) {
+            if (state.startTime && state.endTime && state.activity.name.name) {
                 preBookings.push({
-                    startTime: aState.startTime,
-                    endTime: aState.endTime,
-                    activityName: aState.activity.name
+                    startTime: state.startTime,
+                    endTime: state.endTime,
+                    activityName: state.activity.name
                 });
             }
         });

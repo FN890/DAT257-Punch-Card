@@ -2,18 +2,13 @@ import BookingInfo from "./components/BookingInfo"
 import FinishButtonGroup from "./components/FinishButtonGroup"
 import ActivitiesButtonGroup from './components/ActivitesButtonGroup';
 import Activity from "./components/Activity";
-import Activities from "./components/Activities"
 import React, { useState, useEffect } from 'react';
 import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
-import PriceCalculation from "./components/PriceCalculation";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
-import { v4 as uuidv4 } from 'uuid';
-import { useHistory } from "react-router-dom";
 
 var activityInfo = [];
-var activityStates = [];
 var bookingInfo;
 let reservations = [];
 
@@ -21,45 +16,27 @@ export default function NewBooking() {
 
     const activityService = new ActivityService();
     const bookingService = new BookingService();
-    const history = useHistory();
-    const [state, setState] = useState(0);
 
-    const [activities, setActivities] = useState([]);
+    const [activityStates, setActivityStates] = useState([]);
 
     /**
      * Adds an activity component to new booking.
      */
     const addActivity = () => {
-        let activitiesArray = activities;
-        const id = uuidv4();
-        activitiesArray.push({
-            "id": id, "activity": <Activity
-                activityInfo={activityInfo}
-                removeActivity={removeActivity}
-                reservations={reservations}
-                id={id}
-                onActivityStateChanged={addActivityState} />
+        const states = activityStates;
+        states.push({
+            "id": states.length, "startTime": null, "endTime": null,
+            "activity": { "name": null }, "activityInfo": activityInfo, "reservations": reservations
         })
-        setActivities(activitiesArray);
-
-        setState(state + 1);
-
+        setActivityStates([...states]);
     }
 
     /**
     * Removes an activity component from new booking.
     */
     const removeActivity = (id) => {
-        let activitiesArray = activities;
-        let i;
-        for (i = 0; i < activitiesArray.length; i++) {
-            if (activitiesArray[i].id == id) {
-                activitiesArray.splice(i, 1);
-                break;
-            }
-        }
-        removeActivityState(id);
-        setActivities(activitiesArray);
+        const states = activityStates.filter(object => object.id !== id);
+        setActivityStates(states);
     }
 
     /**
@@ -67,28 +44,12 @@ export default function NewBooking() {
      * @param {*} index 
      * @param {*} activityState 
      */
-    const addActivityState = (id, activityState) => {
-        removeActivityState(id);
-        activityStates.push({ "id": id, "activityState": activityState })
-    }
-
-    /**
-     * Removes an activity state from activityStates.
-     * @param {*} index 
-     */
-    const removeActivityState = (id) => {
-        if (activityStates.length === 1) {
-            activityStates = [];
-            return;
-        } else {
-            let i;
-            for (i = 0; i < activityStates.length; i++) {
-                if (activityStates[i].id == id) {
-                    activityStates.splice(i, 1);
-                    break;
-                }
-            }
-        }
+    const changeActivityState = (state) => {
+        const states = activityStates.filter(object => object.id !== state.id);
+        new Promise(() => {
+            states.push(state);
+            states.sort((a, b) => a.id - b.id)
+        }).then(setActivityStates(states));
     }
 
     /**
@@ -104,13 +65,12 @@ export default function NewBooking() {
      */
     const createBookingPressed = () => {
         let reservations = []
-        let i;
-        for (i = 0; i < activityStates.length; i++) {
-            reservations.push(activityStates[i].activityState);
+        for (let i = 0; i < activityStates.length; i++) {
+            reservations.push({ "startTime": activityStates[i].startTime, "endTime": activityStates[i].endTime, "activity": { "name": activityStates[i].activity.name.name } });
         }
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
             false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then(() => {
-                history.push("/allabokningar")
+                // TODO
             });
     }
 
@@ -128,18 +88,13 @@ export default function NewBooking() {
                     reservations.push(reservation)
                 })
             })
-        }
-        )
-        if (activities.length === 0) {
-            addActivity();
-        }
-
+        })
     }, []);
 
-    const activityChangedCallback = () => {
-        //Send this function to every activity.js
-        //When this is called, re-render BookingOverview.js
-    }
+    useEffect(() => {
+       
+    }, [activityStates]);
+
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-5 p-mb-5">
@@ -147,11 +102,11 @@ export default function NewBooking() {
                 <div><BookingInfo onInfoChanged={addInfo} /></div>
             </div>
             <div className="p-shadow-5 p-m-3">
-                <div><ActivitiesButtonGroup onAddActivity={addActivity} onRemoveActivity={removeActivity} /></div>
-                <div><Activities activities={activities} /></div>
+                <div><ActivitiesButtonGroup onAddActivity={addActivity} /></div>
+                <div>{activityStates.map((state) => <Activity activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} />)}</div>
             </div>
             <div className="p-shadow-5 p-m-3">
-                <div><BookingOverview activites={activities} activityStates={activityStates} /></div>
+                <div><BookingOverview activityStates={activityStates}/></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>

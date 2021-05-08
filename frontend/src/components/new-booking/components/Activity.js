@@ -9,22 +9,20 @@ import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid';
 
 let hourly = false;
-let isRemoved = false;
 
 export default function Activity(props) {
 
-    const activityInfo = props.activityInfo;
-    const id = props.id;
-    const reservations = props.reservations;
-
-    /**
-     * Method for sending the latest activity state to the parent component.
-     */
+    const activityState = props.activityState;
     const onActivityStateChanged = props.onActivityStateChanged;
+    const onRemoveClicked = props.onRemoveClicked;
+
+    const reservations = activityState.reservations;
+    const id = activityState.id;
+    const activityInfo = activityState.activityInfo;
 
     const [activity, setActivity] = useState("");
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(activityState.startTime);
+    const [endDate, setEndDate] = useState(activityState.endTime);
     const [focused, setFocused] = useState(null);
     const [update, setUpdate] = useState(0);
     const [unDates, setUnDates] = useState([]);
@@ -57,7 +55,6 @@ export default function Activity(props) {
             }
 
         })
-
         setUnDates(unavailableDates)
         setUnTimes(unavailableTimes)
         setUpdate(update + 1)
@@ -81,9 +78,7 @@ export default function Activity(props) {
     }
 
     const handleRemove = () => {
-        isRemoved = true;
-        props.removeActivity(id)
-        setUpdate(update + 1)
+        onRemoveClicked(activityState.id);
     }
 
     const getDateSelect = () => {
@@ -150,37 +145,29 @@ export default function Activity(props) {
     }
 
     const ActivtyComponent = () => {
-        if (isRemoved) {
-            return (
-                <div>
-                </div>
-            )
-        } else {
-            return (
-                <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
-                    <div className="p-d-flex p-my-1 ">
-                        <span className="p-float-label" style={{ width: '80%' }}>
-                            <Dropdown id="dropdown" optionLabel="name" options={activityInfo} value={activity} onChange={(e) => setSelectedActivity(e.value)} />
-                            <label htmlFor="dropdown">Aktivitet</label>
-                        </span>
-                        <div className="p-ml-auto p-mb-2">
-                            <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={() => handleRemove()} />
-                        </div>
+        return (
+            <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
+                <div className="p-d-flex p-my-1 ">
+                    <span className="p-float-label" style={{ width: '80%' }}>
+                        <Dropdown id="dropdown" optionLabel="name" options={activityInfo} value={activity} onChange={(e) => setSelectedActivity(e.value)} />
+                        <label htmlFor="dropdown">Aktivitet</label>
+                    </span>
+                    <div className="p-ml-auto p-mb-2">
+                        <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={() => handleRemove()} />
                     </div>
-                    {getDateSelect()}
                 </div>
-
-            )
-        }
+                {getDateSelect()}
+            </div>
+        )
     }
 
     useEffect(() => {
-        isRemoved = false;
-        if (activity != null) {
-            let state = { "startTime": startDate, "endTime": endDate, "activity": { "name": activity.name } };
-            onActivityStateChanged(id, state);
-        }
-    });
+        let state = {
+            "id": id, "startTime": startDate, "endTime": endDate,
+            "activity": { "name": activity }, "activityInfo": activityInfo, "reservations": reservations
+        };
+        onActivityStateChanged(state);
+    }, [activity, startDate, endDate]);
 
     return (
         <ActivtyComponent />
