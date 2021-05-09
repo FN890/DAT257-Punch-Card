@@ -7,6 +7,8 @@ import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
+import { v4 as uuidv4 } from 'uuid';
+import moment from "moment";
 
 var activityInfo = [];
 var bookingInfo;
@@ -24,8 +26,9 @@ export default function NewBooking() {
      */
     const addActivity = () => {
         const states = activityStates;
+        const id = moment().valueOf();
         states.push({
-            "id": states.length, "startTime": null, "endTime": null,
+            "id": id, "startTime": null, "endTime": null,
             "activity": { "name": null }, "activityInfo": activityInfo, "reservations": reservations
         })
         setActivityStates([...states]);
@@ -92,7 +95,7 @@ export default function NewBooking() {
     }, []);
 
     useEffect(() => {
-       
+        console.log(activityStates)
     }, [activityStates]);
 
 
@@ -103,10 +106,10 @@ export default function NewBooking() {
             </div>
             <div className="p-shadow-5 p-m-3">
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} /></div>
-                <div>{activityStates.map((state) => <Activity activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} />)}</div>
+                <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} />)}</div>
             </div>
             <div className="p-shadow-5 p-m-3">
-                <div><BookingOverview activityStates={activityStates}/></div>
+                <div><BookingOverview activityStates={activityStates} /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>
