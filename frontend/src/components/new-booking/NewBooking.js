@@ -7,8 +7,8 @@ import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
-import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 var activityInfo = [];
 var bookingInfo;
@@ -20,6 +20,7 @@ export default function NewBooking() {
     const bookingService = new BookingService();
 
     const [activityStates, setActivityStates] = useState([]);
+    const history = useHistory();
 
     /**
      * Adds an activity component to new booking.
@@ -71,10 +72,10 @@ export default function NewBooking() {
         for (let i = 0; i < activityStates.length; i++) {
             reservations.push({ "startTime": activityStates[i].startTime, "endTime": activityStates[i].endTime, "activity": { "name": activityStates[i].activity.name.name } });
         }
+
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then(() => {
-                // TODO
-            });
+            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations);
+
     }
 
     useEffect(() => {
@@ -93,11 +94,6 @@ export default function NewBooking() {
             })
         })
     }, []);
-
-    useEffect(() => {
-        console.log(activityStates)
-    }, [activityStates]);
-
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-5 p-mb-5">

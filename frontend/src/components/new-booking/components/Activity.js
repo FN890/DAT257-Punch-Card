@@ -34,7 +34,6 @@ export default function Activity(props) {
     const setSelectedActivity = (value) => {
         hourly = value.hourly;
         setActivity(value);
-        //console.log(reservations)
 
         let unavailableDates = [];
         let unavailableTimes = []

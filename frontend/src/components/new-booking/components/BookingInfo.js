@@ -4,6 +4,7 @@ import { InputMask } from 'primereact/inputmask';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import 'primeflex/primeflex.css';
+import { is } from 'date-fns/locale';
 
 export default function BookingInfo(props) {
 
@@ -25,7 +26,7 @@ export default function BookingInfo(props) {
             "groupSize": numberOfStudent, "paid": isPaid, "description": notes,
             "responsible": responsible, "customerName": customer, "customerPhone": phone, "email": email
         });
-    });
+    }, [responsible, isPaid, email, customer, phone, notes, numberOfStudent]);
 
     return (
         <div>
