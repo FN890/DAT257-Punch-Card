@@ -1,6 +1,7 @@
 package com.punchcard.bookingsystem.services;
 
 import com.punchcard.bookingsystem.tables.Activity;
+import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,10 +21,10 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendEmail(String to, List<Activity> activityList) {
+    public void sendEmail(String to, List<Reservation> reservations) {
         SimpleMailMessage message = new SimpleMailMessage();
 
-        String activityMessage = creatFAQMessage(activityList);
+        String activityMessage = creatFAQMessage(reservations);
 
         message.setFrom(from);
         message.setTo(to);
@@ -33,13 +34,15 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    private String creatFAQMessage(List<Activity> activityList) {
+    private String creatFAQMessage(List<Reservation> reservations) {
         StringBuilder message = new StringBuilder();
 
-        for (Activity activity : activityList) {
-            message.append("<b>" + activity.getName() + "</b>\n");
-            message.append(activity.getFaq() + "\n");
+        for (Reservation reservation : reservations) {
+            message.append(reservation.getActivity().getName() + "\n");
+            message.append(reservation.getStartTime() + " - " + reservation.getEndTime() + "\n");
+            message.append("\n" + reservation.getActivity().getFaq() + "\n");
         }
+        message.append("\nTack för bokningen /Punch Card");
         return message.toString();
     }
 }

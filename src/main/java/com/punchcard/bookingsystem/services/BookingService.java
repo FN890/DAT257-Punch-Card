@@ -96,20 +96,20 @@ public class BookingService {
 
         Customer customer = new Customer();
 
+        Activity activity = new Activity();
+
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
 
         List<Reservation> reservations = new ArrayList();
 
-        List<Activity> activityList = new ArrayList<>();
-
         for (Reservation r : booking.getReservations()) {
+            activity = activityService.getActivityByName(r.getActivity().getName());
             if (!reservationService.isAvailable(r)) {
                 throw new IllegalStateException("Overlapping reservation " + r.getActivity().getName() + " in this booking.");
             }
-            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
+            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), activity, newBooking);
             reservations.add(reservation);
-            activityList.add(r.getActivity());
         }
 
         try {
@@ -123,7 +123,7 @@ public class BookingService {
         newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
         bookingRepository.save(newBooking);
-        emailService.sendEmail(customer.getEmail(), activityList);
+        emailService.sendEmail(customer.getEmail(), reservations);
     }
 
     @Transactional
