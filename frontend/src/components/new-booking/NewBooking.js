@@ -95,6 +95,12 @@ export default function NewBooking() {
         })
     }, []);
 
+    useEffect(() => {
+        if(activityStates.length == 0){
+            addActivity();
+        }
+    }, [activityStates]);
+
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-3 p-mt-3 p-mb-5">
             <div className="p-shadow-3 p-m-3">
