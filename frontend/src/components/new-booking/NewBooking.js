@@ -11,7 +11,6 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 var activityInfo = [];
-var bookingInfo;
 let reservations = [];
 
 export default function NewBooking() {
@@ -20,6 +19,7 @@ export default function NewBooking() {
     const bookingService = new BookingService();
 
     const [activityStates, setActivityStates] = useState([]);
+    const [bookingInfo, setBookingInfo] = useState({});
     const history = useHistory();
 
     /**
@@ -61,7 +61,7 @@ export default function NewBooking() {
      * @param {*} info 
      */
     const addInfo = (info) => {
-        bookingInfo = info;
+        setBookingInfo(info);
     }
 
     /**
