@@ -1,5 +1,6 @@
 import PriceCalculation from "./PriceCalculation"
 import React, {useEffect} from 'react';
+import {Divider} from "primereact/divider";
 
 export default function BookingOverview(props) {
 
@@ -12,6 +13,9 @@ export default function BookingOverview(props) {
 
 
     return (
-       <PriceCalculation activityStates={activityStates}/>
+        <div className="p-m-3">
+            <PriceCalculation activityStates={activityStates}/>
+            <Divider/>
+        </div>
     )
 }

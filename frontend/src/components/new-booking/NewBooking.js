@@ -96,15 +96,15 @@ export default function NewBooking() {
     }, []);
 
     return (
-        <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-5 p-mb-5">
-            <div className="p-shadow-5 p-m-3">
+        <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-3 p-mt-3 p-mb-5">
+            <div className="p-shadow-3 p-m-3">
                 <div><BookingInfo onInfoChanged={addInfo} /></div>
             </div>
-            <div className="p-shadow-5 p-m-3">
+            <div className="p-shadow-3 p-m-3">
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} /></div>
                 <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} />)}</div>
             </div>
-            <div className="p-shadow-5 p-m-3">
+            <div className="p-shadow-3 p-m-3">
                 <div><BookingOverview activityStates={activityStates} /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>

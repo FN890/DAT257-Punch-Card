@@ -41,7 +41,7 @@ export default function ActivityTable(props) {
      */
     if (props.activities === undefined) {
         return (
-            <div className="p-shadow-5 p-m-5">
+            <div className="p-shadow-3 p-m-5">
                 <DataTable style={{ width: '100%' }} scrollable scrollWidth="300px" value={activity} header={header} footer={footer}>
                     <Column  headerStyle={{ width: '150px' }} field="name" header="Aktivitetens namn" sortable></Column>
                     <Column headerStyle={{ width: '150px' }} field="price" header="Pris" body={priceBodyTemplate} sortable></Column>
@@ -55,7 +55,7 @@ export default function ActivityTable(props) {
      */
     footer = `Det finns totalt ${activity ? props.activities.length : 0} aktiviteter tillagda.`;
     return (
-        <div className="p-shadow-5 p-m-5">
+        <div className="p-shadow-3 p-m-5">
             <DataTable  scrollable scrollWidth="300px" value={props.activities} header={header} footer={footer}>
                 <Column headerStyle={{ width: '150px' }} field="name" header="Aktivitetens namn" sortable></Column>
                 <Column headerStyle={{ width: '150px' }} field="price" header="Pris" body={priceBodyTemplate} sortable></Column>

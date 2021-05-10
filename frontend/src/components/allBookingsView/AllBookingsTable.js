@@ -110,7 +110,7 @@ export default function AllBookingsTable() {
 
     let footer = `Det finns totalt ${booking ? booking.length : 0} bokningar.`;
     return (
-        <div className="p-shadow-5 p-m-5">
+        <div className="p-shadow-3 p-m-5">
             <DataTable footer={footer} value={booking} scrollable scrollWidth="300px" style={{width: '100%'}}
                        selection={selectedBooking}
                        onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
