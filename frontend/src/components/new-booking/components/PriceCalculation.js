@@ -27,6 +27,8 @@ export default function PriceCalculation(props) {
                 console.log(resp);
                 setPrice(resp.price);
             });
+        } else {
+            setPrice(0);
         }
         
 
