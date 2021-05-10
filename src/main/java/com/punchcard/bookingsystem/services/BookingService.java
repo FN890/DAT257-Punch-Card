@@ -127,31 +127,31 @@ public class BookingService {
     }
 
     @Transactional
-    public void updateBooking(Long id, List<Reservation> reservations, String description, String responsible, boolean paid, Integer price) {
-        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new IllegalStateException(
+    public void updateBooking(Long id, Booking newBooking) {
+        Booking oldBooking = bookingRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "Booking with id " + id + " does not exists"));
 
-        if (reservations != null && !reservations.isEmpty() && !reservations.equals(booking.getReservations())) {
-            booking.setReservations(reservations);
+        if (newBooking.getReservations() != null && !newBooking.getReservations().isEmpty() && !newBooking.getReservations().equals(oldBooking.getReservations())) {
+            oldBooking.setReservations(newBooking.getReservations());
         }
 
-        if (description != null && !description.equals(booking.getDescription())) {
-            booking.setDescription(description);
+        if (newBooking.getDescription() != null && !newBooking.getDescription().equals(oldBooking.getDescription())) {
+            oldBooking.setDescription(newBooking.getDescription());
         }
 
-        if (responsible != null && !responsible.equals(booking.getResponsible())) {
-            booking.setResponsible(responsible);
+        if (newBooking.getResponsible() != null && !newBooking.getResponsible().equals(oldBooking.getResponsible())) {
+            oldBooking.setResponsible(newBooking.getResponsible());
         }
 
-        if (paid != booking.isPaid()) {
-            booking.setPaid(paid);
+        if (newBooking.isPaid() != oldBooking.isPaid()) {
+            oldBooking.setPaid(newBooking.isPaid());
         }
 
-        if (price != null && price != booking.getPrice()) {
-            booking.setPrice(price);
+        if (newBooking.getPrice() != oldBooking.getPrice()) {
+            oldBooking.setPrice(newBooking.getPrice());
         }
 
-        bookingRepository.save(booking);
+        bookingRepository.save(newBooking);
     }
 
     public void deleteBooking(Long id) {
