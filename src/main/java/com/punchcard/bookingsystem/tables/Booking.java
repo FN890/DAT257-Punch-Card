@@ -23,6 +23,9 @@ public class Booking {
 
     private Integer price = null;
 
+    @Column(nullable = false)
+    private boolean archived = false;
+
     @ManyToOne
     @JoinColumn(name = "customer_phone", nullable = false)
     private Customer customer;
@@ -67,6 +70,10 @@ public class Booking {
         }
 
         return price;
+    }
+
+    public boolean isArchived() {
+        return archived;
     }
 
     public Customer getCustomer() {
@@ -119,6 +126,10 @@ public class Booking {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     public void setCustomer(Customer customer) {

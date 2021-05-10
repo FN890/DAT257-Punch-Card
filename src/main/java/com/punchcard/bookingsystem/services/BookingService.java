@@ -151,6 +151,10 @@ public class BookingService {
             oldBooking.setPrice(newBooking.getPrice());
         }
 
+        if (newBooking.isArchived() != oldBooking.isArchived()) {
+            oldBooking.setArchived(newBooking.isArchived());
+        }
+
         bookingRepository.save(newBooking);
     }
 
