@@ -53,7 +53,7 @@ export default function BookingInfo(props) {
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
-                    <InputText id="name" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <InputText id="name" keyfilter="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <label htmlFor="name">E-post</label>
                 </span>
             </div>
