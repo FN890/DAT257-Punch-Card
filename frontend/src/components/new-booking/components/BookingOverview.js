@@ -24,8 +24,10 @@ export default function BookingOverview(props) {
                     </div>
                 )
             }
-            console.log(listActivity)
         });
+        if(activityStates.length > 0 && activityStates[0].activity.name){
+            listActivity.push(<Divider/>)
+        }
         setAct(listActivity)
     }, [activityStates]);
 
@@ -33,7 +35,6 @@ export default function BookingOverview(props) {
     return (
         <div className="p-m-3">
             {act}
-            <Divider/>
             <PriceCalculation activityStates={activityStates}/>
         </div>
     )
