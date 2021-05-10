@@ -5,6 +5,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import 'primeflex/primeflex.css';
 import { is } from 'date-fns/locale';
+import {Checkbox} from "primereact/checkbox";
 
 export default function BookingInfo(props) {
 
@@ -41,12 +42,6 @@ export default function BookingInfo(props) {
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
-                    <InputText id="name" value={isPaid} onChange={(e) => setPaid(e.target.value)} />
-                    <label htmlFor="name">Betalat</label>
-                </span>
-            </div>
-            <div className="p-d-flex p-mx-5 p-mb-5">
-                <span className="p-float-label">
                     <InputText id="name" value={customer} onChange={(e) => setCustomer(e.target.value)} />
                     <label htmlFor="name">Kundnamn</label>
                 </span>
@@ -73,6 +68,12 @@ export default function BookingInfo(props) {
                 <span className="p-float-label">
                     <InputTextarea id="textarea" value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} autoResize />
                     <label htmlFor="textarea">Anteckningar</label>
+                </span>
+            </div>
+            <div className="p-d-flex p-mx-5 p-mb-5">
+                <div className="p-text-normal">Betalat: </div>
+                <span className="p-ml-2">
+                    <Checkbox onChange={e => setPaid(e.checked)} checked={isPaid}></Checkbox>
                 </span>
             </div>
         </div>
