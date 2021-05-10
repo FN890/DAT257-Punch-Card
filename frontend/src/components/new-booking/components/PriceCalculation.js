@@ -17,7 +17,7 @@ export default function PriceCalculation(props) {
                 preBookings.push({
                     startTime: state.startTime,
                     endTime: state.endTime,
-                    activityName: state.activity.name
+                    activityName: state.activity.name.name
                 });
             }
         });
@@ -30,7 +30,7 @@ export default function PriceCalculation(props) {
         }
         
 
-    }, [JSON.stringify(props.activityStates)]);
+    });
 
      
     return (
