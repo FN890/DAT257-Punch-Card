@@ -116,9 +116,9 @@ export default function AllBookingsTable() {
                        onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
                        header={renderHeader(globalFilter)} globalFilter={globalFilter}>
                 <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
-                <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '120px'}}></Column>
-                <Column field="id" header="Boknings-Id" headerStyle={{width: '150px'}} sortable></Column>
-                <Column field="groupSize" header="Antal personer" headerStyle={{width: '180px'}} sortable></Column>
+                <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
+                <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
+                <Column field="groupSize" header="Antal personer" headerStyle={{width: '100px'}} sortable></Column>
                 {/*<Column field="startTime" header="Start datum " headerStyle={{ width: '160px' }} sortable></Column>
                     <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column> */}
                 <Column field="description" header="Övrigt" headerStyle={{width: '300px'}}></Column>
