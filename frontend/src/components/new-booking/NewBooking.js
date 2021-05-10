@@ -2,13 +2,14 @@ import BookingInfo from "./components/BookingInfo"
 import FinishButtonGroup from "./components/FinishButtonGroup"
 import ActivitiesButtonGroup from './components/ActivitesButtonGroup';
 import Activity from "./components/Activity";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import { Toast } from 'primereact/toast';
 
 var activityInfo = [];
 let reservations = [];
@@ -20,6 +21,7 @@ export default function NewBooking() {
 
     const [activityStates, setActivityStates] = useState([]);
     const [bookingInfo, setBookingInfo] = useState({});
+    const toast = useRef(null);
     const history = useHistory();
 
     /**
@@ -67,15 +69,24 @@ export default function NewBooking() {
     /**
      * Collects the relevant data and sends a POST request with BookingService.
      */
-    const createBookingPressed = async () => {
+    const createBookingPressed = () => {
         let reservations = []
         for (let i = 0; i < activityStates.length; i++) {
             reservations.push({ "startTime": activityStates[i].startTime, "endTime": activityStates[i].endTime, "activity": { "name": activityStates[i].activity.name.name } });
         }
 
-        await bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations);
-            history.push("/allabokningar");
+        bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
+            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                displayError(error.response.data.status, error.response.data.message);
+                console.log(error.response.data);
+            });
+
+    }
+
+    const displayError = (code, message) => {
+        toast.current.show({ severity: 'error', summary: code + " - Något gick fel!", detail: message, life: 7500 });
     }
 
     useEffect(() => {
@@ -96,13 +107,14 @@ export default function NewBooking() {
     }, []);
 
     useEffect(() => {
-        if(activityStates.length == 0){
+        if (activityStates.length == 0) {
             addActivity();
         }
     }, [activityStates]);
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-3 p-mt-3 p-mb-5">
+            <Toast ref={toast} />
             <div className="p-shadow-3 p-m-3">
                 <div><BookingInfo onInfoChanged={addInfo} /></div>
             </div>
