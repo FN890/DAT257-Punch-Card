@@ -7,6 +7,8 @@ import com.punchcard.bookingsystem.tables.Booking;
 import com.punchcard.bookingsystem.tables.Customer;
 import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -72,11 +74,11 @@ public class BookingService {
         return bookingRepository.findByCustomerEmail(email);
     }
 
-    public List<Booking> getByCustomerName(String name) {
+    public ResponseEntity getByCustomerName(String name) {
         if (bookingRepository.findByCustomerName(name).isEmpty()) {
-            throw new IllegalStateException("Booking customer name " + name + " does not exists.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No booking with customer " + name + " exists");
         }
-        return bookingRepository.findByCustomerName(name);
+        return ResponseEntity.ok(bookingRepository.findByCustomerName(name));
     }
 
     public Map<String, Integer> calculatePreBooking(List<PreBooking> preBookings) {

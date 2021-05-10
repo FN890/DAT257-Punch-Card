@@ -6,6 +6,7 @@ import com.punchcard.bookingsystem.tables.Booking;
 import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -45,7 +46,7 @@ public class BookingController {
     }
 
     @GetMapping(path = "/customer/name/{name}")
-    public List<Booking> getByCustomerName(@PathVariable String name) {
+    public ResponseEntity getByCustomerName(@PathVariable String name) {
         return bookingService.getByCustomerName(name);
     }
 
