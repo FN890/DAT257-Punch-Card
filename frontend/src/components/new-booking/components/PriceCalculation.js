@@ -4,7 +4,7 @@ import BookingService from '../../services/BookingService';
 export default function PriceCalculation(props) {
 
     const activityStates = props.activityStates;
-    console.log(activityStates);
+    //console.log(activityStates);
 
     const [price, setPrice] = useState(0);
 
@@ -24,7 +24,7 @@ export default function PriceCalculation(props) {
 
         if (preBookings.length !== 0) {
             bookingService.getPriceCalculation(preBookings).then(resp => {
-                console.log(resp);
+                //console.log(resp);
                 setPrice(resp.price);
             });
         } else {
@@ -37,8 +37,8 @@ export default function PriceCalculation(props) {
      
     return (
         <div className="p-d-flex">
-            <div className="p-mr-2">Totalt Pris:</div>
-            <div>{price}</div>
+            <div className="p-ml-auto p-mr-2">Totalt Pris:</div>
+            <div className="p-mr-3">{price}</div>
         </div>
     )
 }
