@@ -73,13 +73,8 @@ public class BookingController {
     }
 
     @PutMapping(path = "/{id}")
-    public void updateBooking(@PathVariable("id") Long id,
-                              @RequestParam(required = false) List<Reservation> reservations,
-                              @RequestParam(required = false) String description,
-                              @RequestParam(required = false) String responsible,
-                              @RequestParam(required = false) boolean paid,
-                              @RequestParam(required = false) Integer price) {
-        bookingService.updateBooking(id, reservations, description, responsible, paid, price);
+    public void updateBooking(@PathVariable("id") Long id, @RequestBody Booking booking) {
+        bookingService.updateBooking(id, booking);
     }
 
     @DeleteMapping(path = "/{id}")
