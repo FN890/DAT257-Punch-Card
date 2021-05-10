@@ -67,15 +67,15 @@ export default function NewBooking() {
     /**
      * Collects the relevant data and sends a POST request with BookingService.
      */
-    const createBookingPressed = () => {
+    const createBookingPressed = async () => {
         let reservations = []
         for (let i = 0; i < activityStates.length; i++) {
             reservations.push({ "startTime": activityStates[i].startTime, "endTime": activityStates[i].endTime, "activity": { "name": activityStates[i].activity.name.name } });
         }
 
-        bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
+        await bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
             false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations);
-
+            history.push("/allabokningar");
     }
 
     useEffect(() => {
