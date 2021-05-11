@@ -5,6 +5,7 @@ import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,5 +98,18 @@ public class CustomerService {
             throw new IllegalStateException("Customer with email " + email + " does not exists");
         }
         return customerRepository.findCustomerByEmail(email);
+    }
+
+    @Transactional
+    public void updateCustomer (Long id, Customer newCustomer) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalStateException("Kund med " + id + " existerar inte"));
+
+        if (newCustomer != null && newCustomer != customer) {
+            customer.setPhoneNr(newCustomer.getPhoneNr());
+            customer.setName(newCustomer.getName());
+            customer.setEmail(newCustomer.getEmail());
+        }
+
+        customerRepository.save(customer);
     }
 }

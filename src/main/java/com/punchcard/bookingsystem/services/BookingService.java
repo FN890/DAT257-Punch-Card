@@ -170,6 +170,10 @@ public class BookingService {
             oldBooking.setArchived(newBooking.isArchived());
         }
 
+        if (newBooking.getCustomer() != oldBooking.getCustomer()) {
+            customerService.updateCustomer(oldBooking.getCustomer().getId(), newBooking.getCustomer());
+        }
+
         bookingRepository.save(oldBooking);
 
         return ResponseEntity.ok("Bokning uppdaterad");
