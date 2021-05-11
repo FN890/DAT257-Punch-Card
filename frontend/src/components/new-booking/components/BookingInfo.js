@@ -4,7 +4,6 @@ import { InputMask } from 'primereact/inputmask';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import 'primeflex/primeflex.css';
-import { is } from 'date-fns/locale';
 import {Checkbox} from "primereact/checkbox";
 
 export default function BookingInfo(props) {
