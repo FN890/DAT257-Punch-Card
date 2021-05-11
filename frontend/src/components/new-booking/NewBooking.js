@@ -76,8 +76,8 @@ export default function NewBooking() {
         }
 
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            false, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
-                console.log(response);
+            bookingInfo.paid, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
+                //console.log(response);
             }).catch((error) => {
                 displayError(error.response.data.status, error.response.data.message);
                 console.log(error.response.data);

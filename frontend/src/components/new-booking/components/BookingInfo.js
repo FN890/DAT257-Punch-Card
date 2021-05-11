@@ -15,7 +15,7 @@ export default function BookingInfo(props) {
     const onInfoChanged = props.onInfoChanged;
 
     const [responsible, setResponsible] = useState('');
-    const [isPaid, setPaid] = useState('');
+    const [isPaid, setPaid] = useState(false);
     const [email, setEmail] = useState('');
     const [customer, setCustomer] = useState('');
     const [phone, setPhone] = useState('');

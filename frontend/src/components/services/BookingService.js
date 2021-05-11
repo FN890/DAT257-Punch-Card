@@ -54,6 +54,15 @@ export default class BookingService {
      * @param {*} reservations
      */
     postBooking(groupSize, description, responsible, paid, price, customer, reservations) {
+
+        console.log(groupSize)
+        console.log(description)
+        console.log(responsible)
+        console.log(paid)
+        console.log(price)
+        console.log(customer)
+        console.log(reservations)
+
         return axios.post(`/api/v1/booking/`, {
             "groupSize": groupSize,
             "description": description,

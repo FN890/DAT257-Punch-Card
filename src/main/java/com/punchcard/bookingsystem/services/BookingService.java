@@ -100,6 +100,7 @@ public class BookingService {
 
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
+        newBooking.setPaid(booking.isPaid());
 
         List<Reservation> reservations = new ArrayList();
 
