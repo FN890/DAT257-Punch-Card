@@ -26,4 +26,8 @@ public class ReservationService {
         return reservationRepository.findOccupied(reservation.getStartTime(), reservation.getEndTime(), reservation.getActivity().getName()).isEmpty();
     }
 
+    public void deleteReservationById(Long id) {
+        reservationRepository.deleteById(id);
+    }
+
 }

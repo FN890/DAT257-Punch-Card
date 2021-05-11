@@ -98,19 +98,16 @@ public class BookingService {
 
         Customer customer = new Customer();
 
-        Activity activity = new Activity();
-
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
 
         List<Reservation> reservations = new ArrayList();
 
         for (Reservation r : booking.getReservations()) {
-            activity = activityService.getActivityByName(r.getActivity().getName());
             if (!reservationService.isAvailable(r)) {
                 throw new IllegalStateException("Overlapping reservation " + r.getActivity().getName() + " in this booking.");
             }
-            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), activity, newBooking);
+            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
         }
 
@@ -129,12 +126,26 @@ public class BookingService {
     }
 
     @Transactional
-    public void updateBooking(Long id, Booking newBooking) {
+    public ResponseEntity updateBooking(Long id, Booking newBooking) {
         Booking oldBooking = bookingRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "Booking with id " + id + " does not exists"));
 
         if (newBooking.getReservations() != null && !newBooking.getReservations().isEmpty() && !newBooking.getReservations().equals(oldBooking.getReservations())) {
-            oldBooking.setReservations(newBooking.getReservations());
+            for (Reservation reservation : oldBooking.getReservations()) {
+                reservationService.deleteReservationById(reservation.getId());
+            }
+
+            List<Reservation> reservationList = new ArrayList<>();
+
+            for (Reservation reservation : newBooking.getReservations()) {
+                if (!reservationService.isAvailable(reservation)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                            "Överlappande reservation: " + reservation.getActivity().getName() + " på datum: " + reservation.getStartTime() + "-" + reservation.getEndTime());
+                }
+                Reservation r = new Reservation(reservation.getStartTime(), reservation.getEndTime(), reservation.getActivity(), newBooking);
+                reservationList.add(r);
+            }
+            oldBooking.setReservations(reservationList);
         }
 
         if (newBooking.getDescription() != null && !newBooking.getDescription().equals(oldBooking.getDescription())) {
@@ -157,7 +168,9 @@ public class BookingService {
             oldBooking.setArchived(newBooking.isArchived());
         }
 
-        bookingRepository.save(newBooking);
+        bookingRepository.save(oldBooking);
+
+        return ResponseEntity.ok("Bokning uppdaterad");
     }
 
     public void deleteBooking(Long id) {
