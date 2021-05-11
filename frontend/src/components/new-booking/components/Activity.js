@@ -18,6 +18,9 @@ export default function Activity(props) {
     const onActivityStateChanged = props.onActivityStateChanged;
     const onRemoveClicked = props.onRemoveClicked;
 
+    const updateUnavailableDates = props.updateUnavailableDates;
+    const unavailableDates = props.unAvailableDates
+
     const reservations = activityState.reservations;
     const id = activityState.id;
     const activityInfo = activityState.activityInfo;
@@ -54,13 +57,21 @@ export default function Activity(props) {
                     unavailableTimes.push(new Date(reservation.startTime))
                     unavailableTimes.push(new Date(reservation.endTime))
                 }
-            } else {
             }
-
         })
+        if (!hourly) {
+            let startDate2 = startDate
+            let endDate2 = endDate
+            while (startDate2 < endDate2) {
+                unavailableDates.push(new Date(startDate2))
+                startDate2.setDate(startDate2.getDate() + 1)
+            }
+        }
+
         setUnDates(unavailableDates)
         setUnTimes(unavailableTimes)
         setUpdate(update + 1)
+        updateUnavailableDates(unavailableDates)
     }
     const filterPassedTime = time => {
         let startTime = null;
@@ -77,11 +88,25 @@ export default function Activity(props) {
     }
 
     const filterBlockedDates = day => {
-        return unDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
+        if(unavailableDates !== undefined) {
+            return unavailableDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
+        }else{
+            return unDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
+        }
     }
 
     const handleRemove = () => {
         onRemoveClicked(activityState.id);
+    }
+
+    const addStartDate = (startDate) => {
+        setStartDate(startDate)
+        setSelectedActivity(activity)
+    }
+
+    const addEndDate = (endDate) => {
+        setEndDate(endDate)
+        setSelectedActivity(activity)
     }
 
     const getDateSelect = () => {
@@ -117,8 +142,8 @@ export default function Activity(props) {
                     endDate={endDate}
                     endDateId={endDateId}
                     onDatesChange={({startDate, endDate}) => {
-                        setStartDate(startDate);
-                        setEndDate(endDate);
+                        addStartDate(startDate);
+                        addEndDate(endDate);
                     }}
                     focusedInput={focused}
                     readOnly={true}
@@ -141,8 +166,8 @@ export default function Activity(props) {
                     endDate={endDate}
                     endDateId={endDateId}
                     onDatesChange={({startDate, endDate}) => {
-                        setStartDate(startDate);
-                        setEndDate(endDate);
+                        addStartDate(startDate);
+                        addEndDate(endDate);
                     }}
                     focusedInput={focused}
                     readOnly={true}
