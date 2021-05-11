@@ -156,7 +156,7 @@ export default function AllBookingsTable() {
         <div>
             {CreateDataTable(booking, footerActive, renderHeader(globalFilter, "Alla aktiva och framtida bokningar", setGlobalFilter), globalFilter)}
             {CreateDataTable(finishedBooking, footerInActive, renderHeader(inactiveGlobalFilter, "Alla äldre bokningar", setInactiveGlobalFilter), inactiveGlobalFilter)}
-            {CreateDataTable(archivedBookings, footerInArchived, renderHeader(archivedGlobalFilter, "Alla arkiverade bokningar", setArchivedGlobalFilter), archivedGlobalFilter)}
+            {CreateDataTable(archivedBooking, footerInArchived, renderHeader(archivedGlobalFilter, "Alla arkiverade bokningar", setArchivedGlobalFilter), archivedGlobalFilter)}
             <Dialog visible={deletePaidDialog} style={{width: '450px'}} header="Bekräfta ändring av betalning" modal
                     footer={deletePaymentDialogFooter} onHide={hidePaidDialog}>
                 <div className="confirmation-content">
