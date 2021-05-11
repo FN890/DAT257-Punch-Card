@@ -59,7 +59,7 @@ export default function BookingInfo(props) {
             </div>
             <div className="p-d-flex p-mx-5 p-mb-5">
                 <span className="p-float-label">
-                    <InputNumber id="inputGroupSize" value={numberOfStudent} onChange={(e) => setNumberOfStudent(e.value)} min={0} max={100} />
+                    <InputNumber id="inputGroupSize" value={numberOfStudent} onChange={(e) => setNumberOfStudent(e.value)} min={0}/>
                     <label htmlFor="inputGroupSize">Gruppstorlek</label>
                 </span>
             </div>
