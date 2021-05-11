@@ -27,7 +27,7 @@ export default function IndividualBooking() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
-    const [editable, setEditable] = useState(true);
+    const [disabled, setDisabled] = useState(true);
 
 
     const bookingService = new BookingService();
@@ -85,7 +85,7 @@ export default function IndividualBooking() {
         bookingService.updateBooking(id, description, responsible, isPaid, price, booking.customer);
         setConfirmationDialog(true);
         setSaveBookingDialog(false);
-        setEditable(true);
+        setDisabled(true);
 
     }
 
@@ -116,17 +116,17 @@ export default function IndividualBooking() {
                     <div className="p-card p-col-6" style={{width: "200pt", margin: "0 30pt"}}>
                         <div className="p-m-2 p-text-left">
                             <b>Kundens namn:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={editable} value={customer}
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={customer}
                                        onChange={(e) => setCustomer(e.target.value)}/>
                         </div>
                         <div className="p-m-2 p-text-left">
                             <b>Mobil:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={editable} value={phone}
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={phone}
                                        onChange={(e) => setPhone(e.target.value)}/>
                         </div>
                         <div className="p-m-2 p-text-left">
                             <b>E-mail:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={editable} value={email}
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={email}
                                        onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ export default function IndividualBooking() {
                         </div>
                         <div className="p-m-2 p-text-left">
                             <b>Ansvarig:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={editable} value={responsible}
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={responsible}
                                        onChange={(e) => setResponsible(e.target.value)}/>
                         </div>
                     </div>
@@ -145,19 +145,19 @@ export default function IndividualBooking() {
                     <div className="p-col-6" style={{width: "150pt", margin: "0 30pt"}}>
                         <div className="p-m-2 p-text-center">
                             <b>Beskrivning:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={editable} value={description}
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={description}
                                        onChange={(e) => setDescription(e.target.value)}/>
                         </div>
                     </div>
                     <div className="p-col-6" style={{width: "150pt", margin: "0 30pt"}}>
                         <div className="p-text-center p-col-12">
                             <b>Pris:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={editable} value={price}
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={price}
                                        onChange={(e) => setPrice(e.target.value)}/>
                         </div>
                         <div className="p-text-center p-col-12">
                             <b>Betald:</b>
-                            <ToggleButton disabled={editable} style={{margin: "10pt 0 0 10pt"}} onLabel="Betalat"
+                            <ToggleButton disabled={disabled} style={{margin: "10pt 0 0 10pt"}} onLabel="Betalat"
                                           offLabel="Ej betalt" onIcon="pi pi-check" offIcon="pi pi-times"
                                           checked={isPaid} onChange={(e) => setPaid(e.target.value)}/>
                         </div>
@@ -171,7 +171,7 @@ export default function IndividualBooking() {
                 <Button label="Spara" icon="pi pi-check" className="p-button-success p-col p-shadow-5"
                         style={{margin: "0 30pt 0 0"}} onClick={() => confirmSaveBooking()}/>
                 <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col p-shadow-5"
-                        style={{margin: "0 30pt 0 0"}} onClick={() => setEditable(!editable)}/>
+                        style={{margin: "0 30pt 0 0"}} onClick={() => setDisabled(!disabled)}/>
                 <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col p-shadow-5"
                         onClick={() => confirmDeleteBooking()}/>
 
