@@ -16,12 +16,15 @@ import moment from 'moment'
  */
 
 export default function AllBookingsTable() {
+
     let [booking, setBookings] = useState([]);
     const [finishedBooking, setFinishedBooking] = useState([])
     const [archivedBooking, setArchivedBooking] = useState([])
     const [updateTable, setUpdateTable] = useState()
-    const [selectedBooking, setSelectedBooking] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
+    const [inactiveGlobalFilter, setInactiveGlobalFilter] = useState(null)
+    const [archivedGlobalFilter, setArchivedGlobalFilter] = useState(null)
+
     const [deletePaidDialog, setDeletePaidDialog] = useState(false);
 
     const history = useHistory();
@@ -80,7 +83,7 @@ export default function AllBookingsTable() {
     const onClickPaid = (event) => {
 
         console.log(bookingService)
-        bookingService.putPayment(event.id, !event.paid).then(() => {
+        bookingService.updateBooking(event.id, event.description, event.responsible, !event.paid, event.price, event.customer).then(() => {
             bookingService.getAllBookings().then(data => {
                 setBookings(data)
             })
@@ -110,12 +113,12 @@ export default function AllBookingsTable() {
     }
 
 
-    const renderHeader = (globalFilterKey, header) => {
+    const renderHeader = (globalFilterKey, header, setFilter) => {
         return (
             <div className="p-d-flex">
                 <span className="p-input-icon-left">
                     <i className="pi pi-search"/>
-                    <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)}
+                    <InputText type="search" onInput={(e) => setFilter(e.target.value)}
                                placeholder="Sök efter bokning"/>
                 </span>
                 <div style={{marginLeft: "50px", fontSize: "28px"}}>{header}
@@ -126,14 +129,15 @@ export default function AllBookingsTable() {
     }
 
     let footerActive = `Det finns totalt aktiva ${booking ? booking.length : 0} bokningar.`;
-    let footerInActive = `Det finns totalt inaktiva ${booking ? finishedBooking.length : 0} bokningar.`;
+    let footerInActive = `Det finns totalt inaktiva ${finishedBooking ? finishedBooking.length : 0} bokningar.`;
+    let footerInArchived = `Det finns totalt ${archivedBooking ? archivedBooking.length : 0} avbokningar.`;
 
-    function CreateDataTable(data, footer, header) {
+    function CreateDataTable(data, footer, header, filter) {
         return (
             <div className="p-shadow-3 p-m-5">
                 <DataTable footer={footer} value={data} scrollable scrollWidth="300px" style={{width: '100%'}}
                            dataKey="id"
-                           header={header} globalFilter={globalFilter}>
+                           header={header} globalFilter={filter}>
                     <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
                     <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
                     <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
@@ -150,8 +154,9 @@ export default function AllBookingsTable() {
 
     return (
         <div>
-            {CreateDataTable(booking, footerActive, renderHeader(globalFilter, "Alla aktiva bokningar"))}
-            {CreateDataTable(finishedBooking, footerInActive, renderHeader(globalFilter, "Alla äldre bokningar"))}
+            {CreateDataTable(booking, footerActive, renderHeader(globalFilter, "Alla aktiva och framtida bokningar", setGlobalFilter), globalFilter)}
+            {CreateDataTable(finishedBooking, footerInActive, renderHeader(inactiveGlobalFilter, "Alla äldre bokningar", setInactiveGlobalFilter), inactiveGlobalFilter)}
+            {CreateDataTable(archivedBookings, footerInArchived, renderHeader(archivedGlobalFilter, "Alla arkiverade bokningar", setArchivedGlobalFilter), archivedGlobalFilter)}
             <Dialog visible={deletePaidDialog} style={{width: '450px'}} header="Bekräfta ändring av betalning" modal
                     footer={deletePaymentDialogFooter} onHide={hidePaidDialog}>
                 <div className="confirmation-content">
