@@ -133,8 +133,7 @@ export default function AllBookingsTable() {
     return (
         <div className="p-shadow-3 p-m-5">
             <DataTable footer={footerActive} value={booking} scrollable scrollWidth="300px" style={{width: '100%'}}
-                       selection={selectedBooking}
-                       onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
+                        dataKey="id"
                        header={renderHeader(globalFilter, "Alla aktiva bokiningar")} globalFilter={globalFilter}>
                 <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
                 <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
@@ -149,8 +148,7 @@ export default function AllBookingsTable() {
             </DataTable>
             <DataTable footer={footerInActive} value={finishedBooking} scrollable scrollWidth="300px"
                        style={{width: '100%'}}
-                       selection={selectedBooking}
-                       onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
+                       dataKey="id"
                        header={renderHeader(globalFilter, "Alla äldre bokningar")} globalFilter={globalFilter}>
                 <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
                 <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
