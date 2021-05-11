@@ -30,6 +30,21 @@ public class BookingController {
         return bookingService.getAllBookings();
     }
 
+    @GetMapping(path = "/archived")
+    public List<Booking> getArchived() {
+        return bookingService.getArchived();
+    }
+
+    @GetMapping(path = "/upcoming")
+    public List<Booking> getUpcoming() {
+        return bookingService.getUpcoming();
+    }
+
+    @GetMapping(path = "/passed")
+    public List<Booking> getPassed() {
+        return bookingService.getPassed();
+    }
+
     @GetMapping(path = "/{id}")
     public Booking getById(@PathVariable("id") Long id) {
         return bookingService.getById(id);

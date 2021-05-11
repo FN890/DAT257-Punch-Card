@@ -43,6 +43,18 @@ public class BookingService {
         return bookingList;
     }
 
+    public List<Booking> getArchived() {
+        return bookingRepository.findArchived();
+    }
+
+    public List<Booking> getUpcoming() {
+        return bookingRepository.findUpcoming();
+    }
+
+    public List<Booking> getPassed() {
+        return bookingRepository.findPassed();
+    }
+
     public List<Booking> getByCustomerPhone(String phone) {
         if (bookingRepository.findByCustomerPhoneNr(phone).isEmpty()) {
             throw new IllegalStateException("Booking with customer phone number " + phone + " does not exists.");

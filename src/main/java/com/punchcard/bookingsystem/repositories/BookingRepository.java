@@ -11,6 +11,15 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
+    @Query(value = "SELECT * FROM Booking WHERE archived ORDER BY start_time DESC", nativeQuery = true)
+    List<Booking> findArchived();
+
+    @Query(value = "SELECT * FROM Booking WHERE end_time >= CURRENT_TIMESTAMP ORDER BY start_time DESC", nativeQuery = true)
+    List<Booking> findUpcoming();
+
+    @Query(value = "SELECT * FROM Booking WHERE end_time < CURRENT_TIMESTAMP ORDER BY start_time DESC", nativeQuery = true)
+    List<Booking> findPassed();
+
     List<Booking> findByCustomerPhoneNr(String phoneNr);
 
     Optional<Booking> findById(int id);
