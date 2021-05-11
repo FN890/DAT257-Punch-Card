@@ -19,6 +19,7 @@ export default function IndividualBooking() {
     const [deleteBookingDialog, setDeleteBookingDialog] = useState(false);
     const [saveBookingDialog, setSaveBookingDialog] = useState(false);
     const history = useHistory();
+    const [confirmationDialog, setConfirmationDialog] = useState(false);
 
     const [responsible, setResponsible] = useState('');
     const [isPaid, setPaid] = useState();
@@ -59,6 +60,11 @@ export default function IndividualBooking() {
     const hideSaveBookingDialog = () => {
         setSaveBookingDialog(false);
     }
+
+    const hideConfirmationDialog = () => {
+        setConfirmationDialog(false);
+    }
+
     const confirmDeleteBooking = () => {
         setBooking(booking);
         setDeleteBookingDialog(true);
@@ -76,8 +82,11 @@ export default function IndividualBooking() {
     }
 
     const updateBooking = () => {
-        bookingService.updateBooking(id, description, responsible, isPaid, price, booking.customer)
-        setSaveBookingDialog(false)
+        bookingService.updateBooking(id, description, responsible, isPaid, price, booking.customer);
+        setConfirmationDialog(true);
+        setSaveBookingDialog(false);
+        setEditable(true);
+
     }
 
     const deleteBookingDialogFooter = (
@@ -91,6 +100,12 @@ export default function IndividualBooking() {
         <React.Fragment>
             <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideSaveBookingDialog}/>
             <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={() => updateBooking()}/>
+        </React.Fragment>
+    );
+
+    const confirmationDialogFooter = (
+        <React.Fragment>
+            <Button label="Okej" icon="pi pi-check" className="p-button-success" onClick={hideConfirmationDialog}/>
         </React.Fragment>
     );
 
@@ -176,6 +191,15 @@ export default function IndividualBooking() {
                     <div className="confirmation-content">
                         <i className="pi pi-exclamation-triangle p-mr-3" style={{fontSize: '2rem'}}/>
                         {booking && <span>Är du säker på att du vill ändra bokningen?</span>}
+                    </div>
+                </Dialog>
+            </div>
+            <div>
+                <Dialog visible={confirmationDialog} style={{width: '450px'}} header="Information" modal
+                        footer={confirmationDialogFooter} onHide={hideConfirmationDialog}>
+                    <div className="confirmation-content">
+                        <i className="pi pi-bell p-mr-3" style={{fontSize: '2rem'}}/>
+                        {booking && <span>Bokningen har nu uppdaterats</span>}
                     </div>
                 </Dialog>
             </div>
