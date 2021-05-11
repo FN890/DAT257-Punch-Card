@@ -110,7 +110,6 @@ export default function AllBookingsTable() {
     }
 
 
-
     const renderHeader = (globalFilterKey, header) => {
         return (
             <div className="p-d-flex">
@@ -120,8 +119,6 @@ export default function AllBookingsTable() {
                                placeholder="Sök efter bokning"/>
                 </span>
                 <div style={{marginLeft: "50px", fontSize: "28px"}}>{header}
-
-
                 </div>
 
             </div>
@@ -132,27 +129,29 @@ export default function AllBookingsTable() {
     let footerInActive = `Det finns totalt inaktiva ${booking ? finishedBooking.length : 0} bokningar.`;
 
     function CreateDataTable(data, footer, header) {
-        return (<DataTable footer={footer} value={data} scrollable scrollWidth="300px" style={{width: '100%'}}
+        return (
+            <div className="p-shadow-3 p-m-5">
+                <DataTable footer={footer} value={data} scrollable scrollWidth="300px" style={{width: '100%'}}
                            dataKey="id"
                            header={header} globalFilter={globalFilter}>
-                <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
-                <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
-                <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
-                <Column field="groupSize" header="Antal personer" headerStyle={{width: '100px'}} sortable></Column>
-                {/*<Column field="startTime" header="Start datum " headerStyle={{ width: '160px' }} sortable></Column>
-                    <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column> */}
-                <Column field="description" header="Övrigt" headerStyle={{width: '300px'}}></Column>
-                <Column field="responsible" header="Ansvarig" headerStyle={{width: '160px'}} sortable></Column>
-                <Column headerStyle={{width: '200px'}} body={actionTemplate}></Column>
+                    <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
+                    <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
+                    <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
+                    <Column field="groupSize" header="Antal personer" headerStyle={{width: '100px'}} sortable></Column>
+                    <Column field="description" header="Övrigt" headerStyle={{width: '300px'}}></Column>
+                    <Column field="responsible" header="Ansvarig" headerStyle={{width: '160px'}} sortable></Column>
+                    <Column headerStyle={{width: '200px'}} body={actionTemplate}></Column>
 
-            </DataTable>
+                </DataTable>
+            </div>
 
         );
     }
+
     return (
-        <div className="p-shadow-3 p-m-5">
-            {CreateDataTable(booking,footerActive,renderHeader(globalFilter,"Alla aktiva bokningar"))}
-            {CreateDataTable(finishedBooking,footerInActive,renderHeader(globalFilter,"Alla äldre bokningar"))}
+        <div>
+            {CreateDataTable(booking, footerActive, renderHeader(globalFilter, "Alla aktiva bokningar"))}
+            {CreateDataTable(finishedBooking, footerInActive, renderHeader(globalFilter, "Alla äldre bokningar"))}
             <Dialog visible={deletePaidDialog} style={{width: '450px'}} header="Bekräfta ändring av betalning" modal
                     footer={deletePaymentDialogFooter} onHide={hidePaidDialog}>
                 <div className="confirmation-content">
