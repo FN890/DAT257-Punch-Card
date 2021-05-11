@@ -75,8 +75,9 @@ export default function IndividualBooking() {
         history.push("/allabokningar");
     }
 
-    const makeChanges = () => {
-        console.log("Changes made") ;
+    const updateBooking = () => {
+        bookingService.updateBooking(id, description, responsible, isPaid, price, booking.customer)
+        setSaveBookingDialog(false)
     }
 
     const deleteBookingDialogFooter = (
@@ -89,7 +90,7 @@ export default function IndividualBooking() {
     const saveBookingDialogFooter = (
         <React.Fragment>
             <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideSaveBookingDialog}/>
-            <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={makeChanges}/>
+            <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={() => updateBooking()}/>
         </React.Fragment>
     );
 

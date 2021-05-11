@@ -19,7 +19,7 @@ export default class BookingService {
     /**
      * GET request to get JSON of wheter a booking has been paid.
      */
-    isPaid(id) {
+    putBooking(id) {
         return axios.get(`/api/v1/booking/${id}`).then(resp => resp.data);
     }
 
@@ -30,8 +30,14 @@ export default class BookingService {
     /**
      * PUT request to edit already existing booking
      */
-    putPayment(id, paid) {
-       return axios.put(`/api/v1/booking/${id}?paid=${paid}`).then(resp => resp.data);
+    updateBooking(id, description, responsible, paid, price, customer) {
+       return axios.put(`/api/v1/booking/${id}`, {
+           "description": description,
+           "responsible": responsible,
+           "paid": paid,
+           "price": price,
+           "customer": customer
+       });
     }
 
     /**
@@ -40,7 +46,7 @@ export default class BookingService {
      */
 
     deleteBooking(id) {
-        axios.delete(`/api/v1/booking/${id}`).then(resp => resp.data);
+        axios.delete(`/api/v1/booking/${id}`, ).then(resp => resp.data);
     }
 
     /**
