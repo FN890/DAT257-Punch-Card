@@ -6,7 +6,10 @@ import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
+import 'moment/locale/sv'
 import { v4 as uuidv4 } from 'uuid';
+import {Calendar} from "primereact/calendar";
+import {Divider} from "primereact/divider";
 
 let hourly = false;
 
@@ -30,6 +33,8 @@ export default function Activity(props) {
 
     const startDateId = uuidv4();
     const endDateId = uuidv4();
+
+    moment.locale('sv')
 
     const setSelectedActivity = (value) => {
         hourly = value.hourly;
@@ -99,6 +104,10 @@ export default function Activity(props) {
                     }}
                     numberOfMonths={1}
                     disabled
+                    startDatePlaceholderText="Start datum"
+                    endDatePlaceholderText="Slut datum"
+                    monthFormat="YYYY MMMM"
+                    phrases={{closeDatePicker: 'Stäng',clearDates: 'Avbryt'}}
                 />
             )
         } else if (hourly === false) {
@@ -119,6 +128,10 @@ export default function Activity(props) {
                     }}
                     numberOfMonths={1}
                     isDayBlocked={filterBlockedDates}
+                    startDatePlaceholderText="Start datum"
+                    endDatePlaceholderText="Slut datum"
+                    monthFormat="YYYY MMMM"
+                    phrases={{closeDatePicker: 'Stäng',clearDates: 'Avbryt'}}
                 />
             )
         } else if (hourly === true) {
@@ -138,6 +151,10 @@ export default function Activity(props) {
                         setFocused(focusedInput);
                     }}
                     numberOfMonths={1}
+                    startDatePlaceholderText="Start datum"
+                    endDatePlaceholderText="Slut datum"
+                    monthFormat="YYYY MMMM"
+                    phrases={{closeDatePicker: 'Stäng',clearDates: 'Avbryt'}}
                 />
             )
         }
@@ -156,6 +173,8 @@ export default function Activity(props) {
                     </div>
                 </div>
                 {getDateSelect()}
+                <Calendar disabled={activity === ""} placeholder="Start tid" timeOnly showTime hourFormat="24" style={{width: '100%', marginTop: 10}}/>
+                <Calendar disabled={activity === ""} placeholder="Slut tid" timeOnly showTime hourFormat="24" style={{width: '100%', marginTop: 10}}/>
             </div>
         )
     }
