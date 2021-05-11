@@ -10,7 +10,7 @@ export default function BookingOverview(props) {
 
     const [act, setAct] = useState([])
     const [discount, setDiscount] = useState(0);
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(0);
 
     let listActivity = []
 
