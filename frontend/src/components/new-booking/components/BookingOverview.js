@@ -7,6 +7,7 @@ import BookingService from '../../services/BookingService';
 export default function BookingOverview(props) {
 
     const activityStates = props.activityStates;
+    const onPriceChange = props.onPriceChange;
 
     const [act, setAct] = useState([])
     const [discount, setDiscount] = useState(0);
@@ -55,7 +56,8 @@ export default function BookingOverview(props) {
         }
         getPrice();
         setAct(listActivity)
-    }, [activityStates, price]);
+        onPriceChange((price - discount));
+    }, [activityStates, price, discount]);
 
 
     const DiscountComponent = () => {

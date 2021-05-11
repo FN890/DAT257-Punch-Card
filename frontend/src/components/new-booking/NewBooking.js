@@ -21,6 +21,7 @@ export default function NewBooking() {
 
     const [activityStates, setActivityStates] = useState([]);
     const [bookingInfo, setBookingInfo] = useState({});
+    const [price, setPrice] = useState(0);
     const toast = useRef(null);
     const history = useHistory();
 
@@ -66,6 +67,10 @@ export default function NewBooking() {
         setBookingInfo(info);
     }
 
+    const changePrice = (price) => {
+        setPrice(price);
+    }
+
     /**
      * Collects the relevant data and sends a POST request with BookingService.
      */
@@ -76,7 +81,7 @@ export default function NewBooking() {
         }
 
         bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
-            bookingInfo.paid, 1500, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
+            bookingInfo.paid, price, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
                 //console.log(response);
             }).catch((error) => {
                 displayError(error.response.data.status, error.response.data.message);
@@ -123,7 +128,7 @@ export default function NewBooking() {
                 <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} />)}</div>
             </div>
             <div className="p-shadow-3 p-m-3">
-                <div><BookingOverview activityStates={activityStates} /></div>
+                <div><BookingOverview activityStates={activityStates} onPriceChange={changePrice} /></div>
                 <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>
