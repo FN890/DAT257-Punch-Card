@@ -17,10 +17,11 @@ export default function IndividualBooking() {
     const [reservations, setReservations] = useState([]);
     const [customer, setCustomer] = useState({})
     const [deleteBookingDialog, setDeleteBookingDialog] = useState(false);
+    const [saveBookingDialog, setSaveBookingDialog] = useState(false);
     const history = useHistory();
 
     const [responsible, setResponsible] = useState('');
-    const [isPaid, setPaid] = useState('');
+    const [isPaid, setPaid] = useState();
     const [price, setPrice] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -54,9 +55,18 @@ export default function IndividualBooking() {
     const hideDeleteBookingDialog = () => {
         setDeleteBookingDialog(false);
     }
+
+    const hideSaveBookingDialog = () => {
+        setSaveBookingDialog(false);
+    }
     const confirmDeleteBooking = () => {
         setBooking(booking);
         setDeleteBookingDialog(true);
+    }
+
+    const confirmSaveBooking = () => {
+        setBooking(booking);
+        setSaveBookingDialog(true);
     }
 
     const deleteProduct = () => {
@@ -65,10 +75,21 @@ export default function IndividualBooking() {
         history.push("/allabokningar");
     }
 
+    const makeChanges = () => {
+        console.log("Changes made") ;
+    }
+
     const deleteBookingDialogFooter = (
         <React.Fragment>
             <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog}/>
             <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={deleteProduct}/>
+        </React.Fragment>
+    );
+
+    const saveBookingDialogFooter = (
+        <React.Fragment>
+            <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideSaveBookingDialog}/>
+            <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={makeChanges}/>
         </React.Fragment>
     );
 
@@ -132,20 +153,32 @@ export default function IndividualBooking() {
             </div>
             <div className="p-m-3 p-grid" style={{width: "40%"}}>
                 <Button label="Spara" icon="pi pi-check" className="p-button-success p-col p-shadow-5"
-                        style={{margin: "0 30pt 0 0"}} onClick={() => confirmDeleteBooking()}/>
+                        style={{margin: "0 30pt 0 0"}} onClick={() => confirmSaveBooking()}/>
                 <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col p-shadow-5"
                         style={{margin: "0 30pt 0 0"}} onClick={() => setEditable(!editable)}/>
                 <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col p-shadow-5"
                         onClick={() => confirmDeleteBooking()}/>
 
             </div>
-            <Dialog visible={deleteBookingDialog} style={{width: '450px'}} header="Bekräfta borttagning" modal
+            <div>
+            <Dialog visible={deleteBookingDialog} style={{width: '450px'}} header="VARNING! Bekräfta borttagning" modal
                     footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle p-mr-3" style={{fontSize: '2rem'}}/>
                     {booking && <span>Är du säker på att du vill ta bort bokningen?</span>}
                 </div>
             </Dialog>
+            </div>
+            <div>
+                <Dialog visible={saveBookingDialog} style={{width: '450px'}} header="Bekräfta ändringar" modal
+                        footer={saveBookingDialogFooter} onHide={hideSaveBookingDialog}>
+                    <div className="confirmation-content">
+                        <i className="pi pi-exclamation-triangle p-mr-3" style={{fontSize: '2rem'}}/>
+                        {booking && <span>Är du säker på att du vill ändra bokningen?</span>}
+                    </div>
+                </Dialog>
+            </div>
+
         </div>
 
     );
