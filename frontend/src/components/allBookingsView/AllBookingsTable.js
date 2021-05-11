@@ -43,15 +43,13 @@ export default function AllBookingsTable() {
     let active = booking;
     booking = []
     for (let i = 0; i < active.length; i++) {
-        if (moment().isAfter(active[i].endTime ) && !active[i].archived) {
+        if (moment().isAfter(active[i].endTime) && !active[i].archived) {
             finishedBooking[nFinished] = active[i];
             nFinished++;
-        }
-        else if(!active[i].archived){
+        } else if (!active[i].archived) {
             booking[activeBookings] = active[i]
             activeBookings++
-        }
-        else {
+        } else {
             archivedBooking[archivedBookings] = active[i]
             archivedBookings++
         }
@@ -111,7 +109,8 @@ export default function AllBookingsTable() {
         );
     }
 
-    const renderHeader = (globalFilterKey) => {
+
+    const renderHeader = (globalFilterKey, header) => {
         return (
             <div className="p-d-flex">
                 <span className="p-input-icon-left">
@@ -119,6 +118,10 @@ export default function AllBookingsTable() {
                     <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)}
                                placeholder="Sök efter bokning"/>
                 </span>
+                <div style={{marginLeft: "50px", fontSize: "28px"}}>{header}
+
+
+                </div>
 
             </div>
         );
@@ -132,7 +135,7 @@ export default function AllBookingsTable() {
             <DataTable footer={footerActive} value={booking} scrollable scrollWidth="300px" style={{width: '100%'}}
                        selection={selectedBooking}
                        onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
-                       header={renderHeader(globalFilter)} globalFilter={globalFilter}>
+                       header={renderHeader(globalFilter, "Alla aktiva bokiningar")} globalFilter={globalFilter}>
                 <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
                 <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
                 <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
@@ -144,10 +147,11 @@ export default function AllBookingsTable() {
                 <Column headerStyle={{width: '200px'}} body={actionTemplate}></Column>
 
             </DataTable>
-            <DataTable footer={footerInActive} value={finishedBooking} scrollable scrollWidth="300px" style={{width: '100%'}}
+            <DataTable footer={footerInActive} value={finishedBooking} scrollable scrollWidth="300px"
+                       style={{width: '100%'}}
                        selection={selectedBooking}
                        onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
-                       header={renderHeader(globalFilter)} globalFilter={globalFilter}>
+                       header={renderHeader(globalFilter, "Alla äldre bokningar")} globalFilter={globalFilter}>
                 <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
                 <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
                 <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
@@ -157,7 +161,6 @@ export default function AllBookingsTable() {
                 <Column field="description" header="Övrigt" headerStyle={{width: '300px'}}></Column>
                 <Column field="responsible" header="Ansvarig" headerStyle={{width: '160px'}} sortable></Column>
                 <Column headerStyle={{width: '200px'}} body={actionTemplate}></Column>
-
             </DataTable>
 
             <Dialog visible={deletePaidDialog} style={{width: '450px'}} header="Bekräfta ändring av betalning" modal
