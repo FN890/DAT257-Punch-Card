@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
+import React, {useState, useEffect} from 'react';
+import {Dropdown} from 'primereact/dropdown';
+import {Button} from 'primereact/button';
 import 'primeflex/primeflex.css';
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import {DateRangePicker} from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import 'moment/locale/sv'
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {Calendar} from "primereact/calendar";
-import {Divider} from "primereact/divider";
 
 let hourly = false;
 
@@ -93,7 +92,7 @@ export default function Activity(props) {
                     startDateId={startDateId}
                     endDate={endDate}
                     endDateId={endDateId}
-                    onDatesChange={({ startDate, endDate }) => {
+                    onDatesChange={({startDate, endDate}) => {
                         setStartDate(startDate);
                         setEndDate(endDate);
                     }}
@@ -107,7 +106,7 @@ export default function Activity(props) {
                     startDatePlaceholderText="Start datum"
                     endDatePlaceholderText="Slut datum"
                     monthFormat="YYYY MMMM"
-                    phrases={{closeDatePicker: 'Stäng',clearDates: 'Avbryt'}}
+                    phrases={{closeDatePicker: 'Stäng', clearDates: 'Avbryt'}}
                 />
             )
         } else if (hourly === false) {
@@ -117,7 +116,7 @@ export default function Activity(props) {
                     startDateId={startDateId}
                     endDate={endDate}
                     endDateId={endDateId}
-                    onDatesChange={({ startDate, endDate }) => {
+                    onDatesChange={({startDate, endDate}) => {
                         setStartDate(startDate);
                         setEndDate(endDate);
                     }}
@@ -131,7 +130,7 @@ export default function Activity(props) {
                     startDatePlaceholderText="Start datum"
                     endDatePlaceholderText="Slut datum"
                     monthFormat="YYYY MMMM"
-                    phrases={{closeDatePicker: 'Stäng',clearDates: 'Avbryt'}}
+                    phrases={{closeDatePicker: 'Stäng', clearDates: 'Avbryt'}}
                 />
             )
         } else if (hourly === true) {
@@ -141,7 +140,7 @@ export default function Activity(props) {
                     startDateId={startDateId}
                     endDate={endDate}
                     endDateId={endDateId}
-                    onDatesChange={({ startDate, endDate }) => {
+                    onDatesChange={({startDate, endDate}) => {
                         setStartDate(startDate);
                         setEndDate(endDate);
                     }}
@@ -154,27 +153,31 @@ export default function Activity(props) {
                     startDatePlaceholderText="Start datum"
                     endDatePlaceholderText="Slut datum"
                     monthFormat="YYYY MMMM"
-                    phrases={{closeDatePicker: 'Stäng',clearDates: 'Avbryt'}}
+                    phrases={{closeDatePicker: 'Stäng', clearDates: 'Avbryt'}}
                 />
             )
         }
     }
 
-    const ActivtyComponent = () => {
+    const ActivityComponent = () => {
         return (
             <div className="p-fluid p-ai-center p-mx-5 p-mb-5">
                 <div className="p-d-flex p-my-1 ">
-                    <span className="p-float-label" style={{ width: '80%' }}>
-                        <Dropdown id="dropdown" optionLabel="name" options={activityInfo} value={activity} onChange={(e) => setSelectedActivity(e.value)} />
+                    <span className="p-float-label" style={{width: '80%'}}>
+                        <Dropdown id="dropdown" optionLabel="name" options={activityInfo} value={activity}
+                                  onChange={(e) => setSelectedActivity(e.value)}/>
                         <label htmlFor="dropdown">Aktivitet</label>
                     </span>
                     <div className="p-ml-auto p-mb-2">
-                        <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right" onClick={() => handleRemove()} />
+                        <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right"
+                                onClick={() => handleRemove()}/>
                     </div>
                 </div>
                 {getDateSelect()}
-                <Calendar disabled={activity === ""} placeholder="Start tid" timeOnly showTime hourFormat="24" style={{width: '100%', marginTop: 10}}/>
-                <Calendar disabled={activity === ""} placeholder="Slut tid" timeOnly showTime hourFormat="24" style={{width: '100%', marginTop: 10}}/>
+                <Calendar disabled={activity === ""} placeholder="Start tid" timeOnly showTime hourFormat="24"
+                          style={{width: '100%', marginTop: 10}}/>
+                <Calendar disabled={activity === ""} placeholder="Slut tid" timeOnly showTime hourFormat="24"
+                          style={{width: '100%', marginTop: 10}}/>
             </div>
         )
     }
@@ -182,13 +185,13 @@ export default function Activity(props) {
     useEffect(() => {
         let state = {
             "id": id, "startTime": startDate, "endTime": endDate,
-            "activity": { "name": activity }, "activityInfo": activityInfo, "reservations": reservations
+            "activity": {"name": activity}, "activityInfo": activityInfo, "reservations": reservations
         };
         onActivityStateChanged(state);
     }, [activity, startDate, endDate]);
 
     return (
-        <ActivtyComponent />
+        <ActivityComponent/>
     )
 
 }
