@@ -12,7 +12,6 @@ import AllBookingsTable from "./components/allBookingsView/AllBookingsTable";
 import Calendar from "./components/calendar/Calendar";
 import IndividualBooking from './components/individual_booking/IndividualBooking';
 import Settings from "./components/settingsView/Settings";
-import FinishedBookingsTable from "./components/allBookingsView/FinishedBookingsTable";
 
 const newBooking = 'Här kommer man kunna skapa nya bokningar!'
 const prices = 'Priser'
@@ -29,7 +28,6 @@ function App() {
                 <Route exact path="/allabokningar">
                     <NavBar/>
                     <AllBookingsTable/>
-                    <FinishedBookingsTable/>
                 </Route>
                 <Route path="/allabokningar/:id">
                     <NavBar/>

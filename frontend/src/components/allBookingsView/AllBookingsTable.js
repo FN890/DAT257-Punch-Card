@@ -7,7 +7,7 @@ import {Button} from 'primereact/button';
 import {ToggleButton} from 'primereact/togglebutton';
 import {InputText} from "primereact/inputtext";
 import {Dialog} from "primereact/dialog";
-import {FooterCell} from "primereact/components/datatable/FooterCell";
+import moment from 'moment'
 
 /**
  * Creates the table that shows all bookings with customer info
@@ -16,7 +16,9 @@ import {FooterCell} from "primereact/components/datatable/FooterCell";
  */
 
 export default function AllBookingsTable() {
-    const [booking, setBookings] = useState([]);
+    let [booking, setBookings] = useState([]);
+    const [finishedBooking, setFinishedBooking] = useState([])
+    const [archivedBooking, setArchivedBooking] = useState([])
     const [updateTable, setUpdateTable] = useState()
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [globalFilter, setGlobalFilter] = useState(null);
@@ -35,11 +37,24 @@ export default function AllBookingsTable() {
     }, []);
 
 
-    for (let i = 0; i < booking.length; i++) {
-        booking[i].startTime = booking[i].startTime.replaceAll('T', ' ');
-        booking[i].endTime = booking[i].endTime.replaceAll('T', ' ');
-        booking[i].startTime = booking[i].startTime.slice(0, 16)
-        booking[i].endTime = booking[i].endTime.slice(0, 16)
+    let nFinished = 0;
+    let activeBookings = 0;
+    let archivedBookings = 0;
+    let active = booking;
+    booking = []
+    for (let i = 0; i < active.length; i++) {
+        if (moment().isAfter(active[i].endTime ) && !active[i].archived) {
+            finishedBooking[nFinished] = active[i];
+            nFinished++;
+        }
+        else if(!active[i].archived){
+            booking[activeBookings] = active[i]
+            activeBookings++
+        }
+        else {
+            archivedBooking[archivedBookings] = active[i]
+            archivedBookings++
+        }
     }
 
     const onClickButton = (event) => {
@@ -104,14 +119,17 @@ export default function AllBookingsTable() {
                     <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)}
                                placeholder="Sök efter bokning"/>
                 </span>
+
             </div>
         );
     }
 
-    let footer = `Det finns totalt ${booking ? booking.length : 0} bokningar.`;
+    let footerActive = `Det finns totalt aktiva ${booking ? booking.length : 0} bokningar.`;
+    let footerInActive = `Det finns totalt inaktiva ${booking ? finishedBooking.length : 0} bokningar.`;
+
     return (
         <div className="p-shadow-3 p-m-5">
-            <DataTable footer={footer} value={booking} scrollable scrollWidth="300px" style={{width: '100%'}}
+            <DataTable footer={footerActive} value={booking} scrollable scrollWidth="300px" style={{width: '100%'}}
                        selection={selectedBooking}
                        onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
                        header={renderHeader(globalFilter)} globalFilter={globalFilter}>
@@ -126,6 +144,22 @@ export default function AllBookingsTable() {
                 <Column headerStyle={{width: '200px'}} body={actionTemplate}></Column>
 
             </DataTable>
+            <DataTable footer={footerInActive} value={finishedBooking} scrollable scrollWidth="300px" style={{width: '100%'}}
+                       selection={selectedBooking}
+                       onSelectionChange={e => setSelectedBooking(e.value)} selectionMode="single" dataKey="id"
+                       header={renderHeader(globalFilter)} globalFilter={globalFilter}>
+                <Column field="customer.name" header="Namn" headerStyle={{width: '110px'}} sortable></Column>
+                <Column field="customer.phoneNr" header="Telefon" headerStyle={{width: '140px'}}></Column>
+                <Column field="id" header="Boknings-Id" headerStyle={{width: '100px'}} sortable></Column>
+                <Column field="groupSize" header="Antal personer" headerStyle={{width: '100px'}} sortable></Column>
+                {/*<Column field="startTime" header="Start datum " headerStyle={{ width: '160px' }} sortable></Column>
+                    <Column field="endTime" header="Slut datum" headerStyle={{ width: '160px' }} sortable></Column> */}
+                <Column field="description" header="Övrigt" headerStyle={{width: '300px'}}></Column>
+                <Column field="responsible" header="Ansvarig" headerStyle={{width: '160px'}} sortable></Column>
+                <Column headerStyle={{width: '200px'}} body={actionTemplate}></Column>
+
+            </DataTable>
+
             <Dialog visible={deletePaidDialog} style={{width: '450px'}} header="Bekräfta ändring av betalning" modal
                     footer={deletePaymentDialogFooter} onHide={hidePaidDialog}>
                 <div className="confirmation-content">
