@@ -47,12 +47,8 @@ public class BookingService {
         return bookingRepository.findArchived();
     }
 
-    public List<Booking> getUpcoming() {
-        return bookingRepository.findUpcoming();
-    }
-
-    public List<Booking> getPassed() {
-        return bookingRepository.findPassed();
+    public List<Booking> getNotArchived() {
+        return bookingRepository.findNotArchived();
     }
 
     public List<Booking> getByCustomerPhone(String phone) {

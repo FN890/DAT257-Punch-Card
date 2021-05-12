@@ -35,14 +35,9 @@ public class BookingController {
         return bookingService.getArchived();
     }
 
-    @GetMapping(path = "/upcoming")
-    public List<Booking> getUpcoming() {
-        return bookingService.getUpcoming();
-    }
-
-    @GetMapping(path = "/passed")
-    public List<Booking> getPassed() {
-        return bookingService.getPassed();
+    @GetMapping(path = "/notarchived")
+    public List<Booking> getNotArchived() {
+        return bookingService.getNotArchived();
     }
 
     @GetMapping(path = "/{id}")
