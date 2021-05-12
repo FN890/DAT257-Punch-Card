@@ -10,6 +10,14 @@ export default class BookingService {
     }
 
     /**
+     * GET request to get JSON of all bookings
+     */
+    getNotArchivedBookings() {
+        return axios.get('/api/v1/booking/notarchived').then(resp => resp.data);
+    }
+
+
+    /**
      * GET request to get JSON of specific booking.
      */
     getIndividualBooking(id) {

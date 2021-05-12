@@ -121,7 +121,7 @@ export default function AllBookingsTable() {
                     <InputText type="search" onInput={(e) => setFilter(e.target.value)}
                                placeholder="Sök efter bokning"/>
                 </span>
-                <div style={{marginLeft: "50px", fontSize: "28px"}}>{header}
+                <div className="table-header" style={{marginLeft: "10px", fontSize: "28px"}}>{header}
                 </div>
 
             </div>
@@ -129,7 +129,7 @@ export default function AllBookingsTable() {
     }
 
     let footerActive = `Det finns totalt aktiva ${booking ? booking.length : 0} bokningar.`;
-    let footerInActive = `Det finns totalt inaktiva ${finishedBooking ? finishedBooking.length : 0} bokningar.`;
+    let footerInActive = `Det finns totalt äldre ${finishedBooking ? finishedBooking.length : 0} bokningar.`;
     let footerInArchived = `Det finns totalt ${archivedBooking ? archivedBooking.length : 0} avbokningar.`;
 
     function CreateDataTable(data, footer, header, filter) {
