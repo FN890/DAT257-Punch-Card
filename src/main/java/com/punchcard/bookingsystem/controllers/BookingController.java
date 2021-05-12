@@ -84,8 +84,8 @@ public class BookingController {
     }
 
     @PostMapping
-    public void addNewBooking(@RequestBody Booking booking) {
-        bookingService.addNewBooking(booking);
+    public ResponseEntity addNewBooking(@RequestBody Booking booking) {
+        return bookingService.addNewBooking(booking);
     }
 
     @PutMapping(path = "/{id}")
