@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ActivityRepository  extends JpaRepository<Activity, String> {
 
-    @Query(name = "SELECT * FROM Activity WHERE active", nativeQuery = true)
+    @Query(value = "SELECT * FROM Activity WHERE active", nativeQuery = true)
     List<Activity> findActive();
 
 }
