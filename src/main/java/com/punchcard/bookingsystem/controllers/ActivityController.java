@@ -23,8 +23,14 @@ public class ActivityController {
     @GetMapping
     public List<Activity> getAllActivities(){
         return activityService.getAllActivities();
-
     }
+
+    @GetMapping(path = "/active")
+    public List<Activity> getActive() {
+        return activityService.getActive();
+    }
+
+
 
     @GetMapping(path = "/name/{name}")
     public Activity getActivityByName(@PathVariable("name") String name) {

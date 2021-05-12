@@ -28,6 +28,9 @@ public class Activity {
     @Column(nullable = false)
     private boolean hourly = false;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
     private String faq;
 
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
@@ -96,6 +99,14 @@ public class Activity {
 
     public void setHourly(boolean hourly) {
         this.hourly = hourly;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getFaq() {

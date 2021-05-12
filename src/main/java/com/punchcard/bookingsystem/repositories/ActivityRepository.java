@@ -1,13 +1,16 @@
 package com.punchcard.bookingsystem.repositories;
 
 import com.punchcard.bookingsystem.tables.Activity;
-import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface ActivityRepository  extends JpaRepository<Activity, String> {
+
+    @Query(name = "SELECT * FROM Activity WHERE active", nativeQuery = true)
+    List<Activity> findActive();
 
 }
