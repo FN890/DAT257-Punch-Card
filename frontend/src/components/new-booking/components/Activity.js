@@ -8,6 +8,8 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import 'moment/locale/sv'
 import {v4 as uuidv4} from 'uuid';
+import {InputText} from "primereact/inputtext";
+import {InputMask} from "primereact/inputmask";
 
 let hourly = false;
 
@@ -24,6 +26,8 @@ export default function Activity(props) {
     const [activity, setActivity] = useState("");
     const [startDate, setStartDate] = useState(activityState.startTime);
     const [endDate, setEndDate] = useState(activityState.endTime);
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
     const [focused, setFocused] = useState(null);
     const [update, setUpdate] = useState(0);
     const [unDates, setUnDates] = useState([]);
@@ -163,6 +167,14 @@ export default function Activity(props) {
                     </div>
                 </div>
                 {getDateSelect()}
+                <span className="p-float-label p-mt-4" >
+                    <InputMask id="name" value={startTime} mask="99:99" slotChar="--:--" />
+                    <label  htmlFor="name">Start tid</label>
+                </span>
+                <span className="p-float-label p-mt-4" >
+                    <InputMask id="name" value={endTime} mask="99:99" slotChar="--:--"/>
+                    <label htmlFor="name">Slut tid</label>
+                </span>
             </div>
         )
     }
