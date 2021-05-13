@@ -23,6 +23,10 @@ public class ActivityService {
         return activityRepository.findAll() ;
     }
 
+    public List<Activity> getActive() {
+        return activityRepository.findActive();
+    }
+
     public void addNewActivity(Activity activity) {
         Optional<Activity> optionalActivity = activityRepository.findById(activity.getName());
 
@@ -33,10 +37,11 @@ public class ActivityService {
     }
 
     public void deleteActivity(String name){
-        if(!activityRepository.existsById(name)){
+        Optional<Activity> oa = activityRepository.findById(name);
+        if(oa.isEmpty()){
             throw new IllegalStateException("Activity with name: " + name + " does not exists");
         }
-        activityRepository.deleteById(name);
+        oa.get().setActive(false);
     }
 
 

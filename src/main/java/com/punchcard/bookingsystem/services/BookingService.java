@@ -9,6 +9,7 @@ import com.punchcard.bookingsystem.tables.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -47,12 +48,8 @@ public class BookingService {
         return bookingRepository.findArchived();
     }
 
-    public List<Booking> getUpcoming() {
-        return bookingRepository.findUpcoming();
-    }
-
-    public List<Booking> getPassed() {
-        return bookingRepository.findPassed();
+    public List<Booking> getNotArchived() {
+        return bookingRepository.findNotArchived();
     }
 
     public List<Booking> getByCustomerPhone(String phone) {
@@ -105,7 +102,7 @@ public class BookingService {
         return value;
     }
 
-    public void addNewBooking(Booking booking) {
+    public ResponseEntity addNewBooking(Booking booking) {
         Booking newBooking = new Booking(booking.getCustomer(), booking.getGroupSize());
 
         Customer customer = new Customer();
@@ -119,7 +116,7 @@ public class BookingService {
 
         for (Reservation r : booking.getReservations()) {
             if (!reservationService.isAvailable(r)) {
-                throw new IllegalStateException("Overlapping reservation " + r.getActivity().getName() + " in this booking.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Överlappande datum med aktivitet " + r.getActivity().getName());
             }
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
             reservations.add(reservation);
@@ -136,7 +133,12 @@ public class BookingService {
         newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
         bookingRepository.save(newBooking);
-        emailService.sendEmail(customer.getEmail(), reservations);
+        try {
+            emailService.sendEmail(customer.getEmail(), reservations);
+            return ResponseEntity.ok("Bokning genomförd och mail skickat.");
+        } catch (MailException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fel med att skicka mail, kolla att adressen stämmer. Bokning genomförd.");
+        }
     }
 
     @Transactional

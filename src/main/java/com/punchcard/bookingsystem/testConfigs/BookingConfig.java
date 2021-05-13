@@ -50,6 +50,7 @@ public class BookingConfig {
             booking1.setDescription("Vill boka badtunnan");
             booking1.setResponsible("Richard");
             booking1.setPaid(true);
+            booking1.setArchived(true);
 
             LocalDateTime start = LocalDateTime.now();
             LocalDateTime end = LocalDateTime.now().plusWeeks(1);

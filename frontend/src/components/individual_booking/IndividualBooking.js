@@ -15,12 +15,12 @@ export default function IndividualBooking() {
     const {id} = useParams();
     const [booking, setBooking] = useState({});
     const [reservations, setReservations] = useState([]);
-    const [customer, setCustomer] = useState({})
     const [deleteBookingDialog, setDeleteBookingDialog] = useState(false);
     const [saveBookingDialog, setSaveBookingDialog] = useState(false);
     const history = useHistory();
     const [confirmationDialog, setConfirmationDialog] = useState(false);
 
+    const [customerName, setCustomerName] = useState('')
     const [responsible, setResponsible] = useState('');
     const [isPaid, setPaid] = useState();
     const [price, setPrice] = useState('');
@@ -35,7 +35,7 @@ export default function IndividualBooking() {
     useEffect(() => {
         bookingService.getIndividualBooking(id).then(data => {
             setBooking(data);
-            setCustomer(data.customer.name);
+            setCustomerName(data.customer.name)
             setResponsible(data.responsible);
             setPaid(data.paid);
             setPrice(data.price);
@@ -82,7 +82,14 @@ export default function IndividualBooking() {
     }
 
     const updateBooking = () => {
-        bookingService.updateBooking(id, description, responsible, isPaid, price, booking.customer);
+        let customer = {
+            "id": booking.customer.id,
+            "name": customerName,
+            "phoneNr": phone,
+            "email": email
+        }
+        console.log(customer)
+        bookingService.updateBooking(id, description, responsible, isPaid, price, customer);
         setConfirmationDialog(true);
         setSaveBookingDialog(false);
         setDisabled(true);
@@ -116,8 +123,8 @@ export default function IndividualBooking() {
                     <div className="p-card p-col-6" style={{width: "200pt", margin: "0 30pt"}}>
                         <div className="p-m-2 p-text-left">
                             <b>Kundens namn:</b>
-                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={customer}
-                                       onChange={(e) => setCustomer(e.target.value)}/>
+                            <InputText style={{margin: "5pt 0 0 0"}} disabled={disabled} value={customerName}
+                                       onChange={(e) => setCustomerName(e.target.value)}/>
                         </div>
                         <div className="p-m-2 p-text-left">
                             <b>Mobil:</b>

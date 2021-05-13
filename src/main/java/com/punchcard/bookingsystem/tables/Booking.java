@@ -26,6 +26,12 @@ public class Booking {
     @Column(nullable = false)
     private boolean archived = false;
 
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
+
     @ManyToOne
     @JoinColumn(name = "customer_phone", nullable = false)
     private Customer customer;
@@ -84,7 +90,6 @@ public class Booking {
         return reservations;
     }
 
-    @Column(name = "start_time")
     public LocalDateTime getStartTime() {
         LocalDateTime earliest = null;
         for (Reservation r : reservations) {
@@ -93,10 +98,12 @@ public class Booking {
             }
         }
 
-        return earliest;
+        System.out.println("Setting starttime: " + startTime);
+        this.startTime = earliest;
+
+        return startTime;
     }
 
-    @Column(name = "end_time")
     public LocalDateTime getEndTime() {
         LocalDateTime latest = null;
         for (Reservation r : reservations) {
@@ -105,7 +112,8 @@ public class Booking {
             }
         }
 
-        return latest;
+        this.endTime = latest;
+        return endTime;
     }
 
     public void setGroupSize(int size) {

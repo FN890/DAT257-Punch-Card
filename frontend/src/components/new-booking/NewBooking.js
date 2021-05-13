@@ -84,8 +84,7 @@ export default function NewBooking() {
             bookingInfo.paid, price, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
                 //console.log(response);
             }).catch((error) => {
-                displayError(error.response.data.status, error.response.data.message);
-                console.log(error.response.data);
+                displayError(error.response.status, error.response.data);
             });
 
     }

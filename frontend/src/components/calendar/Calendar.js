@@ -31,7 +31,7 @@ export default function Calendar() {
      * Calls once on initiation and fills bookings array with data from BookingService.js
      */
     useEffect(() => {
-        bookingService.getAllBookings().then(function (bookingsArray) {
+        bookingService.getNotArchivedBookings().then(function (bookingsArray) {
             console.log(bookingsArray)
             setAllData(bookingsArray)
             let calendarEvents = []

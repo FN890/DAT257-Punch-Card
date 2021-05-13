@@ -35,14 +35,9 @@ public class BookingController {
         return bookingService.getArchived();
     }
 
-    @GetMapping(path = "/upcoming")
-    public List<Booking> getUpcoming() {
-        return bookingService.getUpcoming();
-    }
-
-    @GetMapping(path = "/passed")
-    public List<Booking> getPassed() {
-        return bookingService.getPassed();
+    @GetMapping(path = "/notarchived")
+    public List<Booking> getNotArchived() {
+        return bookingService.getNotArchived();
     }
 
     @GetMapping(path = "/{id}")
@@ -84,8 +79,8 @@ public class BookingController {
     }
 
     @PostMapping
-    public void addNewBooking(@RequestBody Booking booking) {
-        bookingService.addNewBooking(booking);
+    public ResponseEntity addNewBooking(@RequestBody Booking booking) {
+        return bookingService.addNewBooking(booking);
     }
 
     @PutMapping(path = "/{id}")
