@@ -170,6 +170,8 @@ export default function Activity(props) {
                 <span className="p-float-label p-mt-4" >
                     <InputMask id="name" value={startTime} mask="99:99" slotChar="--:--" onChange={function (e) {
                         if(!e.value.toString().includes("-")){
+                            let startDateTime = moment(startDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            setStartDate(startDateTime)
                             return setStartTime(e.value);
                         }
                     }}/>
@@ -178,6 +180,8 @@ export default function Activity(props) {
                 <span className="p-float-label p-mt-4" >
                     <InputMask id="name" value={endTime} mask="99:99" slotChar="--:--" onChange={function (e) {
                         if(!e.value.toString().includes("-")){
+                            let endDateTime = moment(startDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            setEndDate(endDateTime)
                             return setEndTime(e.value);
                         }
                     }}/>
