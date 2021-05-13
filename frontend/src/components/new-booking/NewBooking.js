@@ -24,7 +24,6 @@ export default function NewBooking() {
     const [price, setPrice] = useState(0);
     const toast = useRef(null);
     const history = useHistory();
-    const [unavailableDates, setUnavailableDates] = useState([])
 
     /**
      * Adds an activity component to new booking.
@@ -118,9 +117,6 @@ export default function NewBooking() {
         }
     }, [activityStates]);
 
-    const updateUnavailableDates = (unDates) => {
-        setUnavailableDates(unDates)
-    }
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-3 p-mt-3 p-mb-5">
@@ -130,7 +126,7 @@ export default function NewBooking() {
             </div>
             <div className="p-shadow-3 p-m-3">
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} /></div>
-                <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} unAvailableDates={unavailableDates} updateUnavailableDates={(unavailableDates) => updateUnavailableDates()}/>)}</div>
+                <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity}/>)}</div>
             </div>
             <div className="p-shadow-3 p-m-3">
                 <div><BookingOverview activityStates={activityStates} onPriceChange={changePrice} /></div>

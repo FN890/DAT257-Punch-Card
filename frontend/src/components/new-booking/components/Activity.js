@@ -8,7 +8,6 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import 'moment/locale/sv'
 import {v4 as uuidv4} from 'uuid';
-import {Calendar} from "primereact/calendar";
 
 let hourly = false;
 
@@ -17,9 +16,6 @@ export default function Activity(props) {
     const activityState = props.activityState;
     const onActivityStateChanged = props.onActivityStateChanged;
     const onRemoveClicked = props.onRemoveClicked;
-
-    const updateUnavailableDates = props.updateUnavailableDates;
-    const unavailableDates = props.unAvailableDates
 
     const reservations = activityState.reservations;
     const id = activityState.id;
@@ -31,7 +27,6 @@ export default function Activity(props) {
     const [focused, setFocused] = useState(null);
     const [update, setUpdate] = useState(0);
     const [unDates, setUnDates] = useState([]);
-    const [unTimes, setUnTimes] = useState([]);
 
     const startDateId = uuidv4();
     const endDateId = uuidv4();
@@ -43,7 +38,6 @@ export default function Activity(props) {
         setActivity(value);
 
         let unavailableDates = [];
-        let unavailableTimes = []
         reservations.forEach(reservation => {
             if (value.name === reservation.activity.name) {
                 if (!hourly) {
@@ -53,46 +47,16 @@ export default function Activity(props) {
                         unavailableDates.push(new Date(startDate))
                         startDate.setDate(startDate.getDate() + 1)
                     }
-                } else {
-                    unavailableTimes.push(new Date(reservation.startTime))
-                    unavailableTimes.push(new Date(reservation.endTime))
                 }
             }
         })
-        if (!hourly) {
-            let startDate2 = startDate
-            let endDate2 = endDate
-            while (startDate2 < endDate2) {
-                unavailableDates.push(new Date(startDate2))
-                startDate2.setDate(startDate2.getDate() + 1)
-            }
-        }
 
         setUnDates(unavailableDates)
-        setUnTimes(unavailableTimes)
         setUpdate(update + 1)
-        updateUnavailableDates(unavailableDates)
-    }
-    const filterPassedTime = time => {
-        let startTime = null;
-        let endTime = null;
-        const selectedDate = new Date(time);
-        for (let i = 0; i < unTimes.length - 1; i += 2) {
-            startTime = new Date(unTimes[i]);
-            endTime = new Date(unTimes[i + 1]);
-            if (selectedDate.getTime() >= startTime.getTime() && selectedDate.getTime() <= endTime.getTime()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     const filterBlockedDates = day => {
-        if(unavailableDates !== undefined) {
-            return unavailableDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
-        }else{
-            return unDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
-        }
+        return unDates.some((unavailableDay) => moment(unavailableDay).isSame(day, 'day'));
     }
 
     const handleRemove = () => {
@@ -199,10 +163,6 @@ export default function Activity(props) {
                     </div>
                 </div>
                 {getDateSelect()}
-                <Calendar disabled={activity === ""} placeholder="Start tid" timeOnly showTime hourFormat="24"
-                          style={{width: '100%', marginTop: 10}}/>
-                <Calendar disabled={activity === ""} placeholder="Slut tid" timeOnly showTime hourFormat="24"
-                          style={{width: '100%', marginTop: 10}}/>
             </div>
         )
     }
