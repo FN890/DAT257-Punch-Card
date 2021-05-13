@@ -171,12 +171,15 @@ export default function Activity(props) {
                     <InputMask id="name" disabled={!activity.name} value={startTime} mask="99:99" slotChar="--:--" onChange={function (e) {
                         if(!e.value.toString().includes("-")){
                             let startDateTime
+                            let hours = e.value.toString().substring(0, e.value.toString().indexOf(':'))
+                            let minutes = e.value.toString().substring(e.value.toString().indexOf(':'))
                             if(startDate == null){
-                                startDateTime = moment().set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                                startDateTime = moment().set({"hour": parseInt(hours), "minute": parseInt(minutes)})
                             }else{
-                                startDateTime = moment(startDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                                startDateTime = moment(startDate).set({"hour": parseInt(hours), "minute": parseInt(minutes)})
                             }
                             setStartDate(startDateTime)
+                            console.log("StartDate: ", startDateTime)
                             return setStartTime(e.value);
                         }
                     }}/>
@@ -186,12 +189,15 @@ export default function Activity(props) {
                     <InputMask id="name" disabled={!activity.name} value={endTime} mask="99:99" slotChar="--:--" onChange={function (e) {
                         if(!e.value.toString().includes("-")){
                             let endDateTime
+                            let hours = e.value.toString().substring(0, e.value.toString().indexOf(':'))
+                            let minutes = e.value.toString().substring(e.value.toString().indexOf(':'))
                             if(endDate == null){
-                                endDateTime = moment().set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                                endDateTime = moment().set({"hour": parseInt(hours), "minute": parseInt(minutes)})
                             }else{
-                                endDateTime = moment(endDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                                endDateTime = moment(endDate).set({"hour": parseInt(hours), "minute": parseInt(minutes)})
                             }
                             setEndDate(endDateTime)
+                            console.log("EndDate: ", endDateTime)
                             return setEndTime(e.value);
                         }
                     }}/>
@@ -206,6 +212,7 @@ export default function Activity(props) {
             "id": id, "startTime": startDate, "endTime": endDate, "sTime": startTime, "eTime": endTime,
             "activity": {"name": activity}, "activityInfo": activityInfo, "reservations": reservations
         };
+        console.log(state)
         onActivityStateChanged(state);
     }, [activity, startDate, endDate, startTime, endTime]);
 
