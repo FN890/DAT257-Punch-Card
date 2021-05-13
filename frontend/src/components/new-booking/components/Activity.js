@@ -26,8 +26,8 @@ export default function Activity(props) {
     const [activity, setActivity] = useState("");
     const [startDate, setStartDate] = useState(activityState.startTime);
     const [endDate, setEndDate] = useState(activityState.endTime);
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const [startTime, setStartTime] = useState(activityState.sTime);
+    const [endTime, setEndTime] = useState(activityState.eTime);
     const [focused, setFocused] = useState(null);
     const [update, setUpdate] = useState(0);
     const [unDates, setUnDates] = useState([]);
@@ -168,11 +168,19 @@ export default function Activity(props) {
                 </div>
                 {getDateSelect()}
                 <span className="p-float-label p-mt-4" >
-                    <InputMask id="name" value={startTime} mask="99:99" slotChar="--:--" />
+                    <InputMask id="name" value={startTime} mask="99:99" slotChar="--:--" onChange={function (e) {
+                        if(!e.value.toString().includes("-")){
+                            return setStartTime(e.value);
+                        }
+                    }}/>
                     <label  htmlFor="name">Start tid</label>
                 </span>
                 <span className="p-float-label p-mt-4" >
-                    <InputMask id="name" value={endTime} mask="99:99" slotChar="--:--"/>
+                    <InputMask id="name" value={endTime} mask="99:99" slotChar="--:--" onChange={function (e) {
+                        if(!e.value.toString().includes("-")){
+                            return setEndTime(e.value);
+                        }
+                    }}/>
                     <label htmlFor="name">Slut tid</label>
                 </span>
             </div>
@@ -181,11 +189,11 @@ export default function Activity(props) {
 
     useEffect(() => {
         let state = {
-            "id": id, "startTime": startDate, "endTime": endDate,
+            "id": id, "startTime": startDate, "endTime": endDate, "sTime": startTime, "eTime": endTime,
             "activity": {"name": activity}, "activityInfo": activityInfo, "reservations": reservations
         };
         onActivityStateChanged(state);
-    }, [activity, startDate, endDate]);
+    }, [activity, startDate, endDate, startTime, endTime]);
 
     return (
         <ActivityComponent/>
