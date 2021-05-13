@@ -168,9 +168,14 @@ export default function Activity(props) {
                 </div>
                 {getDateSelect()}
                 <span className="p-float-label p-mt-4" >
-                    <InputMask id="name" value={startTime} mask="99:99" slotChar="--:--" onChange={function (e) {
+                    <InputMask id="name" disabled={!activity.name} value={startTime} mask="99:99" slotChar="--:--" onChange={function (e) {
                         if(!e.value.toString().includes("-")){
-                            let startDateTime = moment(startDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            let startDateTime
+                            if(startDate == null){
+                                startDateTime = moment().set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            }else{
+                                startDateTime = moment(startDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            }
                             setStartDate(startDateTime)
                             return setStartTime(e.value);
                         }
@@ -178,9 +183,14 @@ export default function Activity(props) {
                     <label  htmlFor="name">Start tid</label>
                 </span>
                 <span className="p-float-label p-mt-4" >
-                    <InputMask id="name" value={endTime} mask="99:99" slotChar="--:--" onChange={function (e) {
+                    <InputMask id="name" disabled={!activity.name} value={endTime} mask="99:99" slotChar="--:--" onChange={function (e) {
                         if(!e.value.toString().includes("-")){
-                            let endDateTime = moment(endDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            let endDateTime
+                            if(endDate == null){
+                                endDateTime = moment().set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            }else{
+                                endDateTime = moment(endDate).set({"hour": 0, "minute": 0}).add(moment.duration(e.value));
+                            }
                             setEndDate(endDateTime)
                             return setEndTime(e.value);
                         }
