@@ -133,12 +133,12 @@ public class BookingService {
 
         newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
-        bookingRepository.save(newBooking);
         try {
             emailService.sendEmail(customer.getEmail(), reservations);
+            bookingRepository.save(newBooking);
             return ResponseEntity.ok("Bokning genomförd och mail skickat.");
         } catch (MailException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fel med att skicka mail, kolla att adressen stämmer. Bokning genomförd.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fel med att skicka mail, kolla att adressen stämmer.");
         }
     }
 
