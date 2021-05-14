@@ -4,6 +4,8 @@ import com.punchcard.bookingsystem.repositories.ActivityRepository;
 import com.punchcard.bookingsystem.tables.Activity;
 import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,52 +14,56 @@ import java.util.Optional;
 
 @Service
 public class ActivityService {
-    private final ActivityRepository activityRepository ;
+    private final ActivityRepository activityRepository;
 
     @Autowired
     public ActivityService(ActivityRepository activityRepository) {
-        this.activityRepository = activityRepository ;
+        this.activityRepository = activityRepository;
     }
 
-    public List<Activity> getAllActivities(){
-        return activityRepository.findAll() ;
+    public ResponseEntity<List<Activity>> getAllActivities() {
+        return ResponseEntity.ok(activityRepository.findAll());
     }
 
-    public List<Activity> getActive() {
-        return activityRepository.findActive();
+    public ResponseEntity<List<Activity>> getActive() {
+        return ResponseEntity.ok(activityRepository.findActive());
     }
 
-    public void addNewActivity(Activity activity) {
+    public ResponseEntity addNewActivity(Activity activity) {
         Optional<Activity> optionalActivity = activityRepository.findById(activity.getName());
 
-        if(optionalActivity.isPresent()) {
-            throw new IllegalStateException("Activity with name " + activity.getName() + " already exists");
+        if (optionalActivity.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Aktivitet med namn " + activity.getName() + " finns redan.");
         }
         activityRepository.save(activity);
+        return ResponseEntity.ok("Aktivitet tillagd.");
     }
 
-    public void deleteActivity(String name){
+    public ResponseEntity deleteActivity(String name) {
         Optional<Activity> oa = activityRepository.findById(name);
-        if(oa.isEmpty()){
-            throw new IllegalStateException("Activity with name: " + name + " does not exists");
+        if (oa.isEmpty()) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med namn " + name + " hittades inte.");
         }
         oa.get().setActive(false);
+        activityRepository.save(oa.get());
+        return ResponseEntity.ok("Aktivitet borttagen.");
     }
 
 
-    public Activity getActivityByName(String name) {
+    public ResponseEntity getActivityByName(String name) {
         Optional<Activity> optionalActivity = activityRepository.findById(name);
 
-        if (optionalActivity.isEmpty()){
-            throw new IllegalStateException("Activity with name " + name + " does not exists");
+        if (optionalActivity.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med namn " + name + " hittades inte");
         }
-        return optionalActivity.get();
+        return ResponseEntity.ok(optionalActivity.get());
     }
 
     /**
      * Handles the logic of updating an activity
-     * @param name the name of the activity that is to be updated
-     * @param price the new price for the activity
+     *
+     * @param name    the name of the activity that is to be updated
+     * @param price   the new price for the activity
      * @param maxSize the new max size for the activity
      */
     @Transactional

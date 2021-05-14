@@ -34,7 +34,7 @@ public class BookingService {
         this.emailService = emailService;
     }
 
-    public List<Booking> getAllBookings() {
+    public ResponseEntity getAllBookings() {
         List<Booking> bookingList = bookingRepository.findAll();
         bookingList.sort(new Comparator<Booking>() {
             @Override
@@ -42,15 +42,15 @@ public class BookingService {
                 return (int) (o2.getId() - o1.getId());
             }
         });
-        return bookingList;
+        return ResponseEntity.ok(bookingList);
     }
 
-    public List<Booking> getArchived() {
-        return bookingRepository.findArchived();
+    public ResponseEntity getArchived() {
+        return ResponseEntity.ok(bookingRepository.findArchived());
     }
 
-    public List<Booking> getNotArchived() {
-        return bookingRepository.findNotArchived();
+    public ResponseEntity getNotArchived() {
+        return ResponseEntity.ok(bookingRepository.findNotArchived());
     }
 
     public List<Booking> getByCustomerPhone(String phone) {
@@ -95,7 +95,7 @@ public class BookingService {
         int total = 0;
         Map<String, Integer> activityPrices = new HashMap<>();
         for (PreBooking p : preBookings) {
-            Activity a = activityService.getActivityByName(p.getActivityName());
+            Activity a = (Activity) activityService.getActivityByName(p.getActivityName()).getBody();
             Reservation r = new Reservation(p.getStartTime(), p.getEndTime(), a);
             total += r.getPrice();
 
@@ -112,7 +112,7 @@ public class BookingService {
     public ResponseEntity addNewBooking(Booking booking) {
         Booking newBooking = new Booking(booking.getCustomer(), booking.getGroupSize());
 
-        Customer customer = new Customer();
+        Customer customer;
 
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
@@ -125,7 +125,8 @@ public class BookingService {
             if (!reservationService.isAvailable(r)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Överlappande datum med aktivitet " + r.getActivity().getName());
             }
-            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
+            Activity activity = (Activity) activityService.getActivityByName(r.getActivity().getName()).getBody();
+            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), activity, newBooking);
             reservations.add(reservation);
         }
 
@@ -139,12 +140,12 @@ public class BookingService {
 
         newBooking.setCustomer(customer);
         newBooking.setReservations(reservations);
-        bookingRepository.save(newBooking);
         try {
             emailService.sendEmail(customer.getEmail(), reservations);
+            bookingRepository.save(newBooking);
             return ResponseEntity.ok("Bokning genomförd och mail skickat.");
         } catch (MailException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fel med att skicka mail, kolla att adressen stämmer. Bokning genomförd.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fel med att skicka mail, kolla att adressen stämmer.");
         }
     }
 
@@ -200,10 +201,11 @@ public class BookingService {
         return ResponseEntity.ok("Bokning uppdaterad");
     }
 
-    public void deleteBooking(Long id) {
+    public ResponseEntity deleteBooking(Long id) {
         if (!bookingRepository.existsById(id)) {
-            throw new IllegalStateException("Booking with id " + id + " does not exists.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bokning med id " + id + " hittades inte.");
         }
         bookingRepository.deleteById(id);
+        return ResponseEntity.ok("Bokning med id " + id + " är borttagen.");
     }
 }

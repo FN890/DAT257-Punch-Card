@@ -40,7 +40,7 @@ public class EmailService {
         for (Reservation reservation : reservations) {
             message.append(reservation.getActivity().getName() + "\n");
             message.append(reservation.getStartTime() + " - " + reservation.getEndTime() + "\n");
-            message.append("\n" + reservation.getActivity().getFaq() + "\n");
+            message.append("\n" + reservation.getActivity().getFaq() + "\n\n");
         }
         message.append("\nTack för bokningen /Punch Card");
         return message.toString();

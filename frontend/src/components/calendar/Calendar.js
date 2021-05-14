@@ -93,6 +93,9 @@ export default function Calendar() {
                         <div className="p-m-2 p-text-left">
                             <b>Mobil:</b> {booking.customer.phoneNr}
                         </div>
+                        <div className="p-m-2 p-text-left">
+                            <b>E-post:</b> {booking.customer.email}
+                        </div>
                     </div>
                     <div className="p-card box1">
                         <div className="p-m-2 p-text-left">

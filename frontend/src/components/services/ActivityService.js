@@ -8,7 +8,13 @@ export default class ActivityService {
         });
     }
 
-   async addActivity(name, price, maxSize, isDaily, faq) {
+    getActiveActivities() {
+        return axios.get('/api/v1/activity/active').then(resp => {
+            return resp.data
+        });
+    }
+
+    async addActivity(name, price, maxSize, isDaily, faq) {
         try {
             const resp = await axios.post('api/v1/activity',
                 {
@@ -19,13 +25,15 @@ export default class ActivityService {
                     "faq": faq
                 })
             console.log(resp);
-        }
-            catch (err){
-                console.log(err);
-            }
-
+        } catch (err) {
+            console.log(err);
         }
 
+    }
+
+    deleteActivity(name) {
+        return axios.delete(`/api/v1/activity/name/${name}`)
+    }
 
 
 }
