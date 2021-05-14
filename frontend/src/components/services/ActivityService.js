@@ -14,12 +14,15 @@ export default class ActivityService {
         });
     }
 
-    async addActivity(name, price, maxSize, isDaily, faq) {
+    async addActivity(name, price, hprice, dprice, perprice, maxSize, isDaily, faq) {
         try {
             const resp = await axios.post('api/v1/activity',
                 {
                     "name": name,
                     "price": price,
+                    "hourlyPrice": hprice,
+                    "dailyPrice": dprice,
+                    "pricePerPerson": perprice, 
                     "maxSize": maxSize,
                     "isDaily": isDaily,
                     "faq": faq

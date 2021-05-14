@@ -14,6 +14,9 @@ export default function CreateActivityGroup() {
     const [isDaily, setIsDaily] = useState(true);
     const [name, setName] = useState('');
     const [price, setPrice] = useState(null);
+    const [hprice, setHPrice] = useState(null);
+    const [dprice, setDPrice] = useState(null);
+    const [perprice, setPerPrice] = useState(null);
     const [maxPeople, setMaxPeople] = useState(null);
     const [faq, setFaq] = useState()
 
@@ -28,7 +31,7 @@ export default function CreateActivityGroup() {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     function onCreateActivity() {
         console.log(faq);
-        activityService.addActivity(name, price, maxPeople, isDaily, faq).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
+        activityService.addActivity(name, price, hprice, dprice, perprice, maxPeople, isDaily, faq).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
 
     const setActivity = (e) => {
@@ -69,6 +72,27 @@ export default function CreateActivityGroup() {
                 <InputNumber id="price" value={price} onChange={(e) => setPrice(e.value)} min={0}
                 ></InputNumber>
                    <label htmlFor="price">Pris</label>
+                </span>
+                </div>
+                <div className="p-d-flex p-mx-5 p-mb-5">
+               <span className="p-float-label">
+                <InputNumber id="hprice" value={hprice} onChange={(e) => setHPrice(e.value)} min={0}
+                ></InputNumber>
+                   <label htmlFor="hprice">Pris per timme</label>
+                </span>
+                </div>
+                <div className="p-d-flex p-mx-5 p-mb-5">
+               <span className="p-float-label">
+                <InputNumber id="dprice" value={dprice} onChange={(e) => setDPrice(e.value)} min={0}
+                ></InputNumber>
+                   <label htmlFor="dprice">Pris per dag</label>
+                </span>
+                </div>
+                <div className="p-d-flex p-mx-5 p-mb-5">
+               <span className="p-float-label">
+                <InputNumber id="perprice" value={perprice} onChange={(e) => setPerPrice(e.value)} min={0}
+                ></InputNumber>
+                   <label htmlFor="perprice">Pris per person</label>
                 </span>
                 </div>
                 <div className="p-d-flex p-mx-5 p-mb-5">
