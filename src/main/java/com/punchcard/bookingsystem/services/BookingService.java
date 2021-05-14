@@ -33,7 +33,7 @@ public class BookingService {
         this.emailService = emailService;
     }
 
-    public List<Booking> getAllBookings() {
+    public ResponseEntity getAllBookings() {
         List<Booking> bookingList = bookingRepository.findAll();
         bookingList.sort(new Comparator<Booking>() {
             @Override
@@ -41,15 +41,15 @@ public class BookingService {
                 return (int) (o2.getId() - o1.getId());
             }
         });
-        return bookingList;
+        return ResponseEntity.ok(bookingList);
     }
 
-    public List<Booking> getArchived() {
-        return bookingRepository.findArchived();
+    public ResponseEntity getArchived() {
+        return ResponseEntity.ok(bookingRepository.findArchived());
     }
 
-    public List<Booking> getNotArchived() {
-        return bookingRepository.findNotArchived();
+    public ResponseEntity getNotArchived() {
+        return ResponseEntity.ok(bookingRepository.findNotArchived());
     }
 
     public List<Booking> getByCustomerPhone(String phone) {
@@ -193,10 +193,11 @@ public class BookingService {
         return ResponseEntity.ok("Bokning uppdaterad");
     }
 
-    public void deleteBooking(Long id) {
+    public ResponseEntity deleteBooking(Long id) {
         if (!bookingRepository.existsById(id)) {
-            throw new IllegalStateException("Booking with id " + id + " does not exists.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bokning med id " + id + " hittades inte.");
         }
         bookingRepository.deleteById(id);
+        return ResponseEntity.ok("Bokning med id " + id + " är borttagen.");
     }
 }

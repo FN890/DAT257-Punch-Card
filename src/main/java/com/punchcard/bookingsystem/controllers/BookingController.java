@@ -26,17 +26,17 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<Booking> getAllBookings() {
+    public ResponseEntity getAllBookings() {
         return bookingService.getAllBookings();
     }
 
     @GetMapping(path = "/archived")
-    public List<Booking> getArchived() {
+    public ResponseEntity getArchived() {
         return bookingService.getArchived();
     }
 
     @GetMapping(path = "/notarchived")
-    public List<Booking> getNotArchived() {
+    public ResponseEntity getNotArchived() {
         return bookingService.getNotArchived();
     }
 
@@ -89,8 +89,8 @@ public class BookingController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteBooking(@PathVariable("id") Long id) {
-        bookingService.deleteBooking(id);
+    public ResponseEntity deleteBooking(@PathVariable("id") Long id) {
+        return bookingService.deleteBooking(id);
     }
 
 }
