@@ -3,6 +3,7 @@ import com.punchcard.bookingsystem.services.ActivityService;
 import com.punchcard.bookingsystem.tables.Activity;
 import com.punchcard.bookingsystem.tables.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -21,30 +22,30 @@ public class ActivityController {
     }
 
     @GetMapping
-    public List<Activity> getAllActivities(){
+    public ResponseEntity<List<Activity>> getAllActivities(){
         return activityService.getAllActivities();
     }
 
     @GetMapping(path = "/active")
-    public List<Activity> getActive() {
+    public ResponseEntity<List<Activity>> getActive() {
         return activityService.getActive();
     }
 
 
 
     @GetMapping(path = "/name/{name}")
-    public Activity getActivityByName(@PathVariable("name") String name) {
+    public ResponseEntity getActivityByName(@PathVariable("name") String name) {
         return activityService.getActivityByName(name);
     }
 
     @PostMapping
-    public void addNewActivity(@RequestBody Activity activity) {
-        activityService.addNewActivity(activity);
+    public ResponseEntity addNewActivity(@RequestBody Activity activity) {
+        return activityService.addNewActivity(activity);
     }
 
     @DeleteMapping(path = "/name/{name}")
-    public void deleteActivity(@PathVariable("name") String name) {
-        activityService.deleteActivity(name);
+    public ResponseEntity deleteActivity(@PathVariable("name") String name) {
+        return activityService.deleteActivity(name);
     }
 
     /**

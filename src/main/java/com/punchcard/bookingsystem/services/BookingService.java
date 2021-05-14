@@ -93,7 +93,7 @@ public class BookingService {
     public Map<String, Integer> calculatePreBooking(List<PreBooking> preBookings) {
         int total = 0;
         for (PreBooking p : preBookings) {
-            Activity a = activityService.getActivityByName(p.getActivityName());
+            Activity a = (Activity) activityService.getActivityByName(p.getActivityName()).getBody();
             Reservation r = new Reservation(p.getStartTime(), p.getEndTime(), a);
             total += r.getPrice();
         }
@@ -105,7 +105,7 @@ public class BookingService {
     public ResponseEntity addNewBooking(Booking booking) {
         Booking newBooking = new Booking(booking.getCustomer(), booking.getGroupSize());
 
-        Customer customer = new Customer();
+        Customer customer;
 
         newBooking.setResponsible(booking.getResponsible());
         newBooking.setDescription(booking.getDescription());
@@ -118,7 +118,8 @@ public class BookingService {
             if (!reservationService.isAvailable(r)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Överlappande datum med aktivitet " + r.getActivity().getName());
             }
-            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), r.getActivity(), newBooking);
+            Activity activity = (Activity) activityService.getActivityByName(r.getActivity().getName()).getBody();
+            Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), activity, newBooking);
             reservations.add(reservation);
         }
 
