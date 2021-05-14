@@ -13,9 +13,7 @@ export default function BookingOverview(props) {
     const [discount, setDiscount] = useState(0);
     const [price, setPrice] = useState(0);
 
-    let listActivity = []
-
-    const getPrice = () => {
+    const getPrices = () => {
         const bookingService = new BookingService();
         const preBookings = [];
         activityStates.forEach(state => {
@@ -27,35 +25,36 @@ export default function BookingOverview(props) {
                 });
             }
         });
+
+        let listActivity = [];
         if (preBookings.length !== 0) {
             bookingService.getPriceCalculation(preBookings).then(resp => {
+                resp.activities.forEach(activity => {
+                        listActivity.push(
+                            <div className="p-m-2 p-d-flex p-justify-between">
+                                <div className="p-text-left">
+                                    {activity.name}
+                                </div>
+                                <div className="p-text-right ">
+                                    +{activity.price}:-
+                                </div>
+                            </div>
+                        )
+                });
+                if (activityStates.length > 0 && activityStates[0].activity.name) {
+                    listActivity.push(<Divider />)
+                }
                 setPrice(resp.price);
+                setAct(listActivity);
             });
         } else {
             setPrice(0);
+            setAct([]);
         }
     }
 
     useEffect(() => {
-        activityStates.forEach(state => {
-            if (state.activity.name) {
-                listActivity.push(
-                    <div className="p-m-2 p-d-flex p-justify-between">
-                        <div className="p-text-left">
-                            {state.activity.name.name}
-                        </div>
-                        <div className="p-text-right ">
-                            +{state.activity.name.price}:-
-                        </div>
-                    </div>
-                )
-            }
-        });
-        if (activityStates.length > 0 && activityStates[0].activity.name) {
-            listActivity.push(<Divider />)
-        }
-        getPrice();
-        setAct(listActivity)
+        getPrices();
         onPriceChange((price - discount));
     }, [activityStates, price, discount]);
 
