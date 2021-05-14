@@ -98,7 +98,7 @@ export default function NewBooking() {
 
     useEffect(() => {
         activityInfo = [];
-        activityService.getActivities().then(function (availableActivities) {
+        activityService.getActiveActivities().then(function (availableActivities) {
             availableActivities.forEach(activity => {
                 activityInfo.push(activity);
             })

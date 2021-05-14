@@ -7,11 +7,10 @@ import './ActivityTable.css';
 
 /**
  * Creates a table with all the available activities
- * @param props
  * @returns {JSX.Element}
  * @constructor
  */
-export default function ActivityTable(props) {
+export default function ActivityTable() {
     const [activity, setActivity] = useState([]);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
     const activityService = new ActivityService();
@@ -36,10 +35,6 @@ export default function ActivityTable(props) {
         </div>
     );
     let footer = `Det finns totalt ${activity ? activity.length : 0} aktiviteter tillagda.`;
-    /**
-     * used to check if data is passed from a prop or not
-     */
-    if (props.activities === undefined) {
         return (
             <div className="p-shadow-3 p-m-5">
                 <DataTable style={{ width: '100%' }} scrollable scrollWidth="300px" value={activity} header={header} footer={footer}>
@@ -49,19 +44,6 @@ export default function ActivityTable(props) {
                 </DataTable>
             </div>
         );
-    }
-    /**
-     * This is used if activities is a prop passed down from a parent component
-     */
-    footer = `Det finns totalt ${activity ? props.activities.length : 0} aktiviteter tillagda.`;
-    return (
-        <div className="p-shadow-3 p-m-5">
-            <DataTable  scrollable scrollWidth="300px" value={props.activities} header={header} footer={footer}>
-                <Column headerStyle={{ width: '150px' }} field="name" header="Aktivitetens namn" sortable></Column>
-                <Column headerStyle={{ width: '150px' }} field="price" header="Pris" body={priceBodyTemplate} sortable></Column>
-                <Column headerStyle={{ width: '150px' }} field="maxSize" header="Max antal" sortable></Column>
-            </DataTable>
-        </div>
-    );
+
 
 }
