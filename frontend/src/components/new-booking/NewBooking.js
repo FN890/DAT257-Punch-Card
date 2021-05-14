@@ -74,19 +74,22 @@ export default function NewBooking() {
     /**
      * Collects the relevant data and sends a POST request with BookingService.
      */
-    const createBookingPressed = () => {
+    const createBookingPressed = async () => {
         let reservations = []
         for (let i = 0; i < activityStates.length; i++) {
             reservations.push({ "startTime": activityStates[i].startTime, "endTime": activityStates[i].endTime, "activity": { "name": activityStates[i].activity.name.name } });
         }
 
-        bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
+        const status = await bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
             bookingInfo.paid, price, { "phoneNr": bookingInfo.customerPhone, "name": bookingInfo.customerName, "email": bookingInfo.email }, reservations).then((response) => {
-                //console.log(response);
             }).catch((error) => {
                 displayError(error.response.status, error.response.data);
+                return error.response.status;
             });
 
+        if (status !== 400) {
+            history.push("/allabokningar");
+        }
     }
 
     const displayError = (code, message) => {
@@ -125,7 +128,7 @@ export default function NewBooking() {
             </div>
             <div className="p-shadow-3 p-m-3">
                 <div><ActivitiesButtonGroup onAddActivity={addActivity} /></div>
-                <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity}/>)}</div>
+                <div>{activityStates.map((state) => <Activity key={state.id} activityState={state} onActivityStateChanged={changeActivityState} onRemoveClicked={removeActivity} />)}</div>
             </div>
             <div className="p-shadow-3 p-m-3">
                 <div><BookingOverview activityStates={activityStates} onPriceChange={changePrice} /></div>
