@@ -14,14 +14,14 @@ import java.util.Optional;
 
 @Service
 public class ActivityService {
-    private final ActivityRepository activityRepository ;
+    private final ActivityRepository activityRepository;
 
     @Autowired
     public ActivityService(ActivityRepository activityRepository) {
-        this.activityRepository = activityRepository ;
+        this.activityRepository = activityRepository;
     }
 
-    public ResponseEntity<List<Activity>> getAllActivities(){
+    public ResponseEntity<List<Activity>> getAllActivities() {
         return ResponseEntity.ok(activityRepository.findAll());
     }
 
@@ -32,19 +32,20 @@ public class ActivityService {
     public ResponseEntity addNewActivity(Activity activity) {
         Optional<Activity> optionalActivity = activityRepository.findById(activity.getName());
 
-        if(optionalActivity.isPresent()) {
+        if (optionalActivity.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Aktivitet med namn " + activity.getName() + " finns redan.");
         }
         activityRepository.save(activity);
         return ResponseEntity.ok("Aktivitet tillagd.");
     }
 
-    public ResponseEntity deleteActivity(String name){
+    public ResponseEntity deleteActivity(String name) {
         Optional<Activity> oa = activityRepository.findById(name);
-        if(oa.isEmpty()){
+        if (oa.isEmpty()) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med namn " + name + " hittades inte.");
         }
         oa.get().setActive(false);
+        activityRepository.save(oa.get());
         return ResponseEntity.ok("Aktivitet borttagen.");
     }
 
@@ -52,7 +53,7 @@ public class ActivityService {
     public ResponseEntity getActivityByName(String name) {
         Optional<Activity> optionalActivity = activityRepository.findById(name);
 
-        if (optionalActivity.isEmpty()){
+        if (optionalActivity.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med namn " + name + " hittades inte");
         }
         return ResponseEntity.ok(optionalActivity.get());
@@ -60,8 +61,9 @@ public class ActivityService {
 
     /**
      * Handles the logic of updating an activity
-     * @param name the name of the activity that is to be updated
-     * @param price the new price for the activity
+     *
+     * @param name    the name of the activity that is to be updated
+     * @param price   the new price for the activity
      * @param maxSize the new max size for the activity
      */
     @Transactional

@@ -27,7 +27,7 @@ export default function ActivityTable(props) {
      * Calls once on initiation to get all the activities from the database
      */
     useEffect(() => {
-        activityService.getActivities().then(data => setActivity(data));
+        activityService.getActiveActivities().then(data => setActivity(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const header = (

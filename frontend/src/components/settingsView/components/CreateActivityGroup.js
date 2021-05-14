@@ -1,12 +1,12 @@
 import {InputText} from "primereact/inputtext";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import 'primeflex/primeflex.css';
 import {Button} from "primereact/button";
 import {InputNumber} from "primereact/inputnumber";
 import {RadioButton} from "primereact/radiobutton";
 import ActivityService from "../../services/ActivityService";
-import Prices from "../../prices/Prices";
 import {Editor} from "primereact/editor";
+import SettingsPrices from "./SettingsPrices";
 
 export default function CreateActivityGroup() {
     const activityService = new ActivityService();
@@ -23,13 +23,19 @@ export default function CreateActivityGroup() {
      * all the activities and uses setActivities to set new info
      * which causes a rerender
      */
+    useEffect(() => {
+        activityService.getActiveActivities().then(data => setActivities(data));
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
     function onCreateActivity() {
         console.log(faq);
-        activityService.addActivity(name, price, maxPeople, isDaily, faq).then(() => activityService.getActivities().then(data => setActivities(data)))
+        activityService.addActivity(name, price, maxPeople, isDaily, faq).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
 
     const setActivity = (e) => {
         setIsDaily(e.value);
+    }
+    const onDelete = (name) => {
+        activityService.deleteActivity(name).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
     const header = (
         <span className="ql-formats">
@@ -54,7 +60,7 @@ export default function CreateActivityGroup() {
                 <div className="p-d-flex p-mx-5 p-mb-5">
                <span className="p-float-label">
                 <InputNumber id="maxPeople" value={maxPeople} onChange={(e) => setMaxPeople(e.value)}
-                             min={0} max={100}></InputNumber>
+                             min={0}></InputNumber>
                    <label htmlFor="maxPeople">Max antal personer</label>
                 </span>
                 </div>
@@ -93,7 +99,7 @@ export default function CreateActivityGroup() {
                 </div>
             </div>
             <div className="p-m-3">
-                <Prices activities={activities}/>
+                <SettingsPrices activities={activities} onClickDeleteButton={onDelete}/>
             </div>
         </div>
 

@@ -10,7 +10,7 @@ export default class BookingService {
     }
 
     /**
-     * GET request to get JSON of all bookings
+     * GET request to get JSON of all not archived bookings
      */
     getNotArchivedBookings() {
         return axios.get('/api/v1/booking/notarchived').then(resp => resp.data);
