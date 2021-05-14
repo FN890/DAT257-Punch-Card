@@ -1,6 +1,7 @@
 package com.punchcard.bookingsystem.services;
 
 import com.punchcard.bookingsystem.bodies.PreBooking;
+import com.punchcard.bookingsystem.bodies.PreBookingResponse;
 import com.punchcard.bookingsystem.repositories.BookingRepository;
 import com.punchcard.bookingsystem.tables.Activity;
 import com.punchcard.bookingsystem.tables.Booking;
@@ -90,16 +91,22 @@ public class BookingService {
         return ResponseEntity.ok(bookingRepository.findByCustomerName(name));
     }
 
-    public Map<String, Integer> calculatePreBooking(List<PreBooking> preBookings) {
+    public PreBookingResponse calculatePreBooking(List<PreBooking> preBookings) {
         int total = 0;
+        Map<String, Integer> activityPrices = new HashMap<>();
         for (PreBooking p : preBookings) {
             Activity a = activityService.getActivityByName(p.getActivityName());
             Reservation r = new Reservation(p.getStartTime(), p.getEndTime(), a);
             total += r.getPrice();
+
+            if (activityPrices.containsKey(a.getName())) {
+
+                activityPrices.put(a.getName(), activityPrices.get(a.getName()) + r.getPrice());
+            } else { activityPrices.put(a.getName(), r.getPrice()); }
+
         }
-        Map<String, Integer> value = new HashMap<>();
-        value.put("price", total);
-        return value;
+
+        return new PreBookingResponse(total, activityPrices);
     }
 
     public ResponseEntity addNewBooking(Booking booking) {
