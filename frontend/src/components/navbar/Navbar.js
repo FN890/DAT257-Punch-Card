@@ -34,7 +34,16 @@ function LeftContent() {
 function rightContent() {
     return (
         <React.Fragment>
-            <NavButton buttonName={constants.settingsButtonText} url={constants.settingsNavName} type={'p-button-link'}/>
+            <NavButton buttonName={constants.settingsButtonText} url={constants.settingsNavName} type={'p-button-link'} />
+            <SignOut />
+        </React.Fragment>
+    )
+}
+
+function SignOut() {
+    return (
+        <React.Fragment>
+            <Button icon="pi pi-sign-out" className="p-button-rounded p-button-danger" />
         </React.Fragment>
     )
 }
