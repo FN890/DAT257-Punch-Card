@@ -11,16 +11,16 @@ public class Activity {
     private String name ;
 
     @Column(nullable = false)
-    private int price = 0;
+    private Integer price = 0;
 
     @Column(nullable = false)
-    private int hourlyPrice = 0;
+    private Integer hourlyPrice = 0;
 
     @Column(nullable = false)
-    private int dailyPrice = 0;
+    private Integer dailyPrice = 0;
 
     @Column(nullable = false)
-    private int pricePerPerson = 0;
+    private Integer pricePerPerson = 0;
 
     @Column(nullable = false)
     private Integer maxSize = 10;
@@ -61,27 +61,27 @@ public class Activity {
         this.price = price;
     }
 
-    public int getHourlyPrice() {
+    public Integer getHourlyPrice() {
         return hourlyPrice;
     }
 
-    public void setHourlyPrice(int hourlyPrice) {
+    public void setHourlyPrice(Integer hourlyPrice) {
         this.hourlyPrice = hourlyPrice;
     }
 
-    public int getDailyPrice() {
+    public Integer getDailyPrice() {
         return dailyPrice;
     }
 
-    public void setDailyPrice(int dailyPrice) {
+    public void setDailyPrice(Integer dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
 
-    public int getPricePerPerson() {
+    public Integer getPricePerPerson() {
         return pricePerPerson;
     }
 
-    public void setPricePerPerson(int pricePerPerson) {
+    public void setPricePerPerson(Integer pricePerPerson) {
         this.pricePerPerson = pricePerPerson;
     }
 

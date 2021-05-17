@@ -59,40 +59,33 @@ public class ActivityService {
         return ResponseEntity.ok(optionalActivity.get());
     }
 
-    /**
-     * Handles the logic of updating an activity
-     *
-     * @param name    the name of the activity that is to be updated
-     * @param price   the new price for the activity
-     * @param maxSize the new max size for the activity
-     */
     @Transactional
-    public void updateActivity(String name, Integer price, Integer hourlyPrice, Integer dailyPrice, Integer pricePerPerson, Integer maxSize, String faq) {
-        Activity activity = activityRepository.findById(name).orElseThrow(() -> new IllegalStateException(
+    public void updateActivity(String name, Activity updatedActivity) {
+        Activity oldActivity = activityRepository.findById(name).orElseThrow(() -> new IllegalStateException(
                 "Activity with name " + name + " does not exists"));
 
-        if (price != null && !price.equals(activity.getPrice())) {
-            activity.setPrice(price);
+        if (updatedActivity.getPrice() != null && !updatedActivity.getPrice().equals(oldActivity.getPrice())) {
+            oldActivity.setPrice(updatedActivity.getPrice());
         }
-        if (hourlyPrice != null && !hourlyPrice.equals(activity.getHourlyPrice())) {
-            activity.setPrice(price);
+        if (updatedActivity.getHourlyPrice() != null && !updatedActivity.getHourlyPrice().equals(oldActivity.getHourlyPrice())) {
+            oldActivity.setPrice(updatedActivity.getPrice());
         }
-        if (dailyPrice != null && !dailyPrice.equals(activity.getDailyPrice())) {
-            activity.setPrice(price);
+        if (updatedActivity.getDailyPrice() != null && !updatedActivity.getDailyPrice().equals(oldActivity.getDailyPrice())) {
+            oldActivity.setPrice(updatedActivity.getPrice());
         }
-        if (pricePerPerson != null && !pricePerPerson.equals(activity.getPricePerPerson())) {
-            activity.setPrice(price);
-        }
-
-        if (maxSize != null && !maxSize.equals(activity.getMaxSize())) {
-            activity.setMaxSize(maxSize);
+        if (updatedActivity.getPricePerPerson() != null && !updatedActivity.getPricePerPerson().equals(oldActivity.getPricePerPerson())) {
+            oldActivity.setPrice(updatedActivity.getPrice());
         }
 
-        if (faq != null && !faq.equals(activity.getFaq())) {
-            activity.setFaq(faq);
+        if (updatedActivity.getMaxSize() != null && !updatedActivity.getMaxSize().equals(oldActivity.getMaxSize())) {
+            oldActivity.setMaxSize(updatedActivity.getMaxSize());
         }
 
-        activityRepository.save(activity);
+        if (updatedActivity.getFaq() != null && !updatedActivity.getFaq().equals(oldActivity.getFaq())) {
+            oldActivity.setFaq(updatedActivity.getFaq());
+        }
+
+        activityRepository.save(oldActivity);
     }
 
 }

@@ -48,21 +48,9 @@ public class ActivityController {
         return activityService.deleteActivity(name);
     }
 
-    /**
-     * Handles updating of an activity
-     * @param name the activity to be updated
-     * @param price the new price of the activity
-     * @param maxSize the new max size of the activity
-     */
     @PutMapping(path = "name/{name}")
-    public void updateActivity(@PathVariable("name") String name,
-                               @RequestParam(required = false) Integer price,
-                               @RequestParam(required = false) Integer hourlyPrice,
-                               @RequestParam(required = false) Integer dailyPrice,
-                               @RequestParam(required = false) Integer pricePerPerson,
-                               @RequestParam(required = false) Integer maxSize,
-                               @RequestParam(required = false) String faq) {
-        activityService.updateActivity(name, price, hourlyPrice, dailyPrice, pricePerPerson, maxSize, faq);
+    public void updateActivity(@PathVariable("name") String name, @RequestBody Activity activity) {
+        activityService.updateActivity(name, activity);
     }
 
 }
