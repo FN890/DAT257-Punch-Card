@@ -46,7 +46,7 @@ function App() {
                     <NavBar/>
                     <Settings/>
                 </Route>
-                <Route path='/login'>
+                <Route path='/loggain'>
                     <Login/>
                 </Route>
                 <Route exact path="*" render={() => (
