@@ -10,7 +10,6 @@ export default class ActivityService {
 
     getActiveActivities() {
         return axios.get('/api/v1/activity/active').then(resp => {
-            console.log(resp.data)
             return resp.data
         });
     }
@@ -28,7 +27,6 @@ export default class ActivityService {
                     "isDaily": isDaily,
                     "faq": faq
                 })
-            console.log(resp);
         } catch (err) {
             console.log(err);
         }

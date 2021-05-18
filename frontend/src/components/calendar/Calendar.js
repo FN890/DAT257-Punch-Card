@@ -31,7 +31,6 @@ export default function Calendar() {
      */
     useEffect(() => {
         bookingService.getNotArchivedBookings().then(function (bookingsArray) {
-            console.log(bookingsArray)
             setAllData(bookingsArray)
             let calendarEvents = []
             bookingsArray.forEach(booking => {

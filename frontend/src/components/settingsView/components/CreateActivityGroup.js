@@ -30,7 +30,6 @@ export default function CreateActivityGroup() {
         activityService.getActiveActivities().then(data => setActivities(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     function onCreateActivity() {
-        console.log(faq);
         activityService.addActivity(name, price, hprice, dprice, perprice, maxPeople, isDaily, faq).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
 
@@ -38,7 +37,6 @@ export default function CreateActivityGroup() {
         setIsDaily(e.value);
     }
     const onDelete = (id) => {
-        console.log(id)
         activityService.deleteActivity(id).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
     const header = (
