@@ -37,8 +37,9 @@ export default function CreateActivityGroup() {
     const setActivity = (e) => {
         setIsDaily(e.value);
     }
-    const onDelete = (name) => {
-        activityService.deleteActivity(name).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
+    const onDelete = (id) => {
+        console.log(id)
+        activityService.deleteActivity(id).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
     const header = (
         <span className="ql-formats">

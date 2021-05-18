@@ -8,7 +8,11 @@ import java.util.List;
 public class Activity {
 
     @Id
-    private String name ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private Integer price = 0;
@@ -45,6 +49,9 @@ public class Activity {
         this.hourly = hourly;
         this.faq = faq;
     }
+
+    public Long getId(){ return id; }
+
     public void setName(String name) {
         this.name = name;
     }

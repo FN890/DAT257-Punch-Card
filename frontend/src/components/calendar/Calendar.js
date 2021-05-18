@@ -10,7 +10,6 @@ import {Divider} from "primereact/divider";
 import {Button} from "primereact/button";
 import {useHistory} from "react-router-dom";
 
-
 export default function Calendar() {
 
     const [bookings, setBookings] = useState([]);

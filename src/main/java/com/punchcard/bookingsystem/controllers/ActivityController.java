@@ -43,9 +43,9 @@ public class ActivityController {
         return activityService.addNewActivity(activity);
     }
 
-    @DeleteMapping(path = "/name/{name}")
-    public ResponseEntity deleteActivity(@PathVariable("name") String name) {
-        return activityService.deleteActivity(name);
+    @DeleteMapping(path = "/name/{id}")
+    public ResponseEntity deleteActivity(@PathVariable("id") Long id) {
+        return activityService.deleteActivity(id);
     }
 
     @PutMapping(path = "name/{name}")

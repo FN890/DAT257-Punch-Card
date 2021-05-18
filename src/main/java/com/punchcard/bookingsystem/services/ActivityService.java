@@ -30,19 +30,23 @@ public class ActivityService {
     }
 
     public ResponseEntity addNewActivity(Activity activity) {
-        Optional<Activity> optionalActivity = activityRepository.findById(activity.getName());
+        // No need for this check since I added Long id to activity, but commented just in case
+        /*
+        Optional<Activity> optionalActivity = activityRepository.findById(activity.getId());
 
         if (optionalActivity.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Aktivitet med namn " + activity.getName() + " finns redan.");
         }
+
+         */
         activityRepository.save(activity);
         return ResponseEntity.ok("Aktivitet tillagd.");
     }
 
-    public ResponseEntity deleteActivity(String name) {
-        Optional<Activity> oa = activityRepository.findById(name);
+    public ResponseEntity deleteActivity(Long id) {
+        Optional<Activity> oa = activityRepository.findById(id);
         if (oa.isEmpty()) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med namn " + name + " hittades inte.");
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med id " + id + " hittades inte.");
         }
         oa.get().setActive(false);
         activityRepository.save(oa.get());

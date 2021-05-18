@@ -10,6 +10,7 @@ export default class ActivityService {
 
     getActiveActivities() {
         return axios.get('/api/v1/activity/active').then(resp => {
+            console.log(resp.data)
             return resp.data
         });
     }
@@ -34,8 +35,8 @@ export default class ActivityService {
 
     }
 
-    deleteActivity(name) {
-        return axios.delete(`/api/v1/activity/name/${name}`)
+    deleteActivity(id) {
+        return axios.delete(`/api/v1/activity/name/${id}`)
     }
 
 
