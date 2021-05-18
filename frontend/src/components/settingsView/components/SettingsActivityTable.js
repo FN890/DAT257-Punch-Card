@@ -17,7 +17,6 @@ export default function SettingsActivityTable(props) {
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
     const activityService = new ActivityService();
     const onDelete = (id) => {
-        console.log("delete pressed: ", id)
         props.onClickDeleteButton(id)
     }
 
@@ -41,7 +40,6 @@ export default function SettingsActivityTable(props) {
         </div>
     );
     const actionTemplate = (rowData) => {
-        console.log(rowData.id)
         return (
             <React.Fragment>
                 <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right"
