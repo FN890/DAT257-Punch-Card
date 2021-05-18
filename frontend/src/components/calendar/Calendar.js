@@ -10,7 +10,6 @@ import {Divider} from "primereact/divider";
 import {Button} from "primereact/button";
 import {useHistory} from "react-router-dom";
 
-
 export default function Calendar() {
 
     const [bookings, setBookings] = useState([]);
@@ -32,7 +31,6 @@ export default function Calendar() {
      */
     useEffect(() => {
         bookingService.getNotArchivedBookings().then(function (bookingsArray) {
-            console.log(bookingsArray)
             setAllData(bookingsArray)
             let calendarEvents = []
             bookingsArray.forEach(booking => {

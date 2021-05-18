@@ -13,12 +13,11 @@ import {ToggleButton} from "primereact/togglebutton";
  * @constructor
  */
 export default function SettingsActivityTable(props) {
-    let name;
     const [activity, setActivity] = useState([]);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
     const activityService = new ActivityService();
-    const onDelete = () => {
-        props.onClickDeleteButton(name)
+    const onDelete = (id) => {
+        props.onClickDeleteButton(id)
     }
 
     const formatCurrency = (value) => {
@@ -41,11 +40,10 @@ export default function SettingsActivityTable(props) {
         </div>
     );
     const actionTemplate = (rowData) => {
-        name = rowData.name;
         return (
             <React.Fragment>
                 <Button className="p-button-raised p-button-danger" icon="pi pi-trash" iconPos="right"
-                        onClick={onDelete}/>
+                        onClick={() => onDelete(rowData.id)}/>
             </React.Fragment>
         );
     }

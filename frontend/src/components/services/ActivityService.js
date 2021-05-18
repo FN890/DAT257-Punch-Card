@@ -27,15 +27,14 @@ export default class ActivityService {
                     "isDaily": isDaily,
                     "faq": faq
                 })
-            console.log(resp);
         } catch (err) {
             console.log(err);
         }
 
     }
 
-    deleteActivity(name) {
-        return axios.delete(`/api/v1/activity/name/${name}`)
+    deleteActivity(id) {
+        return axios.delete(`/api/v1/activity/name/${id}`)
     }
 
 
