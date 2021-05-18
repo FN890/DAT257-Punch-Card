@@ -53,12 +53,11 @@ public class ActivityService {
         return ResponseEntity.ok("Aktivitet borttagen.");
     }
 
-
-    public ResponseEntity getActivityByName(String name) {
-        Optional<Activity> optionalActivity = activityRepository.findById(name);
+    public ResponseEntity getActivityById(Long id) {
+        Optional<Activity> optionalActivity = activityRepository.findById(id);
 
         if (optionalActivity.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med namn " + name + " hittades inte");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aktivitet med id " + id + " hittades inte");
         }
         return ResponseEntity.ok(optionalActivity.get());
     }

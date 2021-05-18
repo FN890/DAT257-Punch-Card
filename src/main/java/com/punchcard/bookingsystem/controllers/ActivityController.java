@@ -33,9 +33,9 @@ public class ActivityController {
 
 
 
-    @GetMapping(path = "/name/{name}")
-    public ResponseEntity getActivityByName(@PathVariable("name") String name) {
-        return activityService.getActivityByName(name);
+    @GetMapping(path = "/name/{id}")
+    public ResponseEntity getActivityByName(@PathVariable("id") Long id) {
+        return activityService.getActivityById(id);
     }
 
     @PostMapping

@@ -6,12 +6,12 @@ public class PreBooking {
 
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
-    private final String activityName;
+    private final Long activityId;
 
-    public PreBooking(LocalDateTime startTime, LocalDateTime endTime, String activityName) {
+    public PreBooking(LocalDateTime startTime, LocalDateTime endTime, Long activityId) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.activityName = activityName;
+        this.activityId = activityId;
     }
 
     public LocalDateTime getStartTime() {
@@ -22,7 +22,7 @@ public class PreBooking {
         return endTime;
     }
 
-    public String getActivityName() {
-        return activityName;
+    public Long getActivityId() {
+        return activityId;
     }
 }

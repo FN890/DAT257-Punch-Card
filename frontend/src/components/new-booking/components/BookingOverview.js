@@ -21,7 +21,7 @@ export default function BookingOverview(props) {
                 preBookings.push({
                     startTime: state.startTime,
                     endTime: state.endTime,
-                    activityName: state.activity.name.name
+                    activityId: state.activity.name.id
                 });
             }
         });
