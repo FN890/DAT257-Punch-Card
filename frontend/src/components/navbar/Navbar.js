@@ -1,13 +1,14 @@
 import React from 'react'
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
-import { useHistory } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 import { Divider } from 'primereact/divider';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import * as constants from './NavBarConstants'
+import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router';
 
 
 export default function NavBar() {
@@ -41,9 +42,18 @@ function rightContent() {
 }
 
 function SignOut() {
+
+    const history = useHistory();
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
+
+    const onSignOut = () => {
+        removeCookie('JWT', [])
+        history.push("/loggain");
+    }
+
     return (
         <React.Fragment>
-            <Button icon="pi pi-sign-out" className="p-button-rounded p-button-danger" />
+            <Button icon="pi pi-sign-out" className="p-button-rounded p-button-danger" onClick={onSignOut}/>
         </React.Fragment>
     )
 }
