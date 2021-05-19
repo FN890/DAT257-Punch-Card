@@ -110,8 +110,8 @@ export default function NewBooking() {
         activityService.getActiveActivities(cookies.JWT).then(function (availableActivities) {
             availableActivities.data.forEach(activity => {
                 activityInfo.push(activity);
-            }).catch(() => history.push("/loggain"))
-        })
+            })
+        }).catch(() => history.push("/loggain"))
 
         bookingService.getAllBookings(cookies.JWT).then(function (bookings) {
             bookings.data.forEach(booking => {
