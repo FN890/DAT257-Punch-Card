@@ -36,16 +36,16 @@ export default function IndividualBooking() {
     useEffect(() => {
         console.log(cookies.JWT)
         bookingService.getIndividualBooking(id, cookies.JWT).then(data => {
-            setBooking(data);
-            setCustomerName(data.customer.name)
-            setResponsible(data.responsible);
-            setPaid(data.paid);
-            setPrice(data.price);
-            setEmail(data.customer.email);
-            setPhone(data.customer.phoneNr);
-            setDescription(data.description);
+            setBooking(data.data);
+            setCustomerName(data.data.customer.name)
+            setResponsible(data.data.responsible);
+            setPaid(data.data.paid);
+            setPrice(data.data.price);
+            setEmail(data.data.customer.email);
+            setPhone(data.data.customer.phoneNr);
+            setDescription(data.data.description);
             const res = [];
-            data.reservations.forEach(r => {
+            data.data.reservations.forEach(r => {
                 res.push(
                     <Reservation reservation={r}/>
                 );

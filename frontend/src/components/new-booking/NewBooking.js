@@ -2,15 +2,15 @@ import BookingInfo from "./components/BookingInfo"
 import FinishButtonGroup from "./components/FinishButtonGroup"
 import ActivitiesButtonGroup from './components/ActivitesButtonGroup';
 import Activity from "./components/Activity";
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'primeflex/primeflex.css';
 import ActivityService from "../services/ActivityService";
 import BookingService from "../services/BookingService";
 import BookingOverview from "./components/BookingOverview";
 import moment from "moment";
-import {useHistory} from "react-router-dom";
-import {Toast} from 'primereact/toast';
-import {useCookies} from "react-cookie";
+import { useHistory } from "react-router-dom";
+import { Toast } from 'primereact/toast';
+import { useCookies } from "react-cookie";
 
 var activityInfo = [];
 let reservations = [];
@@ -34,7 +34,7 @@ export default function NewBooking() {
         const id = moment().valueOf();
         states.push({
             "id": id, "startTime": null, "endTime": null,
-            "activity": {"name": null}, "activityInfo": activityInfo, "reservations": reservations
+            "activity": { "name": null }, "activityInfo": activityInfo, "reservations": reservations
         })
         setActivityStates([...states]);
     }
@@ -81,28 +81,28 @@ export default function NewBooking() {
             reservations.push({
                 "startTime": activityStates[i].startTime,
                 "endTime": activityStates[i].endTime,
-                "activity": {"name": activityStates[i].activity.name.name}
+                "activity": { "name": activityStates[i].activity.name.name }
             });
         }
 
         const status = await bookingService.postBooking(bookingInfo.groupSize, bookingInfo.description, bookingInfo.responsible,
             bookingInfo.paid, price, {
-                "phoneNr": bookingInfo.customerPhone,
-                "name": bookingInfo.customerName,
-                "email": bookingInfo.email
-            }, reservations, cookies.JWT).then((response) => {
+            "phoneNr": bookingInfo.customerPhone,
+            "name": bookingInfo.customerName,
+            "email": bookingInfo.email
+        }, reservations, cookies.JWT).then((response) => {
         }).catch((error) => {
-            displayError(error.response.status, error.response.data);
+            displayError(error.response.status, error.response.data.message);
             return error.response.status;
         });
 
-        if (status !== 400) {
+        if (status !== 400 && status !== 500) {
             history.push("/allabokningar");
         }
     }
 
     const displayError = (code, message) => {
-        toast.current.show({severity: 'error', summary: code + " - Något gick fel!", detail: message, life: 7500});
+        toast.current.show({ severity: 'error', summary: code + " - Något gick fel!", detail: message, life: 7500 });
     }
 
     useEffect(() => {
@@ -114,7 +114,7 @@ export default function NewBooking() {
         })
 
         bookingService.getAllBookings(cookies.JWT).then(function (bookings) {
-            bookings.forEach(booking => {
+            bookings.data.forEach(booking => {
                 booking.reservations.forEach(reservation => {
                     reservations.push(reservation)
                 })
@@ -131,19 +131,19 @@ export default function NewBooking() {
 
     return (
         <div className="p-d-flex p-flex-column p-flex-md-row p-ai-start p-mx-3 p-mt-3 p-mb-5">
-            <Toast ref={toast}/>
+            <Toast ref={toast} />
             <div className="p-shadow-3 p-m-3">
-                <div><BookingInfo onInfoChanged={addInfo}/></div>
+                <div><BookingInfo onInfoChanged={addInfo} /></div>
             </div>
             <div className="p-shadow-3 p-m-3">
-                <div><ActivitiesButtonGroup onAddActivity={addActivity}/></div>
+                <div><ActivitiesButtonGroup onAddActivity={addActivity} /></div>
                 <div>{activityStates.map((state) => <Activity key={state.id} activityState={state}
-                                                              onActivityStateChanged={changeActivityState}
-                                                              onRemoveClicked={removeActivity}/>)}</div>
+                    onActivityStateChanged={changeActivityState}
+                    onRemoveClicked={removeActivity} />)}</div>
             </div>
             <div className="p-shadow-3 p-m-3">
-                <div><BookingOverview activityStates={activityStates} onPriceChange={changePrice}/></div>
-                <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed}/></div>
+                <div><BookingOverview activityStates={activityStates} onPriceChange={changePrice} /></div>
+                <div><FinishButtonGroup onCreateBookingPressed={createBookingPressed} /></div>
             </div>
         </div>
     )

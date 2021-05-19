@@ -30,7 +30,7 @@ export default function BookingOverview(props) {
         let listActivity = [];
         if (preBookings.length !== 0) {
             bookingService.getPriceCalculation(preBookings, cookies.JWT).then(resp => {
-                resp.activities.forEach(activity => {
+                resp.data.activities.forEach(activity => {
                     listActivity.push(
                         <div className="p-m-2 p-d-flex p-justify-between">
                             <div className="p-text-left">
@@ -45,7 +45,7 @@ export default function BookingOverview(props) {
                 if (activityStates.length > 0 && activityStates[0].activity.name) {
                     listActivity.push(<Divider/>)
                 }
-                setPrice(resp.price);
+                setPrice(resp.data.price);
                 setAct(listActivity);
             });
         } else {

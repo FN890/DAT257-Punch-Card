@@ -10,7 +10,7 @@ export default class BookingService {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resp => resp.data);
+        })
     }
 
     /**
@@ -21,7 +21,7 @@ export default class BookingService {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resp => resp.data);
+        })
     }
 
 
@@ -34,7 +34,7 @@ export default class BookingService {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resp => resp.data);
+        })
     }
 
     /**
@@ -45,7 +45,7 @@ export default class BookingService {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resp => resp.data);
+        })
     }
 
     getPriceCalculation(preBookings, token) {
@@ -53,7 +53,7 @@ export default class BookingService {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resp => resp.data);
+        })
     }
 
     /**
@@ -79,11 +79,11 @@ export default class BookingService {
      */
 
     deleteBooking(id, token) {
-        axios.delete(`/api/v1/booking/${id}`, {
+       return axios.delete(`/api/v1/booking/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }).then(resp => resp.data);
+        })
     }
 
     /**

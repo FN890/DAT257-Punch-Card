@@ -35,7 +35,7 @@ export default function AllBookingsTable() {
     useEffect(() => {
         setUpdateTable(updateTable + 1)
         bookingService.getAllBookings(cookies.JWT).then(data => {
-            setBookings(data)
+            setBookings(data.data)
 
         });
     }, []);
