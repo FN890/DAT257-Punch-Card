@@ -23,6 +23,7 @@ import java.util.ArrayList;
 @RequestMapping(path = "api/v1/admin")
 public class AdminController {
 
+
     private final AdminService adminService;
 
     private final AuthenticationManager authenticationManager;

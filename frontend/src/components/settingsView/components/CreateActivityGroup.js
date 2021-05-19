@@ -7,6 +7,7 @@ import {RadioButton} from "primereact/radiobutton";
 import ActivityService from "../../services/ActivityService";
 import {Editor} from "primereact/editor";
 import SettingsPrices from "./SettingsPrices";
+import {useCookies} from "react-cookie";
 
 export default function CreateActivityGroup() {
     const activityService = new ActivityService();
@@ -19,6 +20,7 @@ export default function CreateActivityGroup() {
     const [perprice, setPerPrice] = useState(null);
     const [maxPeople, setMaxPeople] = useState(null);
     const [faq, setFaq] = useState()
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
 
     /**
      * Posts a new activity to the database
@@ -30,6 +32,7 @@ export default function CreateActivityGroup() {
         activityService.getActiveActivities().then(data => setActivities(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     function onCreateActivity() {
+        console.log(cookies)
         activityService.addActivity(name, price, hprice, dprice, perprice, maxPeople, isDaily, faq).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
     }
 

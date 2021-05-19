@@ -9,7 +9,7 @@ import {Dialog} from 'primereact/dialog';
 import {useHistory} from 'react-router-dom';
 import {InputText} from "primereact/inputtext";
 import {ToggleButton} from "primereact/togglebutton";
-
+import {useCookies} from "react-cookie";
 
 export default function IndividualBooking() {
     const {id} = useParams();
@@ -28,12 +28,14 @@ export default function IndividualBooking() {
     const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
     const [disabled, setDisabled] = useState(true);
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
 
 
     const bookingService = new BookingService();
 
     useEffect(() => {
-        bookingService.getIndividualBooking(id).then(data => {
+        console.log(cookies.JWT)
+        bookingService.getIndividualBooking(id,cookies.JWT).then(data => {
             setBooking(data);
             setCustomerName(data.customer.name)
             setResponsible(data.responsible);

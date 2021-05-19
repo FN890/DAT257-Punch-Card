@@ -20,8 +20,13 @@ export default class BookingService {
     /**
      * GET request to get JSON of specific booking.
      */
-    getIndividualBooking(id) {
-        return axios.get(`/api/v1/booking/${id}`).then(resp => resp.data);
+    getIndividualBooking(id, token) {
+
+        return axios.get(`/api/v1/booking/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => resp.data);
     }
 
     /**
@@ -39,13 +44,13 @@ export default class BookingService {
      * PUT request to edit already existing booking
      */
     updateBooking(id, description, responsible, paid, price, customer) {
-       return axios.put(`/api/v1/booking/${id}`, {
-           "description": description,
-           "responsible": responsible,
-           "paid": paid,
-           "price": price,
-           "customer": customer
-       });
+        return axios.put(`/api/v1/booking/${id}`, {
+            "description": description,
+            "responsible": responsible,
+            "paid": paid,
+            "price": price,
+            "customer": customer
+        });
     }
 
     /**
@@ -54,7 +59,7 @@ export default class BookingService {
      */
 
     deleteBooking(id) {
-        axios.delete(`/api/v1/booking/${id}`, ).then(resp => resp.data);
+        axios.delete(`/api/v1/booking/${id}`,).then(resp => resp.data);
     }
 
     /**

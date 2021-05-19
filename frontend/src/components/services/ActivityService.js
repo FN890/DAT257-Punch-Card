@@ -1,8 +1,12 @@
 import axios from "axios";
+import {useCookies} from "react-cookie";
+
 
 export default class ActivityService {
 
+
     getActivities() {
+
         return axios.get('/api/v1/activity').then(resp => {
             return resp.data
         });
@@ -22,7 +26,7 @@ export default class ActivityService {
                     "price": price,
                     "hourlyPrice": hprice,
                     "dailyPrice": dprice,
-                    "pricePerPerson": perprice, 
+                    "pricePerPerson": perprice,
                     "maxSize": maxSize,
                     "isDaily": isDaily,
                     "faq": faq
