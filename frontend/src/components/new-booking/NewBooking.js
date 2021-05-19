@@ -108,7 +108,7 @@ export default function NewBooking() {
     useEffect(() => {
         activityInfo = [];
         activityService.getActiveActivities(cookies.JWT).then(function (availableActivities) {
-            availableActivities.forEach(activity => {
+            availableActivities.data.forEach(activity => {
                 activityInfo.push(activity);
             })
         })

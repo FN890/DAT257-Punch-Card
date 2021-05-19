@@ -33,7 +33,10 @@ export default function SettingsActivityTable(props) {
      * Calls once on initiation to get all the activities from the database
      */
     useEffect(() => {
-        activityService.getActiveActivities(cookies.JWT).then(data => setActivity(data));
+        activityService.getActiveActivities(cookies.JWT).then((data) => {
+            console.log(data.data)
+            setActivity(data.data)
+        });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const header = (

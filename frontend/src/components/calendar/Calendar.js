@@ -33,7 +33,7 @@ export default function Calendar() {
      */
     useEffect(() => {
         bookingService.getNotArchivedBookings(cookies.JWT).then(function (bookingsArray) {
-            setAllData(bookingsArray)
+            setAllData(bookingsArray.data)
             let calendarEvents = []
             bookingsArray.data.forEach(booking => {
                 let indvidualBooking = {
