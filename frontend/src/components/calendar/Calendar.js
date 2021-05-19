@@ -47,7 +47,7 @@ export default function Calendar() {
                 calendarEvents.push(indvidualBooking)
             })
             setBookings(calendarEvents)
-        })
+        }).catch(() => history.push("/loggain"))
     }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
     const fillDialog = (bookingId) => {

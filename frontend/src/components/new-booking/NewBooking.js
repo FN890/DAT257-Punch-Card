@@ -110,7 +110,7 @@ export default function NewBooking() {
         activityService.getActiveActivities(cookies.JWT).then(function (availableActivities) {
             availableActivities.data.forEach(activity => {
                 activityInfo.push(activity);
-            })
+            }).catch(() => history.push("/loggain"))
         })
 
         bookingService.getAllBookings(cookies.JWT).then(function (bookings) {
@@ -119,7 +119,7 @@ export default function NewBooking() {
                     reservations.push(reservation)
                 })
             })
-        })
+        }).catch(() => history.push("/loggain"))
     }, []);
 
     useEffect(() => {

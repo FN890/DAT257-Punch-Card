@@ -14,7 +14,6 @@ import {useCookies} from "react-cookie";
  * @constructor
  */
 export default function SettingsActivityTable(props) {
-    const [activity, setActivity] = useState([]);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
     const activityService = new ActivityService();
     const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
@@ -29,16 +28,6 @@ export default function SettingsActivityTable(props) {
     const priceBodyTemplate = (rowData) => {
         return formatCurrency(rowData.price);
     }
-    /**
-     * Calls once on initiation to get all the activities from the database
-     */
-    useEffect(() => {
-        activityService.getActiveActivities(cookies.JWT).then((data) => {
-            console.log(data.data)
-            setActivity(data.data)
-        });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
     const header = (
         <div className="table-header">
             Priser för aktiviteter
