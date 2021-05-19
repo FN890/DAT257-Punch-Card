@@ -4,6 +4,7 @@ import {Column} from 'primereact/column';
 import {DataTable} from 'primereact/datatable';
 import ActivityService from '../services/ActivityService';
 import './ActivityTable.css';
+import {useCookies} from "react-cookie";
 
 /**
  * Creates a table with all the available activities
@@ -14,6 +15,7 @@ export default function ActivityTable() {
     const [activity, setActivity] = useState([]);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
     const activityService = new ActivityService();
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
 
     const formatCurrency = (value) => {
         return value.toLocaleString('sv-SE', {style: 'currency', currency: 'SEK'});
@@ -26,7 +28,7 @@ export default function ActivityTable() {
      * Calls once on initiation to get all the activities from the database
      */
     useEffect(() => {
-        activityService.getActiveActivities().then(data => setActivity(data));
+        activityService.getActiveActivities(cookies.JWT).then(data => setActivity(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const header = (

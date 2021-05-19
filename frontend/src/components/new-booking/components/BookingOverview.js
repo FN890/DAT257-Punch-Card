@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Divider } from "primereact/divider";
+import React, {useEffect, useState, useRef} from 'react';
+import {Divider} from "primereact/divider";
 import 'primeflex/primeflex.css';
-import { InputNumber } from 'primereact/inputnumber';
+import {InputNumber} from 'primereact/inputnumber';
 import BookingService from '../../services/BookingService';
+import {useCookies} from "react-cookie";
 
 export default function BookingOverview(props) {
 
@@ -12,7 +13,7 @@ export default function BookingOverview(props) {
     const [act, setAct] = useState([])
     const [discount, setDiscount] = useState(0);
     const [price, setPrice] = useState(0);
-
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
     const getPrices = () => {
         const bookingService = new BookingService();
         const preBookings = [];
@@ -28,21 +29,21 @@ export default function BookingOverview(props) {
 
         let listActivity = [];
         if (preBookings.length !== 0) {
-            bookingService.getPriceCalculation(preBookings).then(resp => {
+            bookingService.getPriceCalculation(preBookings, cookies.JWT).then(resp => {
                 resp.activities.forEach(activity => {
-                        listActivity.push(
-                            <div className="p-m-2 p-d-flex p-justify-between">
-                                <div className="p-text-left">
-                                    {activity.name}
-                                </div>
-                                <div className="p-text-right ">
-                                    +{activity.price}:-
-                                </div>
+                    listActivity.push(
+                        <div className="p-m-2 p-d-flex p-justify-between">
+                            <div className="p-text-left">
+                                {activity.name}
                             </div>
-                        )
+                            <div className="p-text-right ">
+                                +{activity.price}:-
+                            </div>
+                        </div>
+                    )
                 });
                 if (activityStates.length > 0 && activityStates[0].activity.name) {
-                    listActivity.push(<Divider />)
+                    listActivity.push(<Divider/>)
                 }
                 setPrice(resp.price);
                 setAct(listActivity);
@@ -63,7 +64,8 @@ export default function BookingOverview(props) {
         return (
             <div className="p-my-5">
                 <span className="p-float-label">
-                    <InputNumber id="inputGroupSize" value={discount} onValueChange={(e) => setDiscount(e.value)} min={0} max={price} />
+                    <InputNumber id="inputGroupSize" value={discount} onValueChange={(e) => setDiscount(e.value)}
+                                 min={0} max={price}/>
                     <label htmlFor="inputGroupSize">Rabatt</label>
                 </span>
             </div>
@@ -73,7 +75,7 @@ export default function BookingOverview(props) {
     return (
         <div className="p-m-3">
             {act}
-            <DiscountComponent />
+            <DiscountComponent/>
             <div className="p-d-flex">
                 <div className="p-ml-auto p-mr-2">Totalt Pris:</div>
                 <div className="p-mr-3">{price - discount}</div>

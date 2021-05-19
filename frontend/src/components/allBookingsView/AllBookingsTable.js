@@ -8,6 +8,7 @@ import {ToggleButton} from 'primereact/togglebutton';
 import {InputText} from "primereact/inputtext";
 import {Dialog} from "primereact/dialog";
 import moment from 'moment'
+import {useCookies} from "react-cookie";
 
 /**
  * Creates the table that shows all bookings with customer info
@@ -24,7 +25,7 @@ export default function AllBookingsTable() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const [inactiveGlobalFilter, setInactiveGlobalFilter] = useState(null)
     const [archivedGlobalFilter, setArchivedGlobalFilter] = useState(null)
-
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
     const [deletePaidDialog, setDeletePaidDialog] = useState(false);
 
     const history = useHistory();
@@ -33,7 +34,7 @@ export default function AllBookingsTable() {
 
     useEffect(() => {
         setUpdateTable(updateTable + 1)
-        bookingService.getAllBookings().then(data => {
+        bookingService.getAllBookings(cookies.JWT).then(data => {
             setBookings(data)
 
         });
@@ -81,10 +82,8 @@ export default function AllBookingsTable() {
     }
 
     const onClickPaid = (event) => {
-
-        console.log(bookingService)
-        bookingService.updateBooking(event.id, event.description, event.responsible, !event.paid, event.price, event.customer).then(() => {
-            bookingService.getAllBookings().then(data => {
+        bookingService.updateBooking(event.id, event.description, event.responsible, !event.paid, event.price, event.customer, cookies.JWT).then(() => {
+            bookingService.getAllBookings(cookies.JWT).then(data => {
                 setBookings(data)
             })
         })

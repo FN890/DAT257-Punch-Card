@@ -2,13 +2,14 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import svLocale from '@fullcalendar/core/locales/sv';
-import { Dialog } from 'primereact/dialog';
+import {Dialog} from 'primereact/dialog';
 import styles from './Calendar.css';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import BookingService from "../services/BookingService";
 import {Divider} from "primereact/divider";
 import {Button} from "primereact/button";
 import {useHistory} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 export default function Calendar() {
 
@@ -19,9 +20,10 @@ export default function Calendar() {
     const [dialogBody, setDialogBody] = useState("");
     const bookingService = new BookingService();
     const history = useHistory();
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
 
     const hideDialog = () => {
-        if(displayDialog === true) {
+        if (displayDialog === true) {
             setDisplayDialog(false)
         }
     }
@@ -30,23 +32,23 @@ export default function Calendar() {
      * Calls once on initiation and fills bookings array with data from BookingService.js
      */
     useEffect(() => {
-        bookingService.getNotArchivedBookings().then(function (bookingsArray) {
+        bookingService.getNotArchivedBookings(cookies.JWT).then(function (bookingsArray) {
             setAllData(bookingsArray)
             let calendarEvents = []
             bookingsArray.forEach(booking => {
                 let indvidualBooking = {
-                    "id" : booking.id,
-                    "title" : booking.description,
-                    "start" : booking.startTime,
-                    "end" : booking.endTime,
-                    "backgroundColor" : intToRGB(hashCode(booking.responsible)),
-                    "borderColor" : intToRGB(hashCode(booking.responsible))
+                    "id": booking.id,
+                    "title": booking.description,
+                    "start": booking.startTime,
+                    "end": booking.endTime,
+                    "backgroundColor": intToRGB(hashCode(booking.responsible)),
+                    "borderColor": intToRGB(hashCode(booking.responsible))
                 }
                 calendarEvents.push(indvidualBooking)
             })
             setBookings(calendarEvents)
         })
-    },[]);// eslint-disable-line react-hooks/exhaustive-deps
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
     const fillDialog = (bookingId) => {
         let booking = allData.find(booking => booking.id == bookingId)
@@ -76,7 +78,7 @@ export default function Calendar() {
                     </div>
                 </div>
             )
-            if(reservation !== booking.reservations[booking.reservations.length-1]) {
+            if (reservation !== booking.reservations[booking.reservations.length - 1]) {
                 activites.push(<Divider/>)
             }
         })
@@ -106,12 +108,13 @@ export default function Calendar() {
                 </div>
 
                 <div className="p-grid p-my-3 p-justify-even">
-                    <div className="p-card p-p-2 activity-card" >
+                    <div className="p-card p-p-2 activity-card">
                         {activites}
                     </div>
                 </div>
-                <div className="p-grid p-justify-center" style={{marginTop:"5%"}}>
-                    <Button icon="pi pi-arrow-right" iconPos="right" label="Gå till bokning" onClick={() => history.push("/allabokningar/" + booking.id)}/>
+                <div className="p-grid p-justify-center" style={{marginTop: "5%"}}>
+                    <Button icon="pi pi-arrow-right" iconPos="right" label="Gå till bokning"
+                            onClick={() => history.push("/allabokningar/" + booking.id)}/>
                 </div>
             </div>
         )
@@ -126,12 +129,13 @@ export default function Calendar() {
         return hash;
     }
 
-    function intToRGB(i){
+    function intToRGB(i) {
         var c = (i & 0x00FFFFFF)
             .toString(16)
             .toUpperCase();
         return "#" + "00000".substring(0, 6 - c.length) + c;
     }
+
     const dialogStyle = {
         width: "70%",
     }
@@ -158,7 +162,8 @@ export default function Calendar() {
                         }
                     }>
                 </FullCalendar>
-                <Dialog className="dialog" header={header} visible={displayDialog} modal onHide={() => hideDialog()} baseZIndex={1000}>
+                <Dialog className="dialog" header={header} visible={displayDialog} modal onHide={() => hideDialog()}
+                        baseZIndex={1000}>
                     {dialogBody}
                 </Dialog>
             </div>

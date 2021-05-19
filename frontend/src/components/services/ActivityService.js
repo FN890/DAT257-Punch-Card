@@ -7,7 +7,7 @@ export default class ActivityService {
 
     getActivities(token) {
 
-        return axios.get('/api/v1/activity',{
+        return axios.get('/api/v1/activity', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -17,7 +17,7 @@ export default class ActivityService {
     }
 
     getActiveActivities(token) {
-        return axios.get('/api/v1/activity/active',{
+        return axios.get('/api/v1/activity/active', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -38,7 +38,7 @@ export default class ActivityService {
                     "maxSize": maxSize,
                     "isDaily": isDaily,
                     "faq": faq
-                },{
+                }, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -50,7 +50,11 @@ export default class ActivityService {
     }
 
     deleteActivity(id, token) {
-        return axios.delete(`/api/v1/activity/name/${id}`)
+        return axios.delete(`/api/v1/activity/name/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
     }
 
 

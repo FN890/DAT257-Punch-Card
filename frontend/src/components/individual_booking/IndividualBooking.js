@@ -35,7 +35,7 @@ export default function IndividualBooking() {
 
     useEffect(() => {
         console.log(cookies.JWT)
-        bookingService.getIndividualBooking(id,cookies.JWT).then(data => {
+        bookingService.getIndividualBooking(id, cookies.JWT).then(data => {
             setBooking(data);
             setCustomerName(data.customer.name)
             setResponsible(data.responsible);
@@ -78,7 +78,7 @@ export default function IndividualBooking() {
     }
 
     const deleteProduct = () => {
-        bookingService.deleteBooking(id)
+        bookingService.deleteBooking(id, cookies.JWT)
         setDeleteBookingDialog(false);
         history.push("/allabokningar");
     }
@@ -91,7 +91,7 @@ export default function IndividualBooking() {
             "email": email
         }
         console.log(customer)
-        bookingService.updateBooking(id, description, responsible, isPaid, price, customer);
+        bookingService.updateBooking(id, description, responsible, isPaid, price, customer, cookies.JWT);
         setConfirmationDialog(true);
         setSaveBookingDialog(false);
         setDisabled(true);
@@ -186,13 +186,14 @@ export default function IndividualBooking() {
 
             </div>
             <div>
-            <Dialog visible={deleteBookingDialog} style={{width: '450px'}} header="VARNING! Bekräfta borttagning" modal
-                    footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle p-mr-3" style={{fontSize: '2rem'}}/>
-                    {booking && <span>Är du säker på att du vill ta bort bokningen?</span>}
-                </div>
-            </Dialog>
+                <Dialog visible={deleteBookingDialog} style={{width: '450px'}} header="VARNING! Bekräfta borttagning"
+                        modal
+                        footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
+                    <div className="confirmation-content">
+                        <i className="pi pi-exclamation-triangle p-mr-3" style={{fontSize: '2rem'}}/>
+                        {booking && <span>Är du säker på att du vill ta bort bokningen?</span>}
+                    </div>
+                </Dialog>
             </div>
             <div>
                 <Dialog visible={saveBookingDialog} style={{width: '450px'}} header="Bekräfta ändringar" modal

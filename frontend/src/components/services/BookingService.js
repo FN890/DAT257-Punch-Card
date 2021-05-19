@@ -5,15 +5,23 @@ export default class BookingService {
     /**
      * GET request to get JSON of all bookings
      */
-    getAllBookings() {
-        return axios.get('/api/v1/booking').then(resp => resp.data);
+    getAllBookings(token) {
+        return axios.get('/api/v1/booking', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => resp.data);
     }
 
     /**
      * GET request to get JSON of all not archived bookings
      */
-    getNotArchivedBookings() {
-        return axios.get('/api/v1/booking/notarchived').then(resp => resp.data);
+    getNotArchivedBookings(token) {
+        return axios.get('/api/v1/booking/notarchived', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => resp.data);
     }
 
 
@@ -32,24 +40,36 @@ export default class BookingService {
     /**
      * GET request to get JSON of wheter a booking has been paid.
      */
-    putBooking(id) {
-        return axios.get(`/api/v1/booking/${id}`).then(resp => resp.data);
+    putBooking(id, token) {
+        return axios.get(`/api/v1/booking/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => resp.data);
     }
 
-    getPriceCalculation(preBookings) {
-        return axios.post(`/api/v1/booking/pre`, preBookings).then(resp => resp.data);
+    getPriceCalculation(preBookings, token) {
+        return axios.post(`/api/v1/booking/pre`, preBookings, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => resp.data);
     }
 
     /**
      * PUT request to edit already existing booking
      */
-    updateBooking(id, description, responsible, paid, price, customer) {
+    updateBooking(id, description, responsible, paid, price, customer, token) {
         return axios.put(`/api/v1/booking/${id}`, {
             "description": description,
             "responsible": responsible,
             "paid": paid,
             "price": price,
             "customer": customer
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
     }
 
@@ -58,8 +78,12 @@ export default class BookingService {
      * @param {*} id
      */
 
-    deleteBooking(id) {
-        axios.delete(`/api/v1/booking/${id}`,).then(resp => resp.data);
+    deleteBooking(id, token) {
+        axios.delete(`/api/v1/booking/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => resp.data);
     }
 
     /**
@@ -72,7 +96,7 @@ export default class BookingService {
      * @param {*} customer
      * @param {*} reservations
      */
-    postBooking(groupSize, description, responsible, paid, price, customer, reservations) {
+    postBooking(groupSize, description, responsible, paid, price, customer, reservations, token) {
         return axios.post(`/api/v1/booking/`, {
             "groupSize": groupSize,
             "description": description,
@@ -81,6 +105,10 @@ export default class BookingService {
             "price": price,
             "customer": customer,
             "reservations": reservations
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
     }
 
