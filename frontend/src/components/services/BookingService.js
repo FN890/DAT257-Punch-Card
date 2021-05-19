@@ -24,6 +24,16 @@ export default class BookingService {
         })
     }
 
+    /**
+     * GET request to get JSON of all archived bookings
+     */
+    getArchivedBookings(token) {
+        return axios.get('/api/v1/booking/archived', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
 
     /**
      * GET request to get JSON of specific booking.
@@ -59,13 +69,14 @@ export default class BookingService {
     /**
      * PUT request to edit already existing booking
      */
-    updateBooking(id, description, responsible, paid, price, customer, token) {
+    updateBooking(id, description, responsible, paid, price, customer, archived, token) {
         return axios.put(`/api/v1/booking/${id}`, {
             "description": description,
             "responsible": responsible,
             "paid": paid,
             "price": price,
-            "customer": customer
+            "customer": customer,
+            "archived": archived
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -79,7 +90,7 @@ export default class BookingService {
      */
 
     deleteBooking(id, token) {
-       return axios.delete(`/api/v1/booking/${id}`, {
+        return axios.delete(`/api/v1/booking/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
