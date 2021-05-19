@@ -5,20 +5,28 @@ import {useCookies} from "react-cookie";
 export default class ActivityService {
 
 
-    getActivities() {
+    getActivities(token) {
 
-        return axios.get('/api/v1/activity').then(resp => {
+        return axios.get('/api/v1/activity',{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => {
             return resp.data
         });
     }
 
-    getActiveActivities() {
-        return axios.get('/api/v1/activity/active').then(resp => {
+    getActiveActivities(token) {
+        return axios.get('/api/v1/activity/active',{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => {
             return resp.data
         });
     }
 
-    async addActivity(name, price, hprice, dprice, perprice, maxSize, isDaily, faq) {
+    async addActivity(name, price, hprice, dprice, perprice, maxSize, isDaily, faq, token) {
         try {
             const resp = await axios.post('api/v1/activity',
                 {
@@ -30,6 +38,10 @@ export default class ActivityService {
                     "maxSize": maxSize,
                     "isDaily": isDaily,
                     "faq": faq
+                },{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 })
         } catch (err) {
             console.log(err);
@@ -37,7 +49,7 @@ export default class ActivityService {
 
     }
 
-    deleteActivity(id) {
+    deleteActivity(id, token) {
         return axios.delete(`/api/v1/activity/name/${id}`)
     }
 

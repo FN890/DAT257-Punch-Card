@@ -10,6 +10,7 @@ import BookingOverview from "./components/BookingOverview";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { Toast } from 'primereact/toast';
+import {useCookies} from "react-cookie";
 
 var activityInfo = [];
 let reservations = [];
@@ -18,7 +19,7 @@ export default function NewBooking() {
 
     const activityService = new ActivityService();
     const bookingService = new BookingService();
-
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
     const [activityStates, setActivityStates] = useState([]);
     const [bookingInfo, setBookingInfo] = useState({});
     const [price, setPrice] = useState(0);
@@ -98,7 +99,7 @@ export default function NewBooking() {
 
     useEffect(() => {
         activityInfo = [];
-        activityService.getActiveActivities().then(function (availableActivities) {
+        activityService.getActiveActivities(cookies.JWT).then(function (availableActivities) {
             availableActivities.forEach(activity => {
                 activityInfo.push(activity);
             })

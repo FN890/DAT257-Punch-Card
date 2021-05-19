@@ -29,18 +29,18 @@ export default function CreateActivityGroup() {
      * which causes a rerender
      */
     useEffect(() => {
-        activityService.getActiveActivities().then(data => setActivities(data));
+        activityService.getActiveActivities(cookies.JWT).then(data => setActivities(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     function onCreateActivity() {
         console.log(cookies)
-        activityService.addActivity(name, price, hprice, dprice, perprice, maxPeople, isDaily, faq).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
+        activityService.addActivity(name, price, hprice, dprice, perprice, maxPeople, isDaily, faq, cookies.JWT).then(() => activityService.getActiveActivities(cookies.JWT).then(data => setActivities(data)))
     }
 
     const setActivity = (e) => {
         setIsDaily(e.value);
     }
     const onDelete = (id) => {
-        activityService.deleteActivity(id).then(() => activityService.getActiveActivities().then(data => setActivities(data)))
+        activityService.deleteActivity(id,cookies.JWT).then(() => activityService.getActiveActivities(cookies.JWT).then(data => setActivities(data)))
     }
     const header = (
         <span className="ql-formats">

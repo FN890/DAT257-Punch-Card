@@ -5,6 +5,7 @@ import ActivityService from "../../services/ActivityService";
 import './SettingsActivityTable.css';
 import {Button} from "primereact/button";
 import {ToggleButton} from "primereact/togglebutton";
+import {useCookies} from "react-cookie";
 
 /**
  * Creates a table with all the available activities
@@ -16,6 +17,7 @@ export default function SettingsActivityTable(props) {
     const [activity, setActivity] = useState([]);
     const [multiSortMeta, setMultiSortMeta] = useState([{field: 'category', order: -1}]);
     const activityService = new ActivityService();
+    const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
     const onDelete = (id) => {
         props.onClickDeleteButton(id)
     }
@@ -31,7 +33,7 @@ export default function SettingsActivityTable(props) {
      * Calls once on initiation to get all the activities from the database
      */
     useEffect(() => {
-        activityService.getActiveActivities().then(data => setActivity(data));
+        activityService.getActiveActivities(cookies.JWT).then(data => setActivity(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const header = (
