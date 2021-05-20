@@ -34,7 +34,6 @@ export default function IndividualBooking() {
     const bookingService = new BookingService();
 
     useEffect(() => {
-        console.log(cookies.JWT)
         bookingService.getIndividualBooking(id, cookies.JWT).then(data => {
             setBooking(data.data);
             setCustomerName(data.data.customer.name)
@@ -90,7 +89,6 @@ export default function IndividualBooking() {
             "phoneNr": phone,
             "email": email
         }
-        console.log(customer)
         bookingService.updateBooking(id, description, responsible, isPaid, price, customer, cookies.JWT);
         setConfirmationDialog(true);
         setSaveBookingDialog(false);

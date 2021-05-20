@@ -34,7 +34,6 @@ export default function CreateActivityGroup() {
         activityService.getActiveActivities(cookies.JWT).then(data => setActivities(data.data)).catch(() => history.push("/loggain"));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     function onCreateActivity() {
-        console.log(cookies)
         activityService.addActivity(name, price, hprice, dprice, perprice, maxPeople, isDaily, faq, cookies.JWT).then(() =>
             activityService.getActiveActivities(cookies.JWT).then(data =>
                 setActivities(data.data)).catch(() => history.push("/loggain")))
