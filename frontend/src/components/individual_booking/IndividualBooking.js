@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { InputText } from "primereact/inputtext";
 import { ToggleButton } from "primereact/togglebutton";
 import { useCookies } from "react-cookie";
+import {InputTextarea} from "primereact/inputtextarea";
 
 export default function IndividualBooking() {
     const { id } = useParams();
@@ -28,6 +29,7 @@ export default function IndividualBooking() {
     const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
     const [disabled, setDisabled] = useState(true);
+    const [archived, setArchived] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
 
 
@@ -43,6 +45,7 @@ export default function IndividualBooking() {
             setEmail(data.data.customer.email);
             setPhone(data.data.customer.phoneNr);
             setDescription(data.data.description);
+            setArchived(data.data.archived)
             const res = [];
             data.data.reservations.forEach(r => {
                 res.push(
@@ -77,9 +80,9 @@ export default function IndividualBooking() {
     }
 
     const deleteProduct = () => {
-        bookingService.deleteBooking(id, cookies.JWT)
         setDeleteBookingDialog(false);
-        history.push("/allabokningar");
+        bookingService.deleteBooking(id, cookies.JWT).then(() =>
+            history.push("/allabokningar")).catch(() => history.push("/loggain"))
     }
 
     const updateBooking = () => {
@@ -89,7 +92,9 @@ export default function IndividualBooking() {
             "phoneNr": phone,
             "email": email
         }
-        bookingService.updateBooking(id, description, responsible, isPaid, price, customer, cookies.JWT);
+        bookingService.updateBooking(id, description, responsible, isPaid, price, customer, archived, cookies.JWT).then(() =>
+            bookingService.getIndividualBooking(id, cookies.JWT).then(data =>
+                setBooking(data.data)).catch(() => history.push("/loggain")));
         setConfirmationDialog(true);
         setSaveBookingDialog(false);
         setDisabled(true);
@@ -152,7 +157,7 @@ export default function IndividualBooking() {
                     <div className="p-col-6" style={{ width: "150pt", margin: "0 30pt" }}>
                         <div className="p-m-2 p-text-center">
                             <b>Beskrivning:</b>
-                            <InputText style={{ margin: "5pt 0 0 0" }} disabled={disabled} value={description}
+                            <InputTextarea style={{ margin: "0 0 0 0" }} disabled={disabled} rows={5} autoResize={true} value={description}
                                 onChange={(e) => setDescription(e.target.value)} />
                         </div>
                     </div>
