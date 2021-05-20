@@ -30,6 +30,9 @@ export default function IndividualBooking() {
     const [description, setDescription] = useState('');
     const [disabled, setDisabled] = useState(true);
     const [archived, setArchived] = useState()
+    const [archiveLabel, setArchiveLabel] = useState('')
+    const [archiveIcon, setArchiveIcon] = useState('')
+    const [dialogLabel, setDialogLabel] = useState('')
     const [cookies, setCookie, removeCookie] = useCookies(['JWT']);
 
 
@@ -45,7 +48,17 @@ export default function IndividualBooking() {
             setEmail(data.data.customer.email);
             setPhone(data.data.customer.phoneNr);
             setDescription(data.data.description);
-            setArchived(data.data.archived)
+            setArchived(data.data.archived);
+            if (data.data.archived) {
+                setArchiveLabel("Ta bort")
+                setArchiveIcon("pi pi-minus")
+                setDialogLabel("ta bort")
+            }
+            else {
+                setArchiveLabel("Arkivera")
+                setArchiveIcon("pi pi-folder-open")
+                setDialogLabel("arkivera")
+            }
             const res = [];
             data.data.reservations.forEach(r => {
                 res.push(
@@ -56,6 +69,11 @@ export default function IndividualBooking() {
         }).catch(() => history.push("/loggain"));
     }, []);
 
+    const deleteProduct = () => {
+        setDeleteBookingDialog(false);
+        bookingService.deleteBooking(id, cookies.JWT).then(() =>
+            history.push("/allabokningar")).catch(() => history.push("/loggain"))
+    }
 
     const hideDeleteBookingDialog = () => {
         setDeleteBookingDialog(false);
@@ -79,12 +97,6 @@ export default function IndividualBooking() {
         setSaveBookingDialog(true);
     }
 
-    const deleteProduct = () => {
-        setDeleteBookingDialog(false);
-        bookingService.deleteBooking(id, cookies.JWT).then(() =>
-            history.push("/allabokningar")).catch(() => history.push("/loggain"))
-    }
-
     const updateBooking = () => {
         let customer = {
             "id": booking.customer.id,
@@ -101,12 +113,32 @@ export default function IndividualBooking() {
 
     }
 
-    const deleteBookingDialogFooter = (
-        <React.Fragment>
-            <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog} />
-            <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={deleteProduct} />
-        </React.Fragment>
-    );
+    const deleteBookingDialogFooter = () => {
+        if (archived) {
+            return (
+                <React.Fragment>
+                    <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog}/>
+                    <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={deleteProduct}/>
+                </React.Fragment>
+            )
+        } else {
+            return (<React.Fragment>
+                <Button label="Nej" icon="pi pi-times" className="p-button-text" onClick={hideDeleteBookingDialog}/>
+                <Button label="Ja" icon="pi pi-check" className="p-button-text" onClick={() => updateArchived()}/>
+            </React.Fragment>)
+        }
+    };
+
+    const updateArchived = () => {
+        let customer = {
+            "id": booking.customer.id,
+            "name": customerName,
+            "phoneNr": phone,
+            "email": email
+        }
+        bookingService.updateBooking(id, description, responsible, isPaid, price, customer, true, cookies.JWT).then(() =>
+            history.push("/allabokningar")).catch(() => history.push("/loggain"));
+    }
 
     const saveBookingDialogFooter = (
         <React.Fragment>
@@ -184,17 +216,17 @@ export default function IndividualBooking() {
                     style={{ margin: "0 30pt 0 0" }} onClick={() => confirmSaveBooking()} />
                 <Button label="Redigera" icon="pi pi-pencil" className="p-button-info p-col p-shadow-5"
                     style={{ margin: "0 30pt 0 0" }} onClick={() => setDisabled(!disabled)} />
-                <Button label="Ta bort" icon="pi pi-minus" className="p-button-danger p-col p-shadow-5"
+                <Button label={archiveLabel} icon={archiveIcon} className="p-button-danger p-col p-shadow-5"
                     onClick={() => confirmDeleteBooking()} />
 
             </div>
             <div>
-                <Dialog visible={deleteBookingDialog} style={{ width: '450px' }} header="VARNING! Bekräfta borttagning"
+                <Dialog visible={deleteBookingDialog} style={{ width: '450px' }} header="VARNING! Bekräfta val"
                     modal
                     footer={deleteBookingDialogFooter} onHide={hideDeleteBookingDialog}>
                     <div className="confirmation-content">
                         <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem' }} />
-                        {booking && <span>Är du säker på att du vill ta bort bokningen?</span>}
+                        {booking && <span>Är du säker på att du vill {dialogLabel} bokningen?</span>}
                     </div>
                 </Dialog>
             </div>
