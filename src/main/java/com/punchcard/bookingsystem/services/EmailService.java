@@ -37,11 +37,16 @@ public class EmailService {
     private String creatFAQMessage(List<Reservation> reservations) {
         StringBuilder message = new StringBuilder();
 
+        int totalPrice = 0;
+
         for (Reservation reservation : reservations) {
             message.append(reservation.getActivity().getName() + "\n");
             message.append(reservation.getStartTime() + " - " + reservation.getEndTime() + "\n");
+            message.append("Pris: " + reservation.getPrice() + "\n");
             message.append("\n" + reservation.getActivity().getFaq() + "\n\n");
+            totalPrice += reservation.getPrice();
         }
+        message.append("Totala kostnaden: " + totalPrice + "\n\n");
         message.append("\nTack för bokningen /Punch Card");
         return message.toString();
     }
