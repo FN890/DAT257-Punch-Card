@@ -50,7 +50,7 @@ function App() {
                     <Login/>
                 </Route>
                 <Route exact path="*" render={() => (
-                    <Redirect to='/kalender'/>
+                    <Redirect to='/loggain'/>
                 )}/>
             </Switch>
         </Router>

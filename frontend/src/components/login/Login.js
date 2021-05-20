@@ -42,7 +42,7 @@ export default function Login() {
         loginService.getToken(username, password).then((resp) => {
             const jwt = resp.data.jwt;
             setCookie("JWT", jwt)
-        }).then(() => history.push("/allabokninar")).catch((error) => {
+        }).then(() => history.push("/kalender")).catch((error) => {
             console.log(error)
             setError(true)
         })
@@ -50,7 +50,7 @@ export default function Login() {
 
     useEffect(() => {
         if (cookies.JWT) {
-            history.push("/allabokninar");
+            history.push("/kalender");
         }
     });
 
