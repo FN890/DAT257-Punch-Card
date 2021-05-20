@@ -81,7 +81,7 @@ export default function NewBooking() {
             reservations.push({
                 "startTime": activityStates[i].startTime,
                 "endTime": activityStates[i].endTime,
-                "activity": { "name": activityStates[i].activity.name.name }
+                "activity": {"id": activityStates[i].activity.name.id, "name": activityStates[i].activity.name.name }
             });
         }
 

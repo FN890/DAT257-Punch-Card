@@ -95,7 +95,7 @@ public class BookingService {
         int total = 0;
         Map<String, Integer> activityPrices = new HashMap<>();
         for (PreBooking p : preBookings) {
-            Activity a = (Activity) activityService.getActivityById(p.getActivityId()).getBody();
+            Activity a = activityService.getActivityById(p.getActivityId());
             Reservation r = new Reservation(p.getStartTime(), p.getEndTime(), a);
             total += r.getPrice();
 
@@ -122,10 +122,10 @@ public class BookingService {
         List<Reservation> reservations = new ArrayList();
 
         for (Reservation r : booking.getReservations()) {
-            if (!reservationService.isAvailable(r)) {
+            if (!isAvailable(r)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Överlappande datum med aktivitet " + r.getActivity().getName());
             }
-            Activity activity = (Activity) activityService.getActivityById(r.getActivity().getId()).getBody();
+            Activity activity = activityService.getActivityById(r.getActivity().getId());
             Reservation reservation = new Reservation(r.getStartTime(), r.getEndTime(), activity, newBooking);
             reservations.add(reservation);
         }
@@ -147,6 +147,18 @@ public class BookingService {
         } catch (MailException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fel med att skicka mail, kolla att adressen stämmer.");
         }
+    }
+
+    private boolean isAvailable(Reservation r) {
+        for (Booking booking : bookingRepository.findAll()) {
+            for (Reservation reservation : booking.getReservations()) {
+                if (r.getStartTime().isBefore(reservation.getEndTime()) && r.getStartTime().isAfter(reservation.getStartTime()) ||
+                    r.getEndTime().isBefore(reservation.getEndTime()) && r.getEndTime().isAfter(reservation.getStartTime())) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Transactional
