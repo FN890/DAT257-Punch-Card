@@ -98,7 +98,6 @@ public class Booking {
             }
         }
 
-        System.out.println("Setting starttime: " + startTime);
         this.startTime = earliest;
 
         return startTime;
