@@ -27,9 +27,9 @@ public class BookingConfig {
 
             customerRepository.saveAll(List.of(customer, customer1));
 
-            Activity activityStuga = new Activity("Stuga", 4000, 4, false, "Stugan är röd.");
-            Activity activityBad = new Activity("Badtunna", 1500, 4, true, "Badtunnan tar lite tid att värma");
-            Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true, "Boat go vrom vrom");
+            Activity activityStuga = new Activity("Stuga", 4000, 4, false, "Stugan har 10 sängar med kuddar och täcken, ta själv med lakan och örngott. Finns plats för extra madrasser.");
+            Activity activityBad = new Activity("Badtunna", 1500, 4, true, "Badtunnan är ny och ligger när vattnet. Töm inte tunnan. Meddela personal att fixa ved om det inte finns.");
+            Activity activityVattenSkidor = new Activity("VattenSkidor", 500, 4, true, "Är ni ett litet sällskap så roterar ni med klubbens medlemmar annars får ni hela anläggningen.");
 
             activityRepository.saveAll(List.of(activityStuga, activityBad, activityVattenSkidor));
 

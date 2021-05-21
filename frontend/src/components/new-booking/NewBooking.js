@@ -92,9 +92,10 @@ export default function NewBooking() {
             "email": bookingInfo.email
         }, reservations, cookies.JWT).then((response) => {
         }).catch((error) => {
-            displayError(error.response.status, error.response.data.message);
+            displayError(error.response.status, error.response.data);
             return error.response.status;
         });
+
 
         if (status !== 400 && status !== 500) {
             history.push("/allabokningar");
