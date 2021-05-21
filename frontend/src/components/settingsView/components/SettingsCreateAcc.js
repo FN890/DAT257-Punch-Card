@@ -10,8 +10,8 @@ export default function SettingsCreateAcc() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [userEmpty, setUserEmpty] = useState('');
-    const [passwordEmpty, setPasswordEmpty] = useState('');
+    let [userEmpty, setUserEmpty] = useState('');
+    let [passwordEmpty, setPasswordEmpty] = useState('');
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const invalidClass = "p-invalid p-d-block"
@@ -44,6 +44,8 @@ export default function SettingsCreateAcc() {
             }
             return;
         }
+        userEmpty = 'p-d-block';
+        passwordEmpty = 'p-d-block';
         loginService.createAccount(username, password, cookies.JWT).then(() => {
             setSuccess(true);
             setError(false);
@@ -67,7 +69,7 @@ export default function SettingsCreateAcc() {
                 <div className="p-d-flex p-mx-5 p-mb-5">
                     <div>
                     <span className="p-float-label">
-                        <Password id="activityName" value={password}
+                        <Password className={passwordEmpty} id="activityName" value={password}
                                   onChange={(e) => setPassword(e.target.value)}/>
                         <label htmlFor="activityName">lösenord</label>
                     </span>
