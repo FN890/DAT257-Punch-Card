@@ -12,12 +12,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/admin")
@@ -35,6 +33,11 @@ public class AdminController {
         this.adminService = adminService;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+    }
+
+    @GetMapping
+    public List<Admin> getAllAccounts() {
+        return adminService.getAllAccounts();
     }
 
     @RequestMapping(path = "/login")
@@ -55,6 +58,11 @@ public class AdminController {
     @PostMapping(path = "/create")
     public ResponseEntity createAdmin(@RequestBody Admin admin) {
         return adminService.createAdmin(admin);
+    }
+
+    @DeleteMapping(path = "/{name}")
+    public void deleteAdmin(@PathVariable String name) {
+        adminService.deleteAdmin(name);
     }
 
 
