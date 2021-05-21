@@ -1,5 +1,6 @@
 package com.punchcard.bookingsystem.services;
 
+import com.punchcard.bookingsystem.bodies.LoginRequest;
 import com.punchcard.bookingsystem.repositories.AdminRepository;
 import com.punchcard.bookingsystem.tables.Admin;
 import org.springframework.beans.factory.annotation.Autowired;

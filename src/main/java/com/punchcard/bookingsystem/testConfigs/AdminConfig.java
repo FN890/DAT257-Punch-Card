@@ -1,6 +1,5 @@
 package com.punchcard.bookingsystem.testConfigs;
 
-import com.punchcard.bookingsystem.repositories.AdminRepository;
 import com.punchcard.bookingsystem.services.AdminService;
 import com.punchcard.bookingsystem.tables.Admin;
 import org.springframework.boot.CommandLineRunner;
