@@ -14,7 +14,7 @@ export default class LoginService {
 
     async createAccount(name, password,token) {
         const data = {
-            "username": name,
+            "name": name,
             "password": password
         }
         console.log(data)
