@@ -19,7 +19,8 @@ To run this project, the required softwares are: Node & npm, Postgres SQL, Java,
 3. Reload the project with maven to make sure all dependencies are installed.
 4. Create a file called application.properties as ``src/main/resources/application.properties`` and paste the following content in the file.
 
-```spring.datasource.hikari.connectionTimeout=20000
+```
+spring.datasource.hikari.connectionTimeout=20000
 spring.datasource.hikari.maximumPoolSize=5
 
 ## PostgreSQL
