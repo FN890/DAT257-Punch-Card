@@ -12,7 +12,7 @@ Trello board.
 https://trello.com/b/88GxVRgH/projektkurs-dat257
 
 <h1>How to run the project</h1>
-To run this project, the required softwares are: ``Node & npm, Postgres SQL, Java, Maven``
+To run this project, the required softwares are: Node & npm, Postgres SQL, Java, Maven.
 
 1. Download the project and put it anywhere on your computer.
 2. Open the root project folder in Intellij IDEA or any other IDEA.
