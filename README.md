@@ -6,7 +6,8 @@ Rasmus Otterlind - RasmusOtterlind
 Filip Nordquist - FN890  
 Gustav Wadström - gustavwww   
 
-All documents including Team Reflections, Individual Reflections, Final Reflection and gitinspector can be found in the documents folder.
+All documents including Team Reflections, Individual Reflections, Final Reflection and gitinspector can be found in the documents folder. </br>
+Some statistics in gitinspector is misrepresented due to refactoring and coding in groups so only one person gets the commit but multiple worked on it.
 
 Trello board.  
 https://trello.com/b/88GxVRgH/projektkurs-dat257
