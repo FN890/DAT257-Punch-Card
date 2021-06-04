@@ -152,9 +152,11 @@ public class BookingService {
     private boolean isAvailable(Reservation r) {
         for (Booking booking : bookingRepository.findAll()) {
             for (Reservation reservation : booking.getReservations()) {
-                if (r.getStartTime().isBefore(reservation.getEndTime()) && r.getStartTime().isAfter(reservation.getStartTime()) ||
-                    r.getEndTime().isBefore(reservation.getEndTime()) && r.getEndTime().isAfter(reservation.getStartTime())) {
-                    return false;
+                if (r.getActivity().equals(reservation.getActivity())) {
+                    if ((r.getStartTime().isBefore(reservation.getEndTime()) && r.getStartTime().isAfter(reservation.getStartTime())) ||
+                            (r.getEndTime().isBefore(reservation.getEndTime()) && r.getEndTime().isAfter(reservation.getStartTime()))) {
+                        return false;
+                    }
                 }
             }
         }
