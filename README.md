@@ -15,13 +15,13 @@ https://trello.com/b/88GxVRgH/projektkurs-dat257
 To run this project, the required softwares are: Node & npm, Postgres SQL, Java, Maven.
 
 <h2>Run via jar file</h2>
-1. Set up a user in Postgres called ```booking```.  
-2. Create a database called ```booking``` with password ```booking```.   
-3. Open up a terminal and cd in directory where the jar file is located (DAT257-Punch-Card/).  
-4. type ```java -jar Booking-System-0.0.1-SNAPSHOT.jar``` and press ENTER and the program will run.  
-5. Open up a web browser and locate to ```http://localhost:8080```.  
-6. Login with username ```admin``` and password ```admin```.  
-7. Done  
+1. Set up a user in Postgres called ```booking```.  </br>
+2. Create a database called ```booking``` with password ```booking```.   </br>
+3. Open up a terminal and cd in directory where the jar file is located (DAT257-Punch-Card/).  </br>
+4. type ```java -jar Booking-System-0.0.1-SNAPSHOT.jar``` and press ENTER and the program will run.  </br>
+5. Open up a web browser and locate to ```http://localhost:8080```.  </br>
+6. Login with username ```admin``` and password ```admin```.  </br>
+7. Done  </br>
   
 
 <h2>Run inside an IDE</h2>  
