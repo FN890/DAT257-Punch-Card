@@ -13,6 +13,16 @@ https://trello.com/b/88GxVRgH/projektkurs-dat257
 
 <h1>How to run the project</h1>
 
+<h2>Run via jar file</h2>
+1. Set up a user in Postgres called ```booking```.
+2. Create a database called ```booking``` with password ```booking```. 
+3. Open up a terminal and cd in directory where the jar file is located (DAT257-Punch-Card/)
+4. type ```java -jar Booking-System-0.0.1-SNAPSHOT.jar``` and press ENTER and the program will run.
+5. Open up a web browser and locate to ```http://localhost:8080```.
+6. Login with username ```admin``` and password ```admin```.
+7. Done
+
+
 <h2>Run inside an IDE</h2>
 To run this project, the required softwares are: Node & npm, Postgres SQL, Java, Maven.
 
@@ -60,12 +70,3 @@ Make sure edit the postgres configuration in this file to use the correct prefer
 8. Back in the terminal, type ``npm start`` to start the frontend react application.
 9. The main browser should open by itself, if not, open it and go to ``http://localhost:3000``
 10. You will be prompted to login. The login credentials are: ``Username: admin Password: admin``
-
-<h2>Run via jar file</h2>
-1. Set up a user in Postgres called ```booking```.
-2. Create a database called ```booking``` with password ```booking```. 
-3. Open up a terminal and cd in directory where the jar file is located (DAT257-Punch-Card/)
-4. type ```java -jar Booking-System-0.0.1-SNAPSHOT.jar``` and press ENTER and the program will run.
-5. Open up a web browser and locate to ```http://localhost:8080```.
-6. Login with username ```admin``` and password ```admin```.
-7. Done
